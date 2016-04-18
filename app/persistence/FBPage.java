@@ -14,6 +14,8 @@ import javax.persistence.Id;
 
 import org.apache.commons.lang3.StringUtils;
 
+import utils.Utils;
+
 @Entity
 public class FBPage {
 	@Id
@@ -134,55 +136,55 @@ public class FBPage {
 		return about;
 	}
 	public void setAbout(String about) {
-		this.about = StringUtils.abbreviate(about, 255);
+		this.about = Utils.sanitize(about, 255);
 	}
 	public String getCategory() {
 		return category;
 	}
 	public void setCategory(String category) {
-		this.category = StringUtils.abbreviate(category, 255);
+		this.category = Utils.sanitize(category, 255);
 	}
 	public String getOverview() {
 		return overview;
 	}
 	public void setOverview(String overview) {
-		this.overview =StringUtils.abbreviate(overview, 255); 
+		this.overview =Utils.sanitize(overview, 255); 
 	}
 	public String getContactAddress() {
 		return contactAddress;
 	}
 	public void setContactAddress(String contactAddress) {
-		this.contactAddress = StringUtils.abbreviate(contactAddress, 255);
+		this.contactAddress = Utils.sanitize(contactAddress, 255);
 	}
 	public String getCurrentLocation() {
 		return currentLocation;
 	}
 	public void setCurrentLocation(String currentLocation) {
-		this.currentLocation = StringUtils.abbreviate(currentLocation, 255);
+		this.currentLocation = Utils.sanitize(currentLocation, 255);
 	}
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
-		this.description =StringUtils.abbreviate(description, 255); 
+		this.description =Utils.sanitize(description, 255); 
 	}
 	public String getFounded() {
 		return founded;
 	}
 	public void setFounded(String founded) {
-		this.founded = StringUtils.abbreviate(founded, 255);
+		this.founded = Utils.sanitize(founded, 255);
 	}
 	public String getGeneralInfo() {
 		return generalInfo;
 	}
 	public void setGeneralInfo(String generalInfo) {
-		this.generalInfo = StringUtils.abbreviate(generalInfo, 255);
+		this.generalInfo = Utils.sanitize(generalInfo, 255);
 	}
 	public String getGeneralManager() {
 		return generalManager;
 	}
 	public void setGeneralManager(String generalManager) {
-		this.generalManager =StringUtils.abbreviate( generalManager, 255);
+		this.generalManager =Utils.sanitize( generalManager, 255);
 	}
 	public String getLink() {
 		return link;
@@ -194,55 +196,55 @@ public class FBPage {
 		return mission;
 	}
 	public void setMission(String mission) {
-		this.mission = StringUtils.abbreviate(mission, 255);
+		this.mission = Utils.sanitize(mission, 255);
 	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = StringUtils.abbreviate(name, 255);
+		this.name = Utils.sanitize(name, 255);
 	}
 	public String getParentPageId() {
 		return parentPageId;
 	}
 	public void setParentPageId(String parentPageId) {
-		this.parentPageId = StringUtils.abbreviate(parentPageId, 255);
+		this.parentPageId = Utils.sanitize(parentPageId, 255);
 	}
 	public String getPersonalInfo() {
 		return personalInfo;
 	}
 	public void setPersonalInfo(String personalInfo) {
-		this.personalInfo = StringUtils.abbreviate(personalInfo, 255);
+		this.personalInfo = Utils.sanitize(personalInfo, 255);
 	}
 	public String getPersonalInterests() {
 		return personalInterests;
 	}
 	public void setPersonalInterests(String personalInterests) {
-		this.personalInterests = StringUtils.abbreviate(personalInterests, 255);
+		this.personalInterests = Utils.sanitize(personalInterests, 255);
 	}
 	public String getPhone() {
 		return phone;
 	}
 	public void setPhone(String phone) {
-		this.phone = StringUtils.abbreviate(phone, 255);
+		this.phone = Utils.sanitize(phone, 255);
 	}
 	public String getProducts() {
 		return products;
 	}
 	public void setProducts(String products) {
-		this.products = StringUtils.abbreviate(products, 255);
+		this.products = Utils.sanitize(products, 255);
 	}
 	public String getStoreNumber() {
 		return storeNumber;
 	}
 	public void setStoreNumber(String storeNumber) {
-		this.storeNumber = StringUtils.abbreviate(storeNumber, 255);
+		this.storeNumber = Utils.sanitize(storeNumber, 255);
 	}
 	public String getSingleLineAddress() {
 		return singleLineAddress;
 	}
 	public void setSingleLineAddress(String singleLineAddress) {
-		this.singleLineAddress = StringUtils.abbreviate(singleLineAddress, 255);
+		this.singleLineAddress = Utils.sanitize(singleLineAddress, 255);
 	}
 	public String getUsername() {
 		return username;
@@ -254,7 +256,7 @@ public class FBPage {
 		return website;
 	}
 	public void setWebsite(String website) {
-		this.website = StringUtils.abbreviate(website, 4000);
+		this.website = Utils.sanitize(website, 4000);
 	}
 	public boolean isPermanentlyClosed() {
 		return permanentlyClosed;
@@ -284,43 +286,43 @@ public class FBPage {
 		return errorCode;
 	}
 	public void setErrorCode(String errorCode) {
-		this.errorCode = StringUtils.abbreviate(errorCode, 255);
+		this.errorCode = Utils.sanitize(errorCode, 255);
 	}
 	public String getErrorMessage() {
 		return errorMessage;
 	}
 	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = StringUtils.abbreviate(errorMessage, 255);
+		this.errorMessage = Utils.sanitize(errorMessage, 255);
 	}
 	public String getAffiliation() {
 		return affiliation;
 	}
 	public void setAffiliation(String affiliation) {
-		this.affiliation = StringUtils.abbreviate(affiliation, 255);
+		this.affiliation = Utils.sanitize(affiliation, 255);
 	}
 	public String getAppId() {
 		return appId;
 	}
 	public void setAppId(String appId) {
-		this.appId = StringUtils.abbreviate(appId, 255);
+		this.appId = Utils.sanitize(appId, 255);
 	}
 	public String getAttire() {
 		return attire;
 	}
 	public void setAttire(String attire) {
-		this.attire = StringUtils.abbreviate(attire, 255);
+		this.attire = Utils.sanitize(attire, 255);
 	}
 	public String getBestPage() {
 		return bestPage;
 	}
 	public void setBestPage(String bestPage) {
-		this.bestPage =StringUtils.abbreviate( bestPage, 255);
+		this.bestPage =Utils.sanitize( bestPage, 255);
 	}
 	public String getBuilt() {
 		return built;
 	}
 	public void setBuilt(String built) {
-		this.built = StringUtils.abbreviate(built, 255);
+		this.built = Utils.sanitize(built, 255);
 	}
 	public boolean isCanCheckin() {
 		return canCheckin;
@@ -332,13 +334,13 @@ public class FBPage {
 		return culinaryTeam;
 	}
 	public void setCulinaryTeam(String culinaryTeam) {
-		this.culinaryTeam = StringUtils.abbreviate(culinaryTeam, 255);
+		this.culinaryTeam = Utils.sanitize(culinaryTeam, 255);
 	}
 	public String getDisplaySubtext() {
 		return displaySubtext;
 	}
 	public void setDisplaySubtext(String displaySubtext) {
-		this.displaySubtext = StringUtils.abbreviate(displaySubtext, 255);
+		this.displaySubtext = Utils.sanitize(displaySubtext, 255);
 	}
 	public List<String> getFoodStyles() {
 		return foodStyles;
@@ -357,115 +359,115 @@ public class FBPage {
 		return features;
 	}
 	public void setFeatures(String features) {
-		this.features = StringUtils.abbreviate(features, 255);
+		this.features = Utils.sanitize(features, 255);
 	}
 	public String getGlobalBrandRootId() {
 		return globalBrandRootId;
 	}
 	public void setGlobalBrandRootId(String globalBrandRootId) {
-		this.globalBrandRootId = StringUtils.abbreviate(globalBrandRootId, 255);
+		this.globalBrandRootId = Utils.sanitize(globalBrandRootId, 255);
 	}
 	public String getHours() {
 		return hours;
 	}
 	public void setHours(String hours) {
-		this.hours = StringUtils.abbreviate(hours, 255);
+		this.hours = Utils.sanitize(hours, 255);
 	}
 	public String getImpressum() {
 		return impressum;
 	}
 	public void setImpressum(String impressum) {
-		this.impressum = StringUtils.abbreviate(impressum, 255);
+		this.impressum = Utils.sanitize(impressum, 255);
 	}
 	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
-		this.location = StringUtils.abbreviate(location, 255);
+		this.location = Utils.sanitize(location, 255);
 	}
 	public String getMembers() {
 		return members;
 	}
 	public void setMembers(String members) {
-		this.members = StringUtils.abbreviate(members, 255);
+		this.members = Utils.sanitize(members, 255);
 	}
 	public String getMpg() {
 		return mpg;
 	}
 	public void setMpg(String mpg) {
-		this.mpg =StringUtils.abbreviate( mpg, 255);
+		this.mpg =Utils.sanitize( mpg, 255);
 	}
 	public String getNameWithBrandOrLocation() {
 		return nameWithBrandOrLocation;
 	}
 	public void setNameWithBrandOrLocation(String nameWithBrandOrLocation) {
-		this.nameWithBrandOrLocation = StringUtils.abbreviate(nameWithBrandOrLocation, 255);
+		this.nameWithBrandOrLocation = Utils.sanitize(nameWithBrandOrLocation, 255);
 	}
 	public String getParking() {
 		return parking;
 	}
 	public void setParking(String parking) {
-		this.parking = StringUtils.abbreviate(parking, 255);
+		this.parking = Utils.sanitize(parking, 255);
 	}
 	public String getPaymentOptions() {
 		return paymentOptions;
 	}
 	public void setPaymentOptions(String paymentOptions) {
-		this.paymentOptions = StringUtils.abbreviate(paymentOptions, 255);
+		this.paymentOptions = Utils.sanitize(paymentOptions, 255);
 	}
 	public String getPharmaSafetyInfo() {
 		return pharmaSafetyInfo;
 	}
 	public void setPharmaSafetyInfo(String pharmaSafetyInfo) {
-		this.pharmaSafetyInfo = StringUtils.abbreviate(pharmaSafetyInfo, 255);
+		this.pharmaSafetyInfo = Utils.sanitize(pharmaSafetyInfo, 255);
 	}
 	public String getPlaceType() {
 		return placeType;
 	}
 	public void setPlaceType(String placeType) {
-		this.placeType = StringUtils.abbreviate(placeType, 255);
+		this.placeType = Utils.sanitize(placeType, 255);
 	}
 	public String getPriceRange() {
 		return priceRange;
 	}
 	public void setPriceRange(String priceRange) {
-		this.priceRange = StringUtils.abbreviate(priceRange, 255);
+		this.priceRange = Utils.sanitize(priceRange, 255);
 	}
 	public String getPublicTransit() {
 		return publicTransit;
 	}
 	public void setPublicTransit(String publicTransit) {
-		this.publicTransit = StringUtils.abbreviate(publicTransit, 255);
+		this.publicTransit = Utils.sanitize(publicTransit, 255);
 	}
 	public String getRestaurantServices() {
 		return restaurantServices;
 	}
 	public void setRestaurantServices(String restaurantServices) {
-		this.restaurantServices = StringUtils.abbreviate(restaurantServices, 255);
+		this.restaurantServices = Utils.sanitize(restaurantServices, 255);
 	}
 	public String getRestaurantSpecialties() {
 		return restaurantSpecialties;
 	}
 	public void setRestaurantSpecialties(String restaurantSpecialties) {
-		this.restaurantSpecialties =StringUtils.abbreviate( restaurantSpecialties, 255);
+		this.restaurantSpecialties =Utils.sanitize( restaurantSpecialties, 255);
 	}
 	public String getStoreLocationDescriptor() {
 		return storeLocationDescriptor;
 	}
 	public void setStoreLocationDescriptor(String storeLocationDescriptor) {
-		this.storeLocationDescriptor =StringUtils.abbreviate( storeLocationDescriptor, 255);
+		this.storeLocationDescriptor =Utils.sanitize( storeLocationDescriptor, 255);
 	}
 	public String getStartDate() {
 		return startDate;
 	}
 	public void setStartDate(String startDate) {
-		this.startDate = StringUtils.abbreviate(startDate, 255);
+		this.startDate = Utils.sanitize(startDate, 255);
 	}
 	public String getStartType() {
 		return startType;
 	}
 	public void setStartType(String startType) {
-		this.startType = StringUtils.abbreviate(startType, 255);
+		this.startType = Utils.sanitize(startType, 255);
 	}
 	public Long getTalkingAbout() {
 		return talkingAbout;
@@ -477,13 +479,13 @@ public class FBPage {
 		return verificationStatus;
 	}
 	public void setVerificationStatus(String verificationStatus) {
-		this.verificationStatus = StringUtils.abbreviate(verificationStatus, 255);
+		this.verificationStatus = Utils.sanitize(verificationStatus, 255);
 	}
 	public String getVoipInfo() {
 		return voipInfo;
 	}
 	public void setVoipInfo(String voipInfo) {
-		this.voipInfo = StringUtils.abbreviate(voipInfo, 255);
+		this.voipInfo = Utils.sanitize(voipInfo, 255);
 	}
 	public Long getWereHere() {
 		return wereHere;

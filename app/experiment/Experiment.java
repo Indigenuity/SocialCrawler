@@ -5,12 +5,17 @@ import java.util.List;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
+import com.restfb.DefaultJsonMapper;
 import com.restfb.FacebookClient;
 import com.restfb.FacebookClient.AccessToken;
+import com.restfb.JsonMapper;
 import com.restfb.scope.ScopeBuilder;
 import com.restfb.scope.UserDataPermissions;
 import com.restfb.Parameter;
 import com.restfb.Version;
+import com.restfb.batch.BatchRequest;
+import com.restfb.batch.BatchRequest.BatchRequestBuilder;
+import com.restfb.batch.BatchResponse;
 import com.restfb.types.Category;
 import com.restfb.types.Comment;
 import com.restfb.types.Comments;
@@ -18,9 +23,12 @@ import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 
+import persistence.FBComment;
 import persistence.FBPage;
+import persistence.FBPost;
 import persistence.Test;
 import play.db.jpa.JPA;
+import utils.Utils;
 
 public class Experiment {
 	
@@ -29,8 +37,120 @@ public class Experiment {
 	private static final String REDIRECT = "https://www.facebook.com/connect/login_success.html";
 	private static final String TEMP_USER_ACCESS = "AQBhzmEw3hmKQ_ffKvyVxI1GIdTop6-epXaeGIwRQzkR54VTfSJkJ8cNBwWn_jKqAbIi00bSQGyaGoC84dT4Nl2DXM6B04X6Ypt_ifeuenuf0UPVse4lqbFBKD86ZQ6dmvnL_T3Pvf4iTL9OytEJGQklKhR3lkv28EdYpdhJOBHszq4FM8qc28BRrjCUpnO-i3dk6kZyFVt9-k1kHsmxg-g1blfYWOmZShlCKvXYk-bOqbqJiu6D0Q_qroof8_yStP1IWa5HFnIswBKdhC6FmimmvrCGxGNUlv6qRVczTnhIkaUBN5vrh4vCmeUF1Cr2VcY";
 
-	public static void runExperiment(){
-		fetchPage();
+	public static void runExperiment() throws Exception{
+		batchRequests();
+	}
+	
+	public static void batchRequests() {
+		System.out.println("getting access token");
+		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(APP_ID, APP_SECRET);
+		System.out.println("creating client");
+		FacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
+		
+		BatchRequest pageRequest = new BatchRequestBuilder("kengarffauto").parameters(Parameter.with("summary",true), 
+				Parameter.with("fields", "about,affiliation,app_id,attire,best_page,built,can_checkin,category,category_list,"
+						+ "checkins,company_overview,contact_address,culinary_team,current_location,description,display_subtext,"
+						+ "emails,fan_count,features,food_styles,founded,general_info,general_manager,global_brand_root_id,"
+						+ "hours,impressum, is_always_open,is_community_page,is_permanently_closed,is_unclaimed,is_verified,link,"
+						+ "location,members,mission,mpg,name, parent_page,parking,payment_options, personal_info, personal_interests,"
+						+ "pharma_safety_info,phone,place_type,price_range, products,public_transit,restaurant_services,"
+						+ "restaurant_specialties,single_line_address,start_info,store_location_descriptor,store_number,"
+						+ "talking_about_count,username,verification_status,voip_info,website,were_here_count")).build();
+		
+		BatchRequest feedRequest = new BatchRequestBuilder("kengarffauto/feed").parameters(Parameter.with("include_hidden", false), Parameter.with("fields", 
+				"application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
+				+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
+				+ "with_tags, likes.limit(0).summary(true), "
+				+ "comments.limit(0).summary(true)")).build();
+		
+		List<BatchResponse> batchResponses = facebookClient.executeBatch(pageRequest, feedRequest);
+
+		// Responses are ordered to match up with their corresponding requests.
+
+		BatchResponse pageResponse = batchResponses.get(0);
+		BatchResponse feedResponse = batchResponses.get(1);
+		
+		if(pageResponse.getCode() != 200)
+			  System.out.println("Batch request failed: " + pageResponse);
+		else {
+			JsonMapper jsonMapper = new DefaultJsonMapper();
+			Page page = jsonMapper.toJavaObject(pageResponse.getBody(), Page.class);
+			System.out.println("page : " + page);
+	
+			Connection<Post> feed = new Connection<Post>(facebookClient, feedResponse.getBody(), Post.class);
+			System.out.println("feed : " + feed.getData().size());
+		}
+	}
+	
+	public static void fetchPosts(){
+		System.out.println("getting access token");
+		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(APP_ID, APP_SECRET);
+		System.out.println("creating client");
+		FacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
+		System.out.println("creating connection");
+		Connection<Post> feed = facebookClient.fetchConnection("cocacola/feed", Post.class, Parameter.with("include_hidden", false), Parameter.with("fields", 
+				"application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
+				+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
+				+ "with_tags, likes.limit(0).summary(true), "
+				+ "comments.limit(0).summary(true)"));
+		int index = 0;
+		System.out.println("getting data");
+		List<Post> posts = feed.getData();
+		System.out.println("Got data");
+		System.out.println("posts : " + posts.size());
+		for(Post post : posts) {
+			Comments commentsObject;
+			if((commentsObject = post.getComments()) == null){
+				System.out.println("no comments");
+			}
+			else {
+				System.out.println("num comments : " + post.getCommentsCount());
+				List<Comment> comments = commentsObject.getData();
+				int commentIndex = 0;
+				for(Comment comment : comments) {
+					FBComment fbComment = new FBComment();
+					fbComment.setId(comment.getId());
+					fbComment.setCommentCount(comment.getCommentCount());
+					fbComment.setCreatedTime(comment.getCreatedTime() + "");
+					fbComment.setFromId(comment.getFrom().getId());
+					fbComment.setLikeCount(comment.getLikeCount());
+					fbComment.setMessage(comment.getMessage());
+					
+					JPA.em().persist(fbComment);
+					System.out.println("comment : " + ++commentIndex + comment.getMessage());
+				}
+			}
+			FBPost fbPost = new FBPost();
+			
+			fbPost.setApp(post.getApplication() + "");
+			fbPost.setCreatedTime(post.getCreatedTime() + "");
+			fbPost.setCaption(post.getCaption());
+			fbPost.setFeedTargeting(post.getFeedTargeting()+"");
+			fbPost.setFromId(post.getFrom().getId());
+			fbPost.setIsHidden(post.getIsHidden());
+			fbPost.setLink(post.getLink());
+			fbPost.setMessage(post.getMessage());
+			fbPost.setMessageTags(post.getMessageTags() + "");
+			fbPost.setObjectId(post.getObjectId());
+			fbPost.setParentId(post.getParentId());
+			fbPost.setPlace(post.getPlace() + "");
+			fbPost.setPrivacy(post.getPrivacy() + "");
+			fbPost.setShares(post.getSharesCount());
+			fbPost.setSource(post.getSource());
+			fbPost.setStatusType(post.getStatusType());
+			fbPost.setStory(post.getStory());
+			fbPost.setTargeting(post.getTargeting() + "");
+			fbPost.setToId(Utils.listToIdCSV(post.getTo()));
+			fbPost.setType(post.getType());
+			fbPost.setUpdatedTime(post.getUpdatedTime() + "");
+			fbPost.setWithTags(post.getWithTags() + "");
+			fbPost.setLikesCount(post.getLikesCount());
+			fbPost.setCommentsCount(post.getCommentsCount());
+			fbPost.setReactionsCount(post.getReactionsCount());
+			
+			JPA.em().persist(fbPost);
+			
+		}
 	}
 	
 	public static void fetchPage() {
@@ -120,6 +240,7 @@ public class Experiment {
 		fbPage.setVoipInfo(page.getVoipInfo() + "");
 		fbPage.setWebsite(page.getWebsite());
 		fbPage.setWereHere(page.getWereHereCount());
+		page.getArtistsWeLike();
 		
 		JPA.em().persist(fbPage);
 		System.out.println("page : " + page.getHours());
@@ -141,7 +262,7 @@ public class Experiment {
 //			System.out.println("page likes : "  + page.getFanCount());
 			
 			
-			Connection<Post> feed = facebookClient.fetchConnection("kengarffauto/feed", Post.class, Parameter.with("include_hidden", true), Parameter.with("fields",  "created_time,from, to, likes.limit(0).summary(true), comments"));
+			Connection<Post> feed = facebookClient.fetchConnection("kengarffauto/feed", Post.class, Parameter.with("include_hidden", false), Parameter.with("fields",  "created_time,from, to, likes.limit(0).summary(true), comments"));
 			int index = 0;
 			List<Post> posts = feed.getData();
 			for(Post post : posts) {

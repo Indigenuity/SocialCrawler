@@ -1,5 +1,6 @@
 package controllers;
 
+import akka.actor.ActorRef;
 import experiment.Experiment;
 import play.db.jpa.Transactional;
 import play.mvc.*;
@@ -25,6 +26,7 @@ public class HomeController extends Controller {
     @Transactional
     public Result experiment() throws Exception {
     	Experiment.runExperiment();
+    	ActorRef ref = null;
     	return ok();
     }
 
