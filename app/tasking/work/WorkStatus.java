@@ -1,4 +1,4 @@
-package utils;
+package tasking.work;
 
 public enum WorkStatus {
 

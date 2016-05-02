@@ -23,6 +23,7 @@ import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 
+import fb.FBMaster;
 import persistence.FBComment;
 import persistence.FBPage;
 import persistence.FBPost;
@@ -38,7 +39,8 @@ public class Experiment {
 	private static final String TEMP_USER_ACCESS = "AQBhzmEw3hmKQ_ffKvyVxI1GIdTop6-epXaeGIwRQzkR54VTfSJkJ8cNBwWn_jKqAbIi00bSQGyaGoC84dT4Nl2DXM6B04X6Ypt_ifeuenuf0UPVse4lqbFBKD86ZQ6dmvnL_T3Pvf4iTL9OytEJGQklKhR3lkv28EdYpdhJOBHszq4FM8qc28BRrjCUpnO-i3dk6kZyFVt9-k1kHsmxg-g1blfYWOmZShlCKvXYk-bOqbqJiu6D0Q_qroof8_yStP1IWa5HFnIswBKdhC6FmimmvrCGxGNUlv6qRVczTnhIkaUBN5vrh4vCmeUF1Cr2VcY";
 
 	public static void runExperiment() throws Exception{
-		batchRequests();
+		
+		FBMaster.fetchFeeds();
 	}
 	
 	public static void batchRequests() {
@@ -83,16 +85,21 @@ public class Experiment {
 	}
 	
 	public static void fetchPosts(){
+		FBPage fbPage = fetchPage();
+		
 		System.out.println("getting access token");
 		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(APP_ID, APP_SECRET);
 		System.out.println("creating client");
 		FacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
 		System.out.println("creating connection");
-		Connection<Post> feed = facebookClient.fetchConnection("cocacola/feed", Post.class, Parameter.with("include_hidden", false), Parameter.with("fields", 
+		String url = fbPage.getFbId() + "/feed";
+		System.out.println("url : " + url);
+		Connection<Post> feed = facebookClient.fetchConnection(url, Post.class, Parameter.with("include_hidden", false), Parameter.with("fields", 
 				"application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
 				+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
 				+ "with_tags, likes.limit(0).summary(true), "
 				+ "comments.limit(0).summary(true)"));
+		
 		int index = 0;
 		System.out.println("getting data");
 		List<Post> posts = feed.getData();
@@ -121,7 +128,7 @@ public class Experiment {
 				}
 			}
 			FBPost fbPost = new FBPost();
-			
+			fbPost.setFbPage(fbPage);
 			fbPost.setApp(post.getApplication() + "");
 			fbPost.setCreatedTime(post.getCreatedTime() + "");
 			fbPost.setCaption(post.getCaption());
@@ -153,10 +160,10 @@ public class Experiment {
 		}
 	}
 	
-	public static void fetchPage() {
+	public static FBPage fetchPage() {
 		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(APP_ID, APP_SECRET);
 		FacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
-		Page page = facebookClient.fetchObject("PizzaPieCafe",  Page.class, Parameter.with("summary",true), 
+		Page page = facebookClient.fetchObject("kengarffauto",  Page.class, Parameter.with("summary",true), 
 				Parameter.with("fields", "about,affiliation,app_id,attire,best_page,built,can_checkin,category,category_list,"
 						+ "checkins,company_overview,contact_address,culinary_team,current_location,description,display_subtext,"
 						+ "emails,fan_count,features,food_styles,founded,general_info,general_manager,global_brand_root_id,"
@@ -167,6 +174,7 @@ public class Experiment {
 						+ "talking_about_count,username,verification_status,voip_info,website,were_here_count"));
 		FBPage fbPage = new FBPage();
 		fbPage.setGivenUrl("kengarffauto");
+		fbPage.setFbId(page.getId());
 		fbPage.setAbout(page.getAbout());
 		fbPage.setAffiliation(page.getAffiliation());
 		fbPage.setAppId(page.getAppId());
@@ -245,6 +253,7 @@ public class Experiment {
 		JPA.em().persist(fbPage);
 		System.out.println("page : " + page.getHours());
 		System.out.println("page likes : "  + page.getDisplaySubtext());
+		return fbPage;
 	}
 	
 	

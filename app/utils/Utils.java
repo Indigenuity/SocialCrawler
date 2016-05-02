@@ -11,12 +11,10 @@ public class Utils {
 	public static String listToIdCSV(List<NamedFacebookType> objects){
 		String returned = "";
 		String delim = "";
-		System.out.println("raw : " + objects);
 		for(NamedFacebookType item : objects){
 			returned += delim + item.getId();
 			delim = ",";
 		}
-		System.out.println("after : " + returned);
 		return returned;
 	}
 	

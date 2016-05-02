@@ -1,0 +1,26 @@
+No longer exists:
+
+
+	Plante Moran	FB	Y	N		https://www.facebook.com/pmcareers?fref=ts
+	TDIndustries	FB	N	N		https://www.facebook.com/pages/TD-Industries/945805982116206?fref=ts
+
+	
+Blocked app access permissions:
+	Aflac	FB	Y	N	Connecticut	https://www.facebook.com/aflacct?fref=ts
+	Stryker	FB	Y	N		https://www.facebook.com/strykercareers
+	Hasbro	FB	Y	N		https://www.facebook.com/hasbrocareers?fref=ts
+
+	
+	
+Altered
+
+	CH2M Hill	FB	Y	N		https://www.facebook.com/ch2mhilljobs?fref=ts -> https://www.facebook.com/ch2mcareers
+		David Weekley Homes	FB	N	N		https://www.facebook.com/WeekleyHomes?fref=ts -> DavidWeekleyHomes
+		
+Used Different for crawling
+	Credit Acceptance	FB	N	N		https://www.facebook.com/Credit-Acceptance-Corporation-168678439842388/ -> 168678439842388
+		Kiewit Corporation	FB	N	N		https://www.facebook.com/kiewit/timeline -> removed /timeline
+
+
+
+	

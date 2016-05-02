@@ -1,4 +1,4 @@
-package utils;
+package tasking.work;
 
 
 
@@ -8,8 +8,11 @@ package utils;
 //Higher tasks may need to be completed before lower tasks are possible to complete
 public enum WorkType{
 	NO_WORK						,
+	FB_PAGE_FETCH					,
+	FB_FEED_FETCH					,
 	CUSTOM						, 
-	SUPERTASK					,
+	SUPERTASK, 
+	TASK					
 	;
 
 	private static final int DEFAULT_NUM_WORKERS = 5;

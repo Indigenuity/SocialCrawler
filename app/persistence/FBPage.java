@@ -11,19 +11,29 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Index;
 
 import org.apache.commons.lang3.StringUtils;
 
 import utils.Utils;
 
 @Entity
+@Table(indexes = {@Index(name = "given_url_index",  columnList="givenUrl", unique = false),
+           @Index(name = "fb_id_index", columnList="fbId",     unique = false)})
 public class FBPage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long fbPageId;
 	
-	@Column(unique=true)
+	
 	private String givenUrl;
+	private String companyString;
+	private Boolean job;
+	private Boolean liTab;
+	private String geoSpecial;
+	
 	private String fbId;
 	private String about;
 	private String affiliation;
@@ -99,11 +109,20 @@ public class FBPage {
 	
 	private String errorCode;
 	private String errorMessage;
+	
+	
+	
+	
+	@OneToMany(mappedBy="fbPage")
+	private List<FBPost> posts = new ArrayList<FBPost>();
+	
+	
+	
 //	
-	private long getFbPageId() {
+	public long getFbPageId() {
 		return fbPageId;
 	}
-	private void setFbPageId(long fbPageId) {
+	public void setFbPageId(long fbPageId) {
 		this.fbPageId = fbPageId;
 	}
 	public List<String> getSubCategories() {
@@ -504,6 +523,36 @@ public class FBPage {
 	}
 	public void setCommunityPage(boolean communityPage) {
 		this.communityPage = communityPage;
+	}
+	public List<FBPost> getPosts() {
+		return posts;
+	}
+	public void addPost(FBPost fbPost) {
+		this.posts.add(fbPost);
+	}
+	public Boolean getLiTab() {
+		return liTab;
+	}
+	public void setLiTab(Boolean liTab) {
+		this.liTab = liTab;
+	}
+	public String getGeoSpecial() {
+		return geoSpecial;
+	}
+	public void setGeoSpecial(String geoSpecial) {
+		this.geoSpecial = geoSpecial;
+	}
+	public String getCompanyString() {
+		return companyString;
+	}
+	public void setCompanyString(String companyString) {
+		this.companyString = companyString;
+	}
+	public Boolean getJob() {
+		return job;
+	}
+	public void setJob(Boolean job) {
+		this.job = job;
 	}
 	
 	

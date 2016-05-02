@@ -12,6 +12,7 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final",
   "com.restfb" % "restfb" % "1.22.0", 
   "mysql" % "mysql-connector-java" % "5.1.38",
+  "org.apache.commons" % "commons-csv" % "1.1",
   cache,
   javaWs
 )

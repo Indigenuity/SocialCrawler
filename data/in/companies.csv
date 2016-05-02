@@ -1,0 +1,412 @@
+Co ID,Company,Site (FB/Tw/LI),Job/Career (Yes/No),LI Tab?,Geography specific,URL
+,Google,FB,N,N,,https://www.facebook.com/Google
+,Google,Tw,N ,N,,https://twitter.com/google
+,Google,LI,Y,N,Netherlands,https://www.linkedin.com/groups?gid=1946899&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A1-1-1%2CtarId%3A1427131229716%2Ctas%3Agoogle+caree
+,Google,LI,Y,N,,https://www.linkedin.com/groups/Google-Universe-Jobs-Tools-Trends-2930475?gid=2930475&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A2-1-2%2CtarId%3A1427131259584%2Ctas%3Agoogle+job
+,Google,LI,Y,Y,,https://www.linkedin.com/company/google?trk=top_nav_home
+,Boston Consulting Group,LI,Y,Y,,https://www.linkedin.com/company/1784?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427131302214%2Ctas%3Aboston+consulting+group+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427131302214%2Ctas%3Aboston+consulting+group+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427131302214%2Ctas%3Aboston+consulting+group+
+,Boston Consulting Group,FB,N,N,,https://www.facebook.com/TheBostonConsultingGroup
+,Boston Consulting Group,Tw,N,N,,https://twitter.com/BCG
+,SAS,Tw,N,N,,https://twitter.com/SAS
+,SAS,FB,N,N,,https://www.facebook.com/SAS
+,SAS,LI,Y,N,USA,https://www.linkedin.com/groups?gid=2041034&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A4-1-4%2CtarId%3A1427135102718%2Ctas%3Asas+job
+,SAS,LI,Y,N,Europe,https://www.linkedin.com/groups?gid=2119911&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A3-2-4%2CtarId%3A1427135129490%2Ctas%3Asas+jobs
+,SAS,LI,Y,N,Canada,https://www.linkedin.com/groups?gid=5095978&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A2-2-3%2CtarId%3A1427135138476%2Ctas%3Asas+career
+,SAS,LI,Y,Y,,https://www.linkedin.com/company/1491?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A1491%2Cidx%3A4-1-12%2CtarId%3A1446047308805%2Ctas%3Asas%20
+,Wegmans Food Markets,LI,N,N,,https://www.linkedin.com/company/166905?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427135176604%2Ctas%3Awegmans+food+
+,Wegmans Food Markets,Tw,N,N,,https://twitter.com/Wegmans
+,Edward Jones,FB,Y,N,,https://www.facebook.com/edwardjonescareers?fref=ts
+,Edward Jones,Tw,N,N,,https://twitter.com/EdwardJones
+,NetApp,FB,Y,N,,https://www.facebook.com/netappcareers?fref=ts
+,NetApp,Tw,Y,N,,https://twitter.com/NetAppCareers
+,NetApp,LI,Y,Y,,https://www.linkedin.com/company/netapp/careers?trk=top_nav_careers
+,Camden Property Trust,LI,N,N,,https://www.linkedin.com/company/162872?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427387897314%2Ctas%3Acamden+property+trust+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427387897314%2Ctas%3Acamden+property+trust+
+,Camden Property Trust,FB,N,N,,https://www.facebook.com/CamdenLiving
+,Recreational Equipment (REI),FB,N,N,,https://www.facebook.com/REI?fref=ts&rf=105647536165501
+,Recreational Equipment (REI),Tw,N,N,,https://twitter.com/REI
+,Recreational Equipment (REI),LI,Y,Y,,https://www.linkedin.com/company/165697?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-7%2CtarId%3A1427388113389%2Ctas%3Arei
+,CHG Healthcare Services,LI,Y,Y,,https://www.linkedin.com/company/12687?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388171150%2Ctas%3Achg+health
+,CHG Healthcare Services,Tw,N,N,,https://twitter.com/CHGHealthcare
+,CHG Healthcare Services,Fb,N,N,,https://www.facebook.com/CHGFans?fref=ts
+,Quicken Loans,Fb,Y,N,,https://www.facebook.com/QLCareers?fref=ts
+,Quicken Loans,Tw,N,N,,https://twitter.com/QuickenLoans
+,Quicken Loans,LI,N,N,,https://www.linkedin.com/company/165627?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388331688%2Ctas%3Aquicken+loans+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388331688%2Ctas%3Aquicken+loans+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388331688%2Ctas%3Aquicken+loans+
+,Zappos.com,LI,N,N,,https://www.linkedin.com/company/14951?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-7%2CtarId%3A1427388371861%2Ctas%3Azappos+c&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-7%2CtarId%3A1427388371861%2Ctas%3Azappos&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-7%2CtarId%3A1427388371861%2Ctas%3Azappos
+,Zappos.com,FB,N,N,,https://www.facebook.com/zappos?fref=ts
+,Zappos.com,Tw,Y,N,,https://twitter.com/Zappos_Jobs
+,Mercedes-Benz USA,Tw,Y,N,,https://twitter.com/MBUSA_Careers
+,Mercedes-Benz USA,LI,Y,Y,,https://www.linkedin.com/company/164934?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-2-10%2CtarId%3A1427388559259%2Ctas%3Amerce
+,Mercedes-Benz USA,FB,N,N,,https://www.facebook.com/MercedesBenz?fref=ts
+,DPR Construction,FB,N,N,,https://www.facebook.com/DPRConstruction?fref=ts
+,DPR Construction,TW,N,N,,https://twitter.com/DPRConstruction
+,DPR Construction,LI,N,N,,https://www.linkedin.com/company/12538?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388664840%2Ctas%3ADPR+CONSTRUCTION+JO&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388664840%2Ctas%3ADPR+CONSTRUCTION+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388664840%2Ctas%3ADPR+CONSTRUCTION+
+,DreamWorks Animation SKG,LI,Y,N,,https://www.linkedin.com/groups?gid=4555783&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A1-1-1%2CtarId%3A1427388709146%2Ctas%3ADREAMWORKS+JOB
+,DreamWorks Animation SKG,LI,N,N,,https://www.linkedin.com/company/4080?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A4080%2Cidx%3A4-1-9%2CtarId%3A1446047833590%2Ctas%3Adreamworks
+,DreamWorks Animation SKG,TW,N,N,,https://twitter.com/DWAnimation
+,DreamWorks Animation SKG,FB,N,N,,https://www.facebook.com/DreamWorksAnimation?fref=ts
+,NuStar Energy,FB,N,N,,https://www.facebook.com/pages/NuStar-Energy/112170275467147?fref=ts
+,NuStar Energy,TW,N,N,,https://twitter.com/NuStarEnergyLP
+,NuStar Energy,LI,N,N,,https://www.linkedin.com/company/7888?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388828706%2Ctas%3ANUSTAR+ENERGY+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388828706%2Ctas%3ANUSTAR+ENERGY+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388828706%2Ctas%3ANUSTAR+ENERGY+
+,Kimpton Hotels & Restaurants,LI,N,N,,https://www.linkedin.com/company/15034?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388847209%2Ctas%3AKIMPTON+HOTE
+,Kimpton Hotels & Restaurants,TW,Y,N,,https://twitter.com/Kimpton_Careers
+,Kimpton Hotels & Restaurants,FB,N,N,,https://www.facebook.com/Kimpton?fref=ts&rf=112145482229508
+,JM Family Enterprises,FB,N,N,,https://www.facebook.com/JMFamilyEnterprises?fref=ts
+,JM Family Enterprises,TW,Y,N,,https://twitter.com/JMFamilyCareers
+,JM Family Enterprises,LI,Y,Y,,https://www.linkedin.com/company/164539?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388969777%2Ctas%3AJM+FAMILY+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388969777%2Ctas%3AJM+FAMILY+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427388969777%2Ctas%3AJM+FAMILY+
+,Chesapeake Energy,FB,N,N,,https://www.facebook.com/Chesapeake?fref=ts
+,Chesapeake Energy,TW,N,N,,https://twitter.com/Chesapeake
+,Chesapeake Energy,LI,Y,N,,https://www.linkedin.com/groups?gid=2744383&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A1-1-1%2CtarId%3A1427770499217%2Ctas%3ACHESAPEAKE+ENERGY+CAREE
+,Chesapeake Energy,LI,N,N,,https://www.linkedin.com/company/163009?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A163009%2Cidx%3A4-1-8%2CtarId%3A1446048198838%2Ctas%3Achesapeake%20en
+,Intuit,LI,Y,N,,https://www.linkedin.com/groups/Intuit-Careers-2435394?gid=2435394&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A1-1-1%2CtarId%3A1427770558028%2Ctas%3AINTUIT+CAREER
+,Intuit,LI,Y,Y,,https://www.linkedin.com/company/1666?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A1666%2Cidx%3A4-1-11%2CtarId%3A1446048266129%2Ctas%3Aintuit
+,Intuit,FB,Y,N,,https://www.facebook.com/intuitcareers?fref=ts
+,Intuit,TW,Y,N,,https://twitter.com/IntuitCareers
+,USAA,TW,Y,N,,https://twitter.com/USAA_jobs
+,USAA,FB,Y,N,,https://www.facebook.com/usaacareers?fref=ts&ref=br_tf
+,USAA,LI,Y,Y,,https://www.linkedin.com/company/4501?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770821480%2Ctas%3AUSAA+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770821480%2Ctas%3AUSAA+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770821480%2Ctas%3AUSAA+
+,Robert W. Baird,LI,Y,Y,,https://www.linkedin.com/company/6983?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770852481%2Ctas%3AROBERT+W.+BAIRD+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770852481%2Ctas%3AROBERT+W.+BAIRD+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770852481%2Ctas%3AROBERT+W.+BAIRD+
+,Robert W. Baird,FB,N,N,,https://www.facebook.com/RobertWBairdandCompany?fref=ts
+,Robert W. Baird,TW,N,N,,https://twitter.com/rwbaird
+,Container Store,TW,N,N,,https://twitter.com/ContainerStore
+,Container Store,FB,N,N,,https://www.facebook.com/containerstore?fref=ts
+,Container Store,LI,Y,Y,,https://www.linkedin.com/company/18062?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427771019615%2Ctas%3ACONTAINER+STORE+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427771019615%2Ctas%3ACONTAINER+STORE+
+,Qualcomm,FB,Y,N,,https://www.facebook.com/QualcommCareers?fref=ts
+,Qualcomm,TW,Y,N,,https://twitter.com/QualcommCareers
+,Qualcomm,LI,Y,Y,,https://www.linkedin.com/company/2017?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843450363%2Ctas%3AQUALCOMM+CA&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843450363%2Ctas%3AQUALCOMM+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843450363%2Ctas%3AQUALCOMM+
+,Alston & Bird,LI,N,N,,https://www.linkedin.com/company/8342?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843787575%2Ctas%3AALSTON+%26+BIRD+CA&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843787575%2Ctas%3AALSTON+%26+BIRD+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843787575%2Ctas%3AALSTON+%26+BIRD+
+,Alston & Bird,FB,N,N,,https://www.facebook.com/pages/Alston-Bird-LLP/109329898949?fref=ts
+,Alston & Bird,TW,N,N,,https://twitter.com/AlstonBirdLLP
+,Ultimate Software,TW,Y,N,,https://twitter.com/UltiCareers
+,Ultimate Software,FB,N,N,,https://www.facebook.com/UltimateSoftware?fref=ts
+,Ultimate Software,LI,Y,Y,,https://www.linkedin.com/company/166574?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843904397%2Ctas%3AULTIMATE+SOFTWARE+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843904397%2Ctas%3AULTIMATE+SOFTWARE+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427843904397%2Ctas%3AULTIMATE+SOFTWARE+
+,Burns & McDonnell,LI,Y,Y,,https://www.linkedin.com/company/12902?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-2-5%2CtarId%3A1427843926075%2Ctas%3ABURNS+
+,Burns & McDonnell,TW,Y,N,,https://twitter.com/BurnsMcdCareers
+,Burns & McDonnell,FB,Y,N,,https://www.facebook.com/BurnsMcDonnellCareers?fref=ts
+,Salesforce.com,FB,N,N,,https://www.facebook.com/salesforce?fref=ts
+,Salesforce.com,TW,N,N,,https://twitter.com/SalesCloud1
+,Salesforce.com,LI,Y,Y,,https://www.linkedin.com/company/3185?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427844090664%2Ctas%3ASALESFOR
+,Devon Energy,LI,Y,Y,,https://www.linkedin.com/company/6848?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427844257202%2Ctas%3ADEVON+ENERGY+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427844257202%2Ctas%3ADEVON+ENERGY+
+,Devon Energy,TW,N,N,,https://twitter.com/DevonEnergy
+,PCL Construction Enterprises,TW,N,N,,https://twitter.com/PCLConstruction
+,PCL Construction Enterprises,FB,N,N,,https://www.facebook.com/PCLconstruction?fref=ts
+,PCL Construction Enterprises,LI,Y,Y,,https://www.linkedin.com/company/15739?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427844471603%2Ctas%3APCL+CONSTRUCTION
+,Bingham McCutchen,LI,N,N,,https://www.linkedin.com/company/162711?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427844496128%2Ctas%3ABINGHAM+MC
+,Bingham McCutchen,TW,N,N,,https://twitter.com/BinghamLaw
+,Scottrade,TW,N,N,,https://twitter.com/scottrade
+,Scottrade,FB,N,N,,https://www.facebook.com/Scottrade?fref=ts
+,Scottrade,LI,Y,Y,,https://www.linkedin.com/company/9385?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427845317097%2Ctas%3ASCOTTRADE+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427845317097%2Ctas%3ASCOTTRADE+
+,Whole Foods Market,FB,Y,N,,https://www.facebook.com/wholefoodsmarketcareers?fref=ts
+,Whole Foods Market,TW,N,N,,https://twitter.com/WholeFoods
+,Whole Foods Market,LI,Y,N,,https://www.linkedin.com/company/3675875?trk=tyah&trkInfo=clickedVertical%3Ashowcase%2Cidx%3A4-1-9%2CtarId%3A1427845807269%2Ctas%3AWHOLE+FOODS+MARKET
+,Whole Foods Market,LI,N,N,,https://www.linkedin.com/company/157353?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A157353%2Cidx%3A2-1-4%2CtarId%3A1446048727342%2Ctas%3Awhole%20food
+,Goldman Sachs,LI,Y,Y,,https://www.linkedin.com/company/1382?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427845895520%2Ctas%3AGOLDMAN+SACHS
+,Goldman Sachs,FB,Y,N,,https://www.facebook.com/goldmansachscareers?fref=ts
+,Goldman Sachs,TW,N,N,,https://twitter.com/GoldmanSachs
+,Nugget Market,FB,N,N,,https://www.facebook.com/nuggetmarkets?fref=ts
+,Nugget Market,TW,N,N,,https://twitter.com/Nugget_Market
+,Nugget Market,LI,N,N,,https://www.linkedin.com/company/941488?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A941488%2Cidx%3A1-1-1%2CtarId%3A1446048795242%2Ctas%3Anugget%20market
+,Millennium: The Takeda Oncology Company,LI,N,N,,https://www.linkedin.com/company/4682?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-2-8%2CtarId%3A1427849883551%2Ctas%3ATAKEDA+
+,Millennium: The Takeda Oncology Company,TW,N,N,,https://twitter.com/TakedaOncology
+,Millennium: The Takeda Oncology Company,FB,N,N,,https://www.facebook.com/TakedaOncology?fref=ts
+,Southern Ohio Medical Center,FB,N,N,,https://www.facebook.com/SouthernOhioMedicalCenter?fref=ts
+,Southern Ohio Medical Center,LI,N,N,,https://www.linkedin.com/company/651918?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A1-1-1%2CtarId%3A1427850061717%2Ctas%3ASOUTHERN+OHIO+MED
+,Plante Moran,TW,N,N,,https://twitter.com/pmcresa
+,Plante Moran,LI,Y,Y,,https://www.linkedin.com/company/8795?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427850168382%2Ctas%3APLANTE+MORAN
+,W. L. Gore & Associates,LI,Y,Y,,https://www.linkedin.com/company/5996?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-3%2CtarId%3A1427851019294%2Ctas%3AW.L.+GORE
+,W. L. Gore & Associates,FB,N,N,,https://www.facebook.com/pages/WL-Gore-Associates/177071832305185?fref=ts
+,St. Jude Children's Research Hospital,FB,N,N,,https://www.facebook.com/stjude?fref=ts
+,St. Jude Children's Research Hospital,TW,N,N,,https://twitter.com/StJude
+,St. Jude Children's Research Hospital,LI,Y,Y,,https://www.linkedin.com/company/7639?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A7639%2Cidx%3A2-2-3%2CtarId%3A1446049020350%2Ctas%3Ast%20jude
+,SVB Financial Group,LI,N,N,,https://www.linkedin.com/company/5090?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-3-9%2CtarId%3A1427851177511%2Ctas%3ASVB+
+,SVB Financial Group,TW,N,N,,https://twitter.com/SVB_Financial
+,SVB Financial Group,FB,N,N,,https://www.facebook.com/SVBFinancialGroup?fref=ts
+,Adobe,FB,N,N,,https://www.facebook.com/Adobe?fref=ts
+,Adobe,TW,Y,N,,https://twitter.com/AdobeCareers
+,Adobe,LI,Y,Y,,https://www.linkedin.com/company/1480?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427851289567%2Ctas%3AADOBE+CA&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427851289567%2Ctas%3AADOBE+
+,Baptist Health South Florida,LI,Y,Y,,https://www.linkedin.com/company/14991?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-3-6%2CtarId%3A1427851316393%2Ctas%3ABAPTIST+HEALTH+S
+,Baptist Health South Florida,FB,N,N,,https://www.facebook.com/BaptistHealthSF?fref=ts
+,Novo Nordisk,FB,N,N,,https://www.facebook.com/novonordisk?fref=ts
+,Novo Nordisk,TW,N,N,,https://twitter.com/novonordisk
+,Novo Nordisk,LI,Y,Y,,https://www.linkedin.com/company/2227?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427851449634%2Ctas%3ANOVO+NORDISK
+,Balfour Beatty Construction,LI,Y,Y,,https://www.linkedin.com/company/17438?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427851489322%2Ctas%3ABALFOUR+BEATTY+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427851489322%2Ctas%3ABALFOUR+BEATTY
+,Balfour Beatty Construction,TW,N,N,,https://twitter.com/balfourbeatty
+,Balfour Beatty Construction,FB,N,N,,https://www.facebook.com/balfourbeatty?fref=ts
+,National Instruments,FB,N,N,,https://www.facebook.com/NationalInstruments?fref=ts
+,National Instruments,TW,N,N,,https://twitter.com/NIglobal
+,National Instruments,LI,Y,Y,,https://www.linkedin.com/company/3433?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427851604484%2Ctas%3ANATIONAL+INSTRUMENTS+
+,Intel,LI,Y,Y,,https://www.linkedin.com/company/1053?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427851620258%2Ctas%3AINTEL
+,Intel,TW,N,N,,https://twitter.com/intel
+,Intel,FB,N,N,,https://www.facebook.com/Intel?fref=ts
+,American Fidelity Assurance,FB,N,N,,https://www.facebook.com/amfidelity?fref=ts
+,American Fidelity Assurance,TW,N,N,,https://twitter.com/amfidelity
+,American Fidelity Assurance,LI,Y,Y,,https://www.linkedin.com/company/26205?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-4%2CtarId%3A1427851827503%2Ctas%3AAMERICAN+FIDELITY+
+,PricewaterhouseCoopers,LI,Y,Y,,https://www.linkedin.com/company/1044?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-9%2CtarId%3A1427851854802%2Ctas%3APWC
+,PricewaterhouseCoopers,TW,Y,N,,https://twitter.com/PwC_US_Careers
+,PricewaterhouseCoopers,FB,Y,N,,https://www.facebook.com/PwCUSCareers?fref=ts
+,Children's Healthcare of Atlanta,FB,N,N,,https://www.facebook.com/ChildrensHealthcareofAtlanta?fref=ts
+,Children's Healthcare of Atlanta,LI,N,N,,https://www.linkedin.com/company/9553?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-3-6%2CtarId%3A1427851987792%2Ctas%3ACHILDREN%27S+HEALTHCARE+
+,World Wide Technology,LI,Y,Y,,https://www.linkedin.com/company/9089?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427852021654%2Ctas%3AWORLD+WIDE+TECHNOLOGY
+,World Wide Technology,FB,N,N,,https://www.facebook.com/pages/World-Wide-Technology-Inc/75577218799?fref=ts
+,Allianz Life Insurance,TW,Y,N,,https://twitter.com/AllianzCareers
+,Allianz Life Insurance,FB,Y,N,USA,https://www.facebook.com/AllianzGlobalAssistanceUSACareers?fref=ts
+,Allianz Life Insurance,LI,Y,Y,,https://www.linkedin.com/company/2979?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427852119404%2Ctas%3AALLIANZ+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427852119404%2Ctas%3AALLIANZ+
+,Autodesk,LI,Y,Y,,https://www.linkedin.com/company/1879?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427852142939%2Ctas%3AAUTODESK
+,Autodesk,TW,Y,N,,https://twitter.com/Autodeskers
+,Autodesk,FB,Y,N,,https://www.facebook.com/AutodeskCareers?fref=ts
+,Methodist Hospital System,FB,N,N,,https://www.facebook.com/NebraskaMethodistHospital?fref=ts
+,Methodist Hospital System,TW,N,N,,https://twitter.com/methodistarc
+,Methodist Hospital System,LI,N,N,,https://www.linkedin.com/company/340784?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427852249987%2Ctas%3AMETHODIST+HOSPITAL+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427852249987%2Ctas%3AMETHODIST+HOSPITAL+
+,Baker Donelson,LI,N,N,,https://www.linkedin.com/company/18418?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427852292873%2Ctas%3ABAKER+DONELSON
+,Baker Donelson,FB,N,N,,https://www.facebook.com/pages/Baker-Donelson-Bearman-Caldwell-Berkowitz/108006932560231?fref=ts
+,Baker Donelson,TW,N,N,,https://twitter.com/Baker_Donelson
+,Men's Wearhouse,FB,N,N,,https://www.facebook.com/MensWearhouse?fref=ts
+,Men's Wearhouse,TW,N,N,,https://twitter.com/menswearhouse
+,Men's Wearhouse,LI,Y,Y,,https://www.linkedin.com/company/410499?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427854981047%2Ctas%3Amen%27s+wearhouse
+,Scripps Health,LI,Y,Y,,https://www.linkedin.com/company/14822?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427855016497%2Ctas%3Ascripps+health+
+,Scripps Health,TW,Y,N,,https://twitter.com/EWScrippsJobs
+,Scripps Health,FB,N,N,,https://www.facebook.com/scrippshealth?fref=ts
+,Marriott International,FB,N,N,,https://www.facebook.com/marriottinternational?fref=ts
+,Marriott International,TW,N,N,,https://twitter.com/MarriottIntl
+,Marriott International,LI,Y,Y,,https://www.linkedin.com/company/2311?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-2%2CtarId%3A1427855498648%2Ctas%3AMARRIOTT+INTERNATIONAL+
+,Perkins Coie,LI,Y,Y,,https://www.linkedin.com/company/6765?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427855535320%2Ctas%3APERKINS+COIE
+,Perkins Coie,TW,N,N,,https://twitter.com/PerkinsCoieLLP
+,Perkins Coie,FB,N,N,,https://www.facebook.com/PerkinsCoieLlp?fref=ts
+,Ernst & Young,FB,N,N,,https://www.facebook.com/pages/EY/195665063800329?fref=ts&rf=109575439061060
+,Ernst & Young,LI,Y,Y,,https://www.linkedin.com/company/1073?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-2-5%2CtarId%3A1427855796989%2Ctas%3AERNST+%26+YOUN
+,Ernst & Young,TW,N,N,,https://twitter.com/EYnews
+,Ernst & Young,TW,Y,N,USA,https://twitter.com/EY_CareersUS
+,Ernst & Young,TW,Y,N,UK,https://twitter.com/EY_CareersUK
+,Ernst & Young,TW,Y,N,Belgium,https://twitter.com/EY_CareersBE
+,American Express,FB,N,N,,https://www.facebook.com/AmericanExpressUS?fref=ts
+,American Express,TW,N,N,,https://twitter.com/AmericanExpress
+,American Express,LI,Y,Y,,https://www.linkedin.com/company/1277?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-7%2CtarId%3A1427855880937%2Ctas%3AAMERICAN+EXPRESS
+,Nordstrom,LI,Y,Y,,https://www.linkedin.com/company/3379?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427855924493%2Ctas%3ANORDSTROM+
+,Nordstrom,TW,N,N,,https://twitter.com/Nordstrom
+,Nordstrom,FB,N,N,,https://www.facebook.com/Nordstrom?fref=ts
+,Build-A-Bear Workshop,FB,N,N,,https://www.facebook.com/Buildabear?fref=ts
+,Build-A-Bear Workshop,TW,N,N,,https://twitter.com/buildabear
+,Build-A-Bear Workshop,LI,N,N,,https://www.linkedin.com/company/17574?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-5%2CtarId%3A1427856098480%2Ctas%3ABUILD-A-BEAR
+,General Mills,LI,Y,Y,,https://www.linkedin.com/company/2822?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427856134261%2Ctas%3AGENERAL+MILLS
+,General Mills,TW,Y,N,,https://twitter.com/GenMillsCareers
+,General Mills,FB,Y,N,,https://www.facebook.com/generalmillscareers?fref=ts
+,TDIndustries,LI,Y,Y,,https://www.linkedin.com/company/23004?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427856304175%2Ctas%3ATDINDUSTRIES
+,TDIndustries,TW,N,N,,https://twitter.com/tdindustries
+,Atlantic Health,FB,Y,N,,https://www.facebook.com/atlantichealthcareers?fref=ts
+,Atlantic Health,TW,N,N,,https://twitter.com/TheAtlanticHLTH
+,Atlantic Health,LI,Y,N,,https://www.linkedin.com/groups?gid=2048651&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A2-1-4%2CtarId%3A1427856546587%2Ctas%3AATLANTIC+HEALTH+CARE
+,Atlantic Health,LI,N,N,,https://www.linkedin.com/company/11804?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A11804%2Cidx%3A4-1-11%2CtarId%3A1446050019169%2Ctas%3AAtlantic%20heal
+,QuikTrip,LI,N,N,,https://www.linkedin.com/company/39542?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427856565402%2Ctas%3AQUIKTRIP
+,QuikTrip,TW,N,N,,https://twitter.com/QuikTrip
+,QuikTrip,FB,N,N,,https://www.facebook.com/Quiktrip?fref=ts
+,Deloitte,FB,Y,N,,https://www.facebook.com/CareersAtDeloitte?fref=ts
+,Deloitte,TW,N,N,,https://twitter.com/Deloitte
+,Deloitte,LI,Y,Y,,https://www.linkedin.com/company/1038?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427856925361%2Ctas%3ADELOITTE+C&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427856925361%2Ctas%3ADELOITTE+
+,Genentech,FB,Y,N,,https://www.facebook.com/GenentechJobs?fref=ts
+,Genentech,TW,Y,N,,https://twitter.com/GenentechJobs
+,Genentech,LI,Y,Y,,https://www.linkedin.com/company/2276?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427857299061%2Ctas%3AGENENTECH
+,Umpqua Bank,FB,N,N,,https://www.facebook.com/umpquabank?fref=ts
+,Umpqua Bank,TW,Y,N,,https://twitter.com/umpquabankjobs
+,Umpqua Bank,LI,Y,Y,,https://www.linkedin.com/company/17603?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356083315%2Ctas%3AUMPQUA+BANK+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356083315%2Ctas%3AUMPQUA+BANK+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356083315%2Ctas%3AUMPQUA+BANK+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356083315%2Ctas%3AUMPQUA+BANK+
+,Teach For America,LI,Y,Y,,https://www.linkedin.com/company/157314?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-7%2CtarId%3A1428356111859%2Ctas%3ATEACH+FOR+AMERICA
+,Teach For America,TW,N,N,,https://twitter.com/TeachForAmerica
+,Teach For America,FB,N,N,,https://www.facebook.com/teachforamerica?fref=ts
+,Mayo Clinic,FB,N,N,,https://www.facebook.com/MayoClinic?fref=ts
+,Mayo Clinic,TW,Y,N,,https://twitter.com/mayoclinicjobs
+,Mayo Clinic,LI,Y,Y,,https://www.linkedin.com/company/4725?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356247732%2Ctas%3AMAYO+CLINIC+J&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356247732%2Ctas%3AMAYO+CLINIC+
+,EOG Resources,LI,Y,Y,,https://www.linkedin.com/company/22849?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356307677%2Ctas%3AEOG+RESOUR
+,EOG Resources,FB,N,N,,https://www.facebook.com/pages/EOG-Resources/107594535937092?fref=ts
+,Starbucks,FB,N,N,,https://www.facebook.com/Starbucks?fref=ts
+,Starbucks,TW,Y,N,,https://twitter.com/StarbucksJobs
+,Starbucks,LI,Y,Y,,https://www.linkedin.com/company/2271?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-7%2CtarId%3A1428356435298%2Ctas%3ASTARBUCKS+CA&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-7%2CtarId%3A1428356435298%2Ctas%3ASTARBUCKS+C
+,Rackspace Hosting,LI,Y,Y,,https://www.linkedin.com/company/5234?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356476261%2Ctas%3ARACKSPACE+HOSTING
+,Rackspace Hosting,TW,Y,N,,https://twitter.com/RackspaceJobs/status/8915237458
+,Rackspace Hosting,FB,Y,N,,https://www.facebook.com/RackspaceCareers?fref=ts
+,FactSet Research Systems,FB,N,N,,https://www.facebook.com/FactSet?fref=ts
+,FactSet Research Systems,TW,Y,N,,https://twitter.com/FactSetCareers
+,FactSet Research Systems,LI,N,N,,https://www.linkedin.com/company/163755?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356611811%2Ctas%3AFACTSET+
+,Microsoft,LI,Y,Y,,https://www.linkedin.com/company/1035?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356648177%2Ctas%3AMICROSOFT+JOB&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356648177%2Ctas%3AMICROSOFT+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356648177%2Ctas%3AMICROSOFT+
+,Microsoft,TW,Y,N,,https://twitter.com/MicrosoftJobs
+,Microsoft,FB,Y,N,,https://www.facebook.com/MicrosoftCareers?fref=ts
+,Aflac,FB,N,N,,https://www.facebook.com/Aflac
+,Aflac,TW,N,N,,https://twitter.com/Aflac
+,Aflac,LI,Y,Y,,https://www.linkedin.com/company/3997?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356797304%2Ctas%3AAFLAC+CA&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356797304%2Ctas%3AAFLAC+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356797304%2Ctas%3AAFLAC+
+,Publix Super Markets,LI,Y,Y,,https://www.linkedin.com/company/7242?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356827489%2Ctas%3APUBLIX
+,Publix Super Markets,TW,Y,N,,https://twitter.com/PublixJobs
+,Publix Super Markets,FB,Y,N,,https://www.facebook.com/publixcareers?fref=ts
+,Mattel,FB,N,N,,https://www.facebook.com/Mattel?fref=ts
+,Mattel,TW,N,N,,https://twitter.com/Mattel
+,Mattel,LI,Y,Y,,https://www.linkedin.com/company/3214?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428356978918%2Ctas%3AMATTEL
+,Stryker,TW,Y,N,,https://twitter.com/Stryker_Jobs
+,Stryker,LI,Y,Y,,https://www.linkedin.com/company/3282?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428357668667%2Ctas%3ASTRYKER+JOB&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428357668667%2Ctas%3ASTRYKER+
+,SRC/SRCTec,LI,N,N,,https://www.linkedin.com/company/349093?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A1-1-1%2CtarId%3A1428357695035%2Ctas%3ASRCTEC
+,SRC/SRCTec,TW,Y,N,,https://twitter.com/SRCTecCareers
+,Hasbro,TW,Y,N,,https://twitter.com/hasbrocareers
+,Hasbro,LI,Y,N,,https://www.linkedin.com/groups?gid=4028658&goback=%2Enpv_133351266_*1_*1_NAME*4SEARCH_Ezeb_*1_en*4US_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_tyah_*1&trk=prof-groups-membership-logo
+,Hasbro,LI,Y,Y,,https://www.linkedin.com/company/4934?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A4934%2Cidx%3A4-1-8%2CtarId%3A1446050621490%2Ctas%3AHasbro
+,Bright Horizons Family Solutions,LI,Y,Y,,https://www.linkedin.com/company/9187?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428357913588%2Ctas%3ABRIGHT+HORIZON
+,Bright Horizons Family Solutions,TW,Y,N,,https://twitter.com/BHjobsUK
+,Bright Horizons Family Solutions,FB,Y,N,,https://www.facebook.com/BrightHorizonsCareers?fref=ts
+,Booz Allen Hamilton,FB,N,N,,https://www.facebook.com/boozallen?fref=ts
+,Booz Allen Hamilton,TW,N,N,,https://twitter.com/BoozAllen
+,Booz Allen Hamilton,LI,Y,Y,,https://www.linkedin.com/company/1403?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358240413%2Ctas%3ABOOZ+ALLEN+HAMILTON
+,Hitachi Data Systems,LI,Y,Y,,https://www.linkedin.com/company/3065?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358264263%2Ctas%3AHITACHI+
+,Hitachi Data Systems,TW,N,N,,https://twitter.com/HDScorp
+,Hitachi Data Systems,FB,Y,N,,https://www.facebook.com/HDSCareers?fref=ts
+,The Everett Clinic,FB,N,N,,https://www.facebook.com/TheEverettClinic?fref=ts
+,The Everett Clinic,TW,N,N,,https://twitter.com/everettclinic
+,The Everett Clinic,LI,N,N,,https://www.linkedin.com/company/28556?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A1-1-1%2CtarId%3A1428358388063%2Ctas%3AEVERETT+CLINI
+,OhioHealth,LI,Y,Y,,https://www.linkedin.com/company/8390?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358424246%2Ctas%3AOHIOHEALTH
+,OhioHealth,TW,Y,N,,https://twitter.com/OhioHealthJobs
+,OhioHealth,FB,N,N,,https://www.facebook.com/OhioHealth?fref=ts
+,Morningstar,TW,Y,N,,https://twitter.com/MorningstarJobs
+,Morningstar,FB,N,N,,https://www.facebook.com/MorningStarSailing?fref=ts&rf=109453902414531
+,Morningstar,LI,Y,Y,,https://www.linkedin.com/company/5161?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A5161%2Cidx%3A2-1-4%2CtarId%3A1446050760110%2Ctas%3Amorningstar
+,Cisco,LI,Y,Y,,https://www.linkedin.com/company/1063?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358603497%2Ctas%3ACISCO+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358603497%2Ctas%3ACISCO+
+,Cisco,TW,Y,N,,https://twitter.com/ciscojob
+,Cisco,FB,Y,N,,https://www.facebook.com/networkingjobs?fref=ts
+,CarMax,FB,N,N,,https://www.facebook.com/CarMax?fref=ts
+,CarMax,TW,N,N,,https://twitter.com/CarMax
+,CarMax,LI,N,N,,https://www.linkedin.com/company/162901?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358714942%2Ctas%3ACARMAX
+,Accenture,LI,Y,Y,,https://www.linkedin.com/company/1033?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358730733%2Ctas%3AACCENTURE+
+,Accenture,TW,Y,N,,https://twitter.com/Accenture_Jobs
+,Accenture,FB,Y,N,,https://www.facebook.com/AccentureCareersUS?fref=ts
+,GoDaddy.com,FB,N,N,,https://www.facebook.com/GoDaddy?fref=ts
+,GoDaddy.com,TW,Y,N,,https://twitter.com/GoDaddyJobs
+,GoDaddy.com,LI,Y,Y,,https://www.linkedin.com/company/7846?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358956697%2Ctas%3AGODADDY
+,KPMG,LI,Y,Y,,https://www.linkedin.com/company/2525300?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358979246%2Ctas%3AKPMG+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358979246%2Ctas%3AKPMG+
+,KPMG,TW,Y,N,USA,https://twitter.com/KPMGUSCareers
+,KPMG,FB,Y,N,USA,https://www.facebook.com/kpmguscareers?fref=ts
+,Navy Federal Credit Union,FB,N,N,,https://www.facebook.com/NavyFederal?fref=ts
+,Navy Federal Credit Union,LI,Y,Y,,https://www.linkedin.com/company/11568?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428448888685%2Ctas%3ANAVY+FEDERAL+
+,Meridian Health,LI,N,N,,https://www.linkedin.com/company/26057?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428448911176%2Ctas%3AMERIDIAN+HEALTH+
+,Meridian Health,TW,N,N,,https://twitter.com/MeridianNJ
+,Schweitzer Engineering Labs,FB,N,N,,https://www.facebook.com/pages/Schweitzer-Engineering-Laboratories-Inc/148960375131063?fref=ts
+,Schweitzer Engineering Labs,LI,N,N,,https://www.linkedin.com/company/15544?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428449043684%2Ctas%3ASCHWEITZER+ENG
+,Capital One,TW,Y,N,,https://twitter.com/capitalonejobs
+,Capital One,LI,Y,Y,,https://www.linkedin.com/company/1419?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428449117745%2Ctas%3ACAPITAL+ONE+
+,Capital One,FB,N,N,,https://www.facebook.com/capitalone?fref=ts
+,Darden Restaurants,FB,N,N,,https://www.facebook.com/pages/Darden-Restaurants/108325625861426?fref=ts
+,Darden Restaurants,TW,N,N,,https://twitter.com/darden
+,Intercontinental Hotels Group,LI,Y,Y,,https://www.linkedin.com/company/3549?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428449438357%2Ctas%3AINTERCONTIN
+,Intercontinental Hotels Group,TW,Y,N,,https://twitter.com/InterConJobs
+,Intercontinental Hotels Group,FB,N,N,,https://www.facebook.com/ihg?fref=ts
+,Stew Leonard's,FB,N,N,,https://www.facebook.com/stewleonards?fref=ts
+,Stew Leonard's,TW,N,N,,https://twitter.com/StewLeonards
+,Stew Leonard's,LI,N,N,,https://www.linkedin.com/company/47807?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A1-1-1%2CtarId%3A1428449833360%2Ctas%3ASTEW+LEONARD%27S
+,Shared Technologies- ARI,FB,N,N,,https://www.facebook.com/s3arrow?fref=ts&ref=br_tf
+,Shared Technologies- ARI,LI,N,N,,https://www.linkedin.com/company/2863686?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A1-1-1%2CtarId%3A1428945935612%2Ctas%3AARROW+SYSTEMS+INTEGRATION
+,Johnson Financial Group,,,,,https://www.linkedin.com/company/17626?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A17626%2Cidx%3A2-1-2%2CtarId%3A1446051078356%2Ctas%3Ajohnson%20financial%20group
+,Johnson Financial Group,,,,,
+,Johnson Financial Group,,,,,
+,Four Seasons Hotels,FB,N,N,,https://www.facebook.com/FourSeasons?fref=ts
+,Four Seasons Hotels,TW,N,N,,https://twitter.com/FourSeasons
+,Four Seasons Hotels,LI,Y,Y,,https://www.linkedin.com/company/163883?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946078396%2Ctas%3AFOUR+SEASONS+HOTEL
+,S.C. Johnson & Son,FB,N,N,,https://www.facebook.com/pages/S-C-Johnson-Son/108206642534121?fref=ts
+,S.C. Johnson & Son,LI,Y,Y,,https://www.linkedin.com/company/4039?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A4039%2Cidx%3A2-1-4%2CtarId%3A1446051214961%2Ctas%3ASC%20johnson
+,S.C. Johnson & Son,TW,N,N,,https://twitter.com/SCJohnson
+,Arkansas Children's Hospital,LI,N,N,,https://www.linkedin.com/company/24494?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-3-9%2CtarId%3A1428946173975%2Ctas%3Aarkansas
+,Arkansas Children's Hospital,TW,N,N,,https://twitter.com/archildrens
+,Arkansas Children's Hospital,FB,N,N,,https://www.facebook.com/ArkansasChildrensHospital?fref=ts
+,Gilbane,FB,N,N,,https://www.facebook.com/pages/Gilbane-Building-Company/258541740902855?fref=ts
+,Gilbane,TW,N,N,,https://twitter.com/GilbaneBuilding
+,Gilbane,LI,N,N,,https://www.linkedin.com/company/10590?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946276134%2Ctas%3AGILBANE+
+,Brocade Communications Systems,LI,Y,Y,,https://www.linkedin.com/company/2543?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946291287%2Ctas%3ABROCADE+
+,Brocade Communications Systems,TW,N,N,,https://twitter.com/BRCDcomm
+,Brocade Communications Systems,FB,N,N,,https://www.facebook.com/brocade?fref=ts
+,CH2M Hill,FB,Y,N,,https://www.facebook.com/ch2mcareers
+,CH2M Hill,TW,Y,N,,https://twitter.com/CH2MHILLJobs
+,CH2M Hill,LI,Y,Y,,https://www.linkedin.com/company/3739?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946378053%2Ctas%3ACH2M+HILL
+,J. M. Smucker,LI,Y,Y,,https://www.linkedin.com/company/11007?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-3%2CtarId%3A1428946403934%2Ctas%3AJ.M.+SMUCKER
+,J. M. Smucker,FB,N,N,,https://www.facebook.com/smuckers?fref=ts&rf=110720075616519
+,Aéropostale,FB,N,N,,https://www.facebook.com/Aeropostale?fref=ts
+,Aéropostale,TW,N,N,,https://twitter.com/Aeropostale
+,Aéropostale,LI,N,N,,https://www.linkedin.com/company/14191?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946509462%2Ctas%3AAEROPOSTALE+
+,MITRE,LI,Y,Y,,https://www.linkedin.com/company/3848?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946527355%2Ctas%3AMITRE+
+,MITRE,TW,N,N,,https://twitter.com/MITREcorp
+,MITRE,FB,N,N,,https://www.facebook.com/Mitre?fref=ts
+,Grainger,FB,Y,N,,https://www.facebook.com/graingercareers?fref=ts
+,Grainger,TW,Y,N,,https://twitter.com/GraingerCareers
+,Grainger,LI,Y,Y,,https://www.linkedin.com/company/3863?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946666295%2Ctas%3AGRAINGER+
+,Colgate-Palmolive,FB,N,N,,https://www.facebook.com/pages/Colgate-Palmolive/109635062395368?fref=ts
+,Colgate-Palmolive,TW,N,N,,https://twitter.com/Colgate
+,Colgate-Palmolive,LI,N,N,,https://www.linkedin.com/company/2748?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946742747%2Ctas%3ACOLGATE-PALMOLIVE+
+,Winchester Hospital,LI,N,N,,https://www.linkedin.com/company/20851?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946789855%2Ctas%3AWINCHESTER+HOSPITAL+
+,Winchester Hospital,TW,N,N,,https://twitter.com/WDMH_CEO
+,Winchester Hospital,FB,N,N,,https://www.facebook.com/WinchesterHospital?fref=ts
+,Monsanto,FB,N,N,,https://www.facebook.com/MonsantoCo?fref=ts
+,Monsanto,TW,N,N,,https://twitter.com/MonsantoCo
+,Monsanto,LI,Y,Y,,https://www.linkedin.com/company/3422?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946901664%2Ctas%3AMONSANTO+
+,FedEx,LI,Y,Y,,https://www.linkedin.com/company/1669?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946915569%2Ctas%3AFEDEX+
+,FedEx,TW,Y,N,,https://twitter.com/FedExOfficeJobs
+,FedEx,FB,N,N,,https://www.facebook.com/FedEx?fref=ts
+,Orrick Herrington & Sutcliffe,LI,N,N,,https://www.linkedin.com/company/5833?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-2%2CtarId%3A1428947064693%2Ctas%3AORRICK+HERRINGTON+
+,Orrick Herrington & Sutcliffe,FB,N,N,,https://www.facebook.com/Orrick
+,Orrick Herrington & Sutcliffe,TW,N,N,,https://twitter.com/Orrick
+,LifeBridge Health,FB,N,N,,https://www.facebook.com/LifeBridgeHealth?fref=ts
+,LifeBridge Health,TW,Y,N,,https://twitter.com/LBHealthJobs
+,LifeBridge Health,LI,Y,Y,,https://www.linkedin.com/company/28779?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428947275377%2Ctas%3ALIFEBRIDGE+HEALTH+
+,Herman Miller,LI,Y,Y,,https://www.linkedin.com/company/164178?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428947292637%2Ctas%3AHERMAN+MILLER
+,Herman Miller,TW,N,N,,https://twitter.com/HermanMiller
+,Herman Miller,FB,N,N,,https://www.facebook.com/HermanMiller?fref=ts
+,Texas Instruments,FB,N,N,,https://www.facebook.com/texasinstruments?fref=ts
+,Texas Instruments,TW,N,N,,https://twitter.com/TXInstruments
+,Texas Instruments,LI,Y,Y,,https://www.linkedin.com/company/1397?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428947810671%2Ctas%3ATEXAS+INSTRUMENTS+
+,Vanderbilt University,LI,Y,Y,,https://www.linkedin.com/company/4564?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A4-1-9%2CtarId%3A1428947856236%2Ctas%3AVANDERBILT+
+,Vanderbilt University,TW,N,N,,https://twitter.com/VUMChealth
+,Vanderbilt University,FB,N,N,,https://www.facebook.com/VanderbiltHealth?fref=ts
+,Sherwin-Williams,FB,N,N,,https://www.facebook.com/SherwinWilliamsforYourHome?fref=ts
+,Sherwin-Williams,TW,N,N,,https://twitter.com/SherwinWilliams
+,Sherwin-Williams,LI,N,N,,https://www.linkedin.com/company/165944?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428947979921%2Ctas%3ASHERWIN-WILLIAMS
+,SRA International,LI,Y,Y,,https://www.linkedin.com/company/3916?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A3-1-3%2CtarId%3A1428948001730%2Ctas%3ASRA+INTERNATIONAL+
+,SRA International,TW,N,N,,https://twitter.com/SRA_One
+,SRA International,FB,N,N,,https://www.facebook.com/SocResAdminINTL?fref=ts
+,David Weekley Homes,FB,N,N,,https://www.facebook.com/DavidWeekleyHomes
+,David Weekley Homes,LI,N,N,,https://www.linkedin.com/company/17033?trk=tyah&trkInfo=clickedVertical%3Acompany%2CentityType%3AentityHistoryName%2CclickedEntityId%3Acompany_17033%2Cidx%3A0
+,David Weekley Homes,TW,N,N,,https://twitter.com/DavidWeekley
+,Hilcorp,LI,N,N,,https://www.linkedin.com/company/23482?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A23482%2Cidx%3A2-1-4%2CtarId%3A1445912857298%2Ctas%3AHilcorp
+,"ARI, Automotive Resources International",LI,N,N,,https://www.linkedin.com/company/15865?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A15865%2Cidx%3A2-1-2%2CtarId%3A1445973507402%2Ctas%3AARI%20
+,"ARI, Automotive Resources International",FB,N,N,,https://www.facebook.com/ARIFleet
+,WellStar Health System,FB,N,N,,https://www.facebook.com/wellstarhealthsystem
+,WellStar Health System,LI,Y,Y,,https://www.linkedin.com/company/wellstar-health-system?trk=top_nav_home
+,WellStar Health System,TW,N,N,,https://twitter.com/WellStarHealth
+,TEKsystems,FB,Y,N,,https://www.facebook.com/TEKsystemsJobs?fref=ts
+,TEKsystems,LI,Y,Y,,https://www.linkedin.com/company/teksystems?trk=top_nav_home
+,TEKsystems,TW,Y,N,,https://twitter.com/TEKcareers
+,TEKsystems,TW,Y,N,UK,https://twitter.com/TEKcareersUK
+,Credit Acceptance,FB,N,N,,https://www.facebook.com/168678439842388
+,Credit Acceptance,LI,Y,Y,,https://www.linkedin.com/company/credit-acceptance?trk=top_nav_home
+,Roche Diagnostics,FB,N,N,,https://www.facebook.com/RocheCareers?nr
+,Roche Diagnostics,LI,Y,Y,,https://www.linkedin.com/company/roche?trk=top_nav_home
+,Roche Diagnostics,TW,N,N,USA,https://twitter.com/RocheDiaUSA
+,Roche Diagnostics,TW,N,N,UK,https://twitter.com/RocheDiaUK
+,Kimley-Horn and Associates,FB,N,N,,https://www.facebook.com/KimleyHorn
+,Kimley-Horn and Associates,LI,Y,Y,,https://www.linkedin.com/company/kimley-horn-and-associates-inc-?trk=top_nav_home
+,Kimley-Horn and Associates,TW,N,N,,https://twitter.com/KimleyHorn
+,Mars,FB,N,N,,https://www.facebook.com/Mars?fref=ts
+,Mars,LI,Y,Y,,https://www.linkedin.com/company/1544?trk=vsrp_companies_res_name&trkInfo=VSRPsearchId%3A3366704411445915885261%2CVSRPtargetId%3A1544%2CVSRPcmpt%3Aprimary
+,Mars,TW,N,N,,https://twitter.com/MarsGlobal
+,Discovery Communications,FB,N,N,,https://www.facebook.com/DiscoveryComm?fref=ts
+,Discovery Communications,LI,N,N,,https://www.linkedin.com/company/2928?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A2928%2Cidx%3A2-1-4%2CtarId%3A1445916217440%2Ctas%3ADiscovery%20Communications
+,Discovery Communications,TW,N,N,,https://twitter.com/DiscoveryComm
+,Arnold & Porter,FB,N,N,,https://www.facebook.com/pages/Arnold-Porter/109389692412823
+,Arnold & Porter,LI,N,N,,https://www.linkedin.com/company/162519?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A162519%2Cidx%3A2-1-4%2CtarId%3A1445916505423%2Ctas%3AArnold%20%26%20Porter
+,Arnold & Porter,TW,N,N,,https://twitter.com/arnoldporter
+,Sheetz,FB,N,N,,https://www.facebook.com/sheetz?fref=ts
+,Sheetz,LI,Y,Y,,https://www.linkedin.com/company/sheetz?trk=top_nav_home
+,Sheetz,TW,N,N,,https://twitter.com/sheetz
+,The Cheesecake Factory,FB,Y,N,,https://www.facebook.com/cheesecakefactorycareers?fref=ts
+,The Cheesecake Factory,LI,Y,Y,,https://www.linkedin.com/company/the-cheesecake-factory?trk=top_nav_home
+,The Cheesecake Factory,TW,Y,N,,https://twitter.com/CakeJobs
+,Hyland Software,FB,N,N,,https://www.facebook.com/pages/Hyland-Software/107824305912670?fref=ts
+,Hyland Software,LI,Y,Y,,https://www.linkedin.com/company/hyland-software?trk=top_nav_home
+,Hyland Software,TW,N,N,,https://twitter.com/OnBase
+,Hyatt Hotels,FB,Y,N,,https://www.facebook.com/hyattcareers?fref=ts
+,Hyatt Hotels,LI,N,N,,https://www.linkedin.com/company/3663581?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A3663581%2Cidx%3A4-2-10%2CtarId%3A1445918453574%2Ctas%3Ahyatt%20ho
+,Hyatt Hotels,TW,Y,N,,https://twitter.com/hyattcareers
+,Kiewit Corporation,FB,N,N,,https://www.facebook.com/kiewit
+,Kiewit Corporation,LI,Y,Y,,https://www.linkedin.com/company/kiewit?trk=top_nav_home
+,Kiewit Corporation,TW,N,N,,https://twitter.com/kiewit
+,Cooley,FB,N,N,,https://www.facebook.com/CooleyLLP?fref=ts
+,Cooley,LI,N,N,,https://www.linkedin.com/company/6027?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A6027%2Cidx%3A2-1-2%2CtarId%3A1445919275927%2Ctas%3ACooley
+,Cooley,TW,N,N,,https://twitter.com/CooleyLLP
+,Rothstein Kass,LI,N,N,,https://www.linkedin.com/company/15176?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A15176%2Cidx%3A2-1-2%2CtarId%3A1445919503296%2Ctas%3ARothstein%20Kass
