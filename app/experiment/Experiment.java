@@ -29,18 +29,49 @@ import persistence.FBPage;
 import persistence.FBPost;
 import persistence.Test;
 import play.db.jpa.JPA;
+import twitter4j.Paging;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 import utils.Utils;
 
 public class Experiment {
 	
-	private static final String APP_SECRET = "17b49f9d44934c08902965568727117e";
+	private static final String APP_SECRET = "17b49f9d44934c08902965568727117e"; 
 	private static final String APP_ID = "847051758681799";
 	private static final String REDIRECT = "https://www.facebook.com/connect/login_success.html";
 	private static final String TEMP_USER_ACCESS = "AQBhzmEw3hmKQ_ffKvyVxI1GIdTop6-epXaeGIwRQzkR54VTfSJkJ8cNBwWn_jKqAbIi00bSQGyaGoC84dT4Nl2DXM6B04X6Ypt_ifeuenuf0UPVse4lqbFBKD86ZQ6dmvnL_T3Pvf4iTL9OytEJGQklKhR3lkv28EdYpdhJOBHszq4FM8qc28BRrjCUpnO-i3dk6kZyFVt9-k1kHsmxg-g1blfYWOmZShlCKvXYk-bOqbqJiu6D0Q_qroof8_yStP1IWa5HFnIswBKdhC6FmimmvrCGxGNUlv6qRVczTnhIkaUBN5vrh4vCmeUF1Cr2VcY";
 
 	public static void runExperiment() throws Exception{
 		
-		FBMaster.fetchFeeds();
+		twitterExperiments(); 
+	}
+	
+	public static void twitterExperiments() throws TwitterException {
+		ConfigurationBuilder cb = new ConfigurationBuilder();
+		cb.setDebugEnabled(true)
+		  .setOAuthConsumerKey("4PZxEOm6whMFjBc7Bi9XDA")
+		  .setOAuthConsumerSecret("TJntYfhSNjDAN997BWtVYbw74AXwIxc6x9EYD7VcMok")
+		  .setOAuthAccessToken("381118490-zArlTcjR1JHlgrhOMUH6RowcaUXwOKF6cuAVGyA3")
+		  .setOAuthAccessTokenSecret("lgzUKc6IDtt6afR1dmDzlm7l1Rpp1RUf2froBfrzw");
+		TwitterFactory tf = new TwitterFactory(cb.build());
+		Twitter twitter = tf.getInstance();
+		List<Status> statuses = twitter.getUserTimeline("TlkngMchns");
+		System.out.println("statuses : " + statuses.size());
+		
+		for(Status status : statuses) {
+			System.out.println("status : " + status.getId() + " " + status.getCreatedAt());
+		}
+		
+		Paging paging = new Paging(1,400).maxId(647712548406591488L);
+		
+		statuses = twitter.getUserTimeline("TlkngMchns", paging);
+		System.out.println("second page statuses : " + statuses.size());
+		for(Status status : statuses) {
+			System.out.println("status : " + status.getId() + " " + status.getCreatedAt());
+		}
 	}
 	
 	public static void batchRequests() {

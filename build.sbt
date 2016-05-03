@@ -13,9 +13,12 @@ libraryDependencies ++= Seq(
   "com.restfb" % "restfb" % "1.22.0", 
   "mysql" % "mysql-connector-java" % "5.1.38",
   "org.apache.commons" % "commons-csv" % "1.1",
+  "org.twitter4j" % "twitter4j-core" % "4.0.4",
   cache,
   javaWs
 )
 
+
+fork in run := true
 
 fork in run := true
