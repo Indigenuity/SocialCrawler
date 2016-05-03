@@ -28,12 +28,19 @@ import persistence.FBComment;
 import persistence.FBPage;
 import persistence.FBPost;
 import persistence.Test;
+import persistence.TwitterUser;
 import play.db.jpa.JPA;
+import twitter.TweetType;
+import twitter.TwitterInterface;
+import twitter.TwitterMaster;
 import twitter4j.Paging;
+import twitter4j.Query;
+import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.api.SearchResource;
 import twitter4j.conf.ConfigurationBuilder;
 import utils.Utils;
 
@@ -46,8 +53,16 @@ public class Experiment {
 
 	public static void runExperiment() throws Exception{
 		
-		twitterExperiments(); 
+//		TwitterUser twitterUser = JPA.em().find(TwitterUser.class, 28L);
+//		System.out.println("tweets : " + twitterUser.getTweets().size());
+		
+		TwitterMaster.readAndFetchPages();
+		TwitterMaster.fetchTimelines(TweetType.STATUS);
+		TwitterMaster.fetchTimelines(TweetType.MENTION); 
+		
 	}
+	
+	
 	
 	public static void twitterExperiments() throws TwitterException {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -58,20 +73,29 @@ public class Experiment {
 		  .setOAuthAccessTokenSecret("lgzUKc6IDtt6afR1dmDzlm7l1Rpp1RUf2froBfrzw");
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		Twitter twitter = tf.getInstance();
-		List<Status> statuses = twitter.getUserTimeline("TlkngMchns");
-		System.out.println("statuses : " + statuses.size());
+		Query query = new Query("@Google").count(100);
+		QueryResult result = twitter.search(query);
+		List<Status> tweets = result.getTweets();
+		System.out.println("tweets : " + tweets.size());
+		System.out.println("next query : " + result.nextQuery());
 		
-		for(Status status : statuses) {
-			System.out.println("status : " + status.getId() + " " + status.getCreatedAt());
-		}
 		
-		Paging paging = new Paging(1,400).maxId(647712548406591488L);
 		
-		statuses = twitter.getUserTimeline("TlkngMchns", paging);
-		System.out.println("second page statuses : " + statuses.size());
-		for(Status status : statuses) {
-			System.out.println("status : " + status.getId() + " " + status.getCreatedAt());
-		}
+//		List<Status> statuses = twitter.getUserTimeline("TlkngMchns");
+		
+//		System.out.println("statuses : " + statuses.size());
+//		
+//		for(Status status : statuses) {
+//			System.out.println("status : " + status.getId() + " " + status.getCreatedAt());
+//		}
+//		
+//		Paging paging = new Paging(1,400).maxId(647712548406591488L);
+//		
+//		statuses = twitter.getUserTimeline("TlkngMchns", paging);
+//		System.out.println("second page statuses : " + statuses.size());
+//		for(Status status : statuses) {
+//			System.out.println("status : " + status.getId() + " " + status.getCreatedAt());
+//		}
 	}
 	
 	public static void batchRequests() {

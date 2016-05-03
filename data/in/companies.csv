@@ -60,7 +60,6 @@ Co ID,Company,Site (FB/Tw/LI),Job/Career (Yes/No),LI Tab?,Geography specific,URL
 ,Intuit,LI,Y,N,,https://www.linkedin.com/groups/Intuit-Careers-2435394?gid=2435394&mostPopular=&trk=tyah&trkInfo=clickedVertical%3Agroup%2Cidx%3A1-1-1%2CtarId%3A1427770558028%2Ctas%3AINTUIT+CAREER
 ,Intuit,LI,Y,Y,,https://www.linkedin.com/company/1666?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A1666%2Cidx%3A4-1-11%2CtarId%3A1446048266129%2Ctas%3Aintuit
 ,Intuit,FB,Y,N,,https://www.facebook.com/intuitcareers?fref=ts
-,Intuit,TW,Y,N,,https://twitter.com/IntuitCareers
 ,USAA,TW,Y,N,,https://twitter.com/USAA_jobs
 ,USAA,FB,Y,N,,https://www.facebook.com/usaacareers?fref=ts&ref=br_tf
 ,USAA,LI,Y,Y,,https://www.linkedin.com/company/4501?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770821480%2Ctas%3AUSAA+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770821480%2Ctas%3AUSAA+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1427770821480%2Ctas%3AUSAA+
@@ -271,7 +270,6 @@ Co ID,Company,Site (FB/Tw/LI),Job/Career (Yes/No),LI Tab?,Geography specific,URL
 ,Accenture,TW,Y,N,,https://twitter.com/Accenture_Jobs
 ,Accenture,FB,Y,N,,https://www.facebook.com/AccentureCareersUS?fref=ts
 ,GoDaddy.com,FB,N,N,,https://www.facebook.com/GoDaddy?fref=ts
-,GoDaddy.com,TW,Y,N,,https://twitter.com/GoDaddyJobs
 ,GoDaddy.com,LI,Y,Y,,https://www.linkedin.com/company/7846?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358956697%2Ctas%3AGODADDY
 ,KPMG,LI,Y,Y,,https://www.linkedin.com/company/2525300?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358979246%2Ctas%3AKPMG+&trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428358979246%2Ctas%3AKPMG+
 ,KPMG,TW,Y,N,USA,https://twitter.com/KPMGUSCareers
@@ -288,7 +286,6 @@ Co ID,Company,Site (FB/Tw/LI),Job/Career (Yes/No),LI Tab?,Geography specific,URL
 ,Darden Restaurants,FB,N,N,,https://www.facebook.com/pages/Darden-Restaurants/108325625861426?fref=ts
 ,Darden Restaurants,TW,N,N,,https://twitter.com/darden
 ,Intercontinental Hotels Group,LI,Y,Y,,https://www.linkedin.com/company/3549?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428449438357%2Ctas%3AINTERCONTIN
-,Intercontinental Hotels Group,TW,Y,N,,https://twitter.com/InterConJobs
 ,Intercontinental Hotels Group,FB,N,N,,https://www.facebook.com/ihg?fref=ts
 ,Stew Leonard's,FB,N,N,,https://www.facebook.com/stewleonards?fref=ts
 ,Stew Leonard's,TW,N,N,,https://twitter.com/StewLeonards
@@ -331,7 +328,6 @@ Co ID,Company,Site (FB/Tw/LI),Job/Career (Yes/No),LI Tab?,Geography specific,URL
 ,Colgate-Palmolive,TW,N,N,,https://twitter.com/Colgate
 ,Colgate-Palmolive,LI,N,N,,https://www.linkedin.com/company/2748?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946742747%2Ctas%3ACOLGATE-PALMOLIVE+
 ,Winchester Hospital,LI,N,N,,https://www.linkedin.com/company/20851?trk=tyah&trkInfo=clickedVertical%3Acompany%2Cidx%3A2-1-4%2CtarId%3A1428946789855%2Ctas%3AWINCHESTER+HOSPITAL+
-,Winchester Hospital,TW,N,N,,https://twitter.com/WDMH_CEO
 ,Winchester Hospital,FB,N,N,,https://www.facebook.com/WinchesterHospital?fref=ts
 ,Monsanto,FB,N,N,,https://www.facebook.com/MonsantoCo?fref=ts
 ,Monsanto,TW,N,N,,https://twitter.com/MonsantoCo
@@ -372,7 +368,6 @@ Co ID,Company,Site (FB/Tw/LI),Job/Career (Yes/No),LI Tab?,Geography specific,URL
 ,TEKsystems,FB,Y,N,,https://www.facebook.com/TEKsystemsJobs?fref=ts
 ,TEKsystems,LI,Y,Y,,https://www.linkedin.com/company/teksystems?trk=top_nav_home
 ,TEKsystems,TW,Y,N,,https://twitter.com/TEKcareers
-,TEKsystems,TW,Y,N,UK,https://twitter.com/TEKcareersUK
 ,Credit Acceptance,FB,N,N,,https://www.facebook.com/168678439842388
 ,Credit Acceptance,LI,Y,Y,,https://www.linkedin.com/company/credit-acceptance?trk=top_nav_home
 ,Roche Diagnostics,FB,N,N,,https://www.facebook.com/RocheCareers?nr

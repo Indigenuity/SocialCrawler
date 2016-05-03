@@ -1,8 +1,16 @@
-No longer exists:
+Doesn't exist:
 
 
 	Plante Moran	FB	Y	N		https://www.facebook.com/pmcareers?fref=ts
 	TDIndustries	FB	N	N		https://www.facebook.com/pages/TD-Industries/945805982116206?fref=ts
+	Intuit	TW	Y	N		https://twitter.com/IntuitCareers
+		GoDaddy.com	TW	Y	N		https://twitter.com/GoDaddyJobs    			//But #GoDaddyJobs is a common hashtag
+		Intercontinental Hotels Group	TW	Y	N		https://twitter.com/InterConJobs
+	Winchester Hospital	TW	N	N		https://twitter.com/WDMH_CEO
+		TEKsystems	TW	Y	N	UK	https://twitter.com/TEKcareersUK
+
+
+
 
 	
 Blocked app access permissions:
