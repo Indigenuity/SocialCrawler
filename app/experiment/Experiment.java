@@ -1,7 +1,21 @@
 package experiment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
@@ -24,6 +38,11 @@ import com.restfb.types.Post;
 import com.restfb.types.User;
 
 import fb.FBMaster;
+import linkedin.LI;
+import linkedin.LIMaster;
+import linkedin.LIPage;
+import linkedin.LIParser;
+import linkedin.LIUpdate;
 import persistence.FBComment;
 import persistence.FBPage;
 import persistence.FBPost;
@@ -50,8 +69,61 @@ public class Experiment {
 	private static final String APP_ID = "847051758681799";
 	private static final String REDIRECT = "https://www.facebook.com/connect/login_success.html";
 	private static final String TEMP_USER_ACCESS = "AQBhzmEw3hmKQ_ffKvyVxI1GIdTop6-epXaeGIwRQzkR54VTfSJkJ8cNBwWn_jKqAbIi00bSQGyaGoC84dT4Nl2DXM6B04X6Ypt_ifeuenuf0UPVse4lqbFBKD86ZQ6dmvnL_T3Pvf4iTL9OytEJGQklKhR3lkv28EdYpdhJOBHszq4FM8qc28BRrjCUpnO-i3dk6kZyFVt9-k1kHsmxg-g1blfYWOmZShlCKvXYk-bOqbqJiu6D0Q_qroof8_yStP1IWa5HFnIswBKdhC6FmimmvrCGxGNUlv6qRVczTnhIkaUBN5vrh4vCmeUF1Cr2VcY";
+	
+	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
+	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
-	public static void runExperiment() throws Exception{
+	public static void runExperiment() throws IOException, InterruptedException { 
+//		LIMaster.readAndFetchPages();
+//		LIMaster.fetchPages();
+		LIPage liPage = JPA.em().find(LIPage.class, 10L);
+		System.out.println("getting main");
+		Document doc = LI.getMainDocument(liPage.getTrimmedUrl());
+		System.out.println("parsing");
+		LIParser.parseDocument(liPage, doc);
+		System.out.println("website : " + liPage.getWebsite());
+	}
+	
+	public static void seleniumExperiment() throws InterruptedException {
+		System.out.println("content : " + LI.getFullDocument("https://www.linkedin.com/company/kimley-horn-and-associates-inc-?trk=top_nav_home"));
+		Thread.sleep(1000);
+		System.out.println("content : " + LI.getFullDocument("https://www.linkedin.com/company/2928?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A2928%2Cidx%3A2-1-4%2CtarId%3A1445916217440%2Ctas%3ADiscovery%20Communications"));
+	} 
+	
+	public static void liExperiment() throws Exception {
+		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");  
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		
+//		Proxy proxy = new Proxy();
+//		String proxyString = Global.getProxyUrl() + ":" + Global.getProxyPort(); 
+//		proxy.setFtpProxy(proxyString);
+//		proxy.setHttpProxy(proxyString);
+//		proxy.setSslProxy(proxyString);
+//		capabilities.setCapability(CapabilityType.PROXY, proxy);
+//		capabilities.setCapability("chrome.switches",  Arrays.asList("--disable-javascript"));
+//		WebDriver driver = new ChromeDriver(capabilities);
+		ChromeOptions opt = new ChromeOptions();
+		opt.setBinary(CHROME_EXE);
+		opt.addArguments(COOKIES);
+		WebDriver driver = new ChromeDriver(opt);
+		
+		String seed = "https://www.linkedin.com/";
+		System.out.println("Performing faux  crawl : " + seed);
+		
+		/*********************** Perform crawl with small windowed normal browser ************************************/
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.get(seed);
+		try{
+			WebElement bodyElement = driver.findElement(By.cssSelector("body"));
+			Thread.sleep(10);
+		}
+		catch(Exception e){
+			System.out.println("caught an exception ");
+			throw e;
+		}
+	}
+	
+	public static void fetchTwitter() throws Exception{
 		
 //		TwitterUser twitterUser = JPA.em().find(TwitterUser.class, 28L);
 //		System.out.println("tweets : " + twitterUser.getTweets().size());
