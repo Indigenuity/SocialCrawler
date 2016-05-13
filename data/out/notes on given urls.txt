@@ -30,5 +30,7 @@ Used Different for crawling
 		Kiewit Corporation	FB	N	N		https://www.facebook.com/kiewit/timeline -> removed /timeline
 
 
+Other:
 
+	Intuit	FB	Y	N		https://www.facebook.com/intuitcareers?fref=ts  : Doesn't exist, but got posts
 	

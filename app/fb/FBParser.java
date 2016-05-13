@@ -1,6 +1,8 @@
 package fb;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +11,7 @@ import com.restfb.types.Category;
 import com.restfb.types.Comment;
 import com.restfb.types.Comments;
 import com.restfb.types.Page;
+import com.restfb.types.Page.PageStartDate;
 import com.restfb.types.Photo;
 import com.restfb.types.Post;
 
@@ -61,7 +64,11 @@ public class FBParser {
 			fbPhoto.setWidth(photo.getWidth());
 			fbPhoto.setHeight(photo.getHeight());
 			fbPhoto.setCanTag(photo.getCanTag());
-			fbPhotos.add(fbPhoto);
+			fbPhoto.setLikesCount(photo.getLikes().size());
+			fbPhoto.setCommentsCount(photo.getComments().size());
+			fbPhoto.setTagsCount(photo.getTags().size());
+			fbPhoto.setReactionsCount(photo.getReactions().getData().size());
+			fbPhotos.add(fbPhoto); 
 			
 			
 		}
@@ -169,6 +176,7 @@ public class FBParser {
 		fbPage.setSingleLineAddress(page.getSingleLineAddress());
 		if(page.getStartInfo() != null){
 			fbPage.setStartDate(page.getStartInfo().getDate() + "");
+			fbPage.setRealStartDate(parseStartDate(page.getStartInfo().getDate()));
 			fbPage.setStartType(page.getStartInfo().getType()); 
 		}
 		fbPage.setStoreLocationDescriptor(page.getNameWithLocationDescriptor());
@@ -185,6 +193,27 @@ public class FBParser {
 		System.out.println("page : " + page.getHours());
 		System.out.println("page likes : "  + page.getDisplaySubtext());
 		return fbPage;
+	}
+	
+	public static Date parseStartDate(PageStartDate startDate){ 
+		Calendar c = Calendar.getInstance();
+		int year = 0;
+		int month = 0;
+		int day = 0;
+		if(startDate == null){
+			return null;
+		}
+		if(startDate.getYear() != null){
+			year = startDate.getYear();
+		}
+		if(startDate.getMonth() != null) {
+			month = startDate.getMonth();
+		}
+		if(startDate.getDay() != null) {
+			day = startDate.getDay();
+		}
+		c.set(year, month, day);
+		return c.getTime();
 	}
 	
 	public static String getIdentifier(String url) {

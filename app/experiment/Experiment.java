@@ -43,6 +43,8 @@ import fb.FBComment;
 import fb.FBMaster;
 import fb.FBPage;
 import fb.FBPost;
+import fb.FeedFetch;
+import fb.FeedType;
 import linkedin.LI;
 import linkedin.LIMaster;
 import linkedin.LIPage;
@@ -75,9 +77,12 @@ public class Experiment {
 	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
-	public static void runExperiment() throws IOException, InterruptedException { 
-		Connection<Photo> photos = FB.getInstance().getPhotoFeedStart("kiewit");
-		System.out.println("photos : " + photos.getData().size());
+	
+	
+	public static void runExperiment() throws IOException, InterruptedException, TwitterException { 
+//		FBMaster.fixPageDates();
+//		TwitterMaster.fetchTimelines(TweetType.STATUS);
+		FB.getInstance().getPhotoLikes("993710240696879");
 	}
 	
 	public static void seleniumExperiment() throws InterruptedException {

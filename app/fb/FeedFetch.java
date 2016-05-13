@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +35,10 @@ public class FeedFetch {
 	private String earliestPost;
 	
 	private Boolean reachedEnd = false;
+	
+	@Enumerated(EnumType.STRING)
+	private FeedType feedType = FeedType.FEED;
+	
 
 	public long getFeedFetchId() {
 		return feedFetchId;
@@ -86,6 +92,14 @@ public class FeedFetch {
 
 	public void setReachedEnd(Boolean reachedEnd) {
 		this.reachedEnd = reachedEnd;
+	}
+
+	public FeedType getFeedType() {
+		return feedType;
+	}
+
+	public void setFeedType(FeedType feedType) {
+		this.feedType = feedType;
 	}
 	
 	
