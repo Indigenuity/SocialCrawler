@@ -14,9 +14,9 @@ import org.jsoup.nodes.Document;
 import com.restfb.types.Page;
 
 import fb.FB;
+import fb.FBPage;
 import fb.FBParser;
 import fb.FBdao;
-import persistence.FBPage;
 import play.db.jpa.JPA;
 
 public class LIMaster {

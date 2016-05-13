@@ -34,18 +34,20 @@ import com.restfb.types.Category;
 import com.restfb.types.Comment;
 import com.restfb.types.Comments;
 import com.restfb.types.Page;
+import com.restfb.types.Photo;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 
+import fb.FB;
+import fb.FBComment;
 import fb.FBMaster;
+import fb.FBPage;
+import fb.FBPost;
 import linkedin.LI;
 import linkedin.LIMaster;
 import linkedin.LIPage;
 import linkedin.LIParser;
 import linkedin.LIUpdate;
-import persistence.FBComment;
-import persistence.FBPage;
-import persistence.FBPost;
 import persistence.Test;
 import persistence.TwitterUser;
 import play.db.jpa.JPA;
@@ -74,14 +76,8 @@ public class Experiment {
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
 	public static void runExperiment() throws IOException, InterruptedException { 
-//		LIMaster.readAndFetchPages();
-//		LIMaster.fetchPages();
-		LIPage liPage = JPA.em().find(LIPage.class, 10L);
-		System.out.println("getting main");
-		Document doc = LI.getMainDocument(liPage.getTrimmedUrl());
-		System.out.println("parsing");
-		LIParser.parseDocument(liPage, doc);
-		System.out.println("website : " + liPage.getWebsite());
+		Connection<Photo> photos = FB.getInstance().getPhotoFeedStart("kiewit");
+		System.out.println("photos : " + photos.getData().size());
 	}
 	
 	public static void seleniumExperiment() throws InterruptedException {

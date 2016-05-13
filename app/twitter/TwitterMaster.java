@@ -15,11 +15,11 @@ import com.restfb.types.Page;
 import com.restfb.types.Post;
 
 import fb.FB;
+import fb.FBPage;
 import fb.FBParser;
+import fb.FBPost;
 import fb.FBdao;
 import fb.FeedFetch;
-import persistence.FBPage;
-import persistence.FBPost;
 import persistence.Tweet;
 import persistence.TwitterUser;
 import play.db.jpa.JPA;

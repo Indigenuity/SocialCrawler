@@ -15,8 +15,6 @@ import com.restfb.Connection;
 import com.restfb.types.Page;
 import com.restfb.types.Post;
 
-import persistence.FBPage;
-import persistence.FBPost;
 import play.db.jpa.JPA;
 
 public class FBMaster {

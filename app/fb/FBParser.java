@@ -9,11 +9,9 @@ import com.restfb.types.Category;
 import com.restfb.types.Comment;
 import com.restfb.types.Comments;
 import com.restfb.types.Page;
+import com.restfb.types.Photo;
 import com.restfb.types.Post;
 
-import persistence.FBComment;
-import persistence.FBPage;
-import persistence.FBPost;
 import play.db.jpa.JPA;
 import utils.DSFormatter;
 import utils.Utils;
@@ -33,6 +31,42 @@ public class FBParser {
 	public static final Pattern SIMPLE_URL = Pattern.compile("(?<=facebook.com/)[^/]+$");
 	
 	public static final String PAGES = "pages/";
+	
+	public static List<FBPhoto> parsePhotos(List<Photo> photos){
+		System.out.println("photos : " + photos.size());
+		List<FBPhoto> fbPhotos = new ArrayList<FBPhoto>();
+		for(Photo photo : photos) {
+			FBPhoto fbPhoto = new FBPhoto();
+			fbPhoto.setId(photo.getId());
+			if(photo.getAlbum() != null){
+				fbPhoto.setAlbumId(photo.getAlbum().getId());
+			}
+			fbPhoto.setBackdatedTime(photo.getBackdatedTime());
+			fbPhoto.setBackdatedTimeGranularity(photo.getBackdatedTimeGranularity());
+			fbPhoto.setCreatedTime(photo.getCreatedTime());
+			if(photo.getEvent() != null) {
+				fbPhoto.setEventId(photo.getEvent().getId());
+			}
+			fbPhoto.setFromId(photo.getFrom().getId());
+			fbPhoto.setIcon(photo.getIcon());
+			fbPhoto.setLink(photo.getLink());
+			fbPhoto.setName(photo.getName());
+			fbPhoto.setNameTags(photo.getNameTags() + "");
+			fbPhoto.setPageStoryId(photo.getPageStoryId());
+			fbPhoto.setPicture(photo.getPicture());
+			if(photo.getPlace() != null ) {
+				fbPhoto.setPlaceId(photo.getPlace().getId());
+			}
+			fbPhoto.setUpdatedTime(photo.getUpdatedTime());
+			fbPhoto.setWidth(photo.getWidth());
+			fbPhoto.setHeight(photo.getHeight());
+			fbPhoto.setCanTag(photo.getCanTag());
+			fbPhotos.add(fbPhoto);
+			
+			
+		}
+		return fbPhotos;
+	}
 	
 	public static List<FBPost> parsePosts(List<Post> posts) {
 		System.out.println("posts : " + posts.size());

@@ -1,4 +1,4 @@
-package persistence;
+package fb;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

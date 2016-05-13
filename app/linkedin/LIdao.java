@@ -2,8 +2,8 @@ package linkedin;
 
 import java.util.List;
 
+import fb.FBPage;
 import fb.FeedFetch;
-import persistence.FBPage;
 import play.db.jpa.JPA;
 
 public class LIdao {

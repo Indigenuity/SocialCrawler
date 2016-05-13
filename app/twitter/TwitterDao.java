@@ -2,8 +2,8 @@ package twitter;
 
 import java.util.List;
 
+import fb.FBPage;
 import fb.FeedFetch;
-import persistence.FBPage;
 import persistence.TwitterUser;
 import play.db.jpa.JPA;
 

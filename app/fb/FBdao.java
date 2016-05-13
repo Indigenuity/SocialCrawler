@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import persistence.FBPage;
 import play.db.jpa.JPA;
 import play.db.jpa.JPAApi;
 

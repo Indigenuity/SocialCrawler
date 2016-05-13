@@ -8,11 +8,11 @@ import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
 
-import persistence.FBPage;
 import utils.ThrottledLimiter;
 
 import com.restfb.FacebookClient.AccessToken;
 import com.restfb.types.Page;
+import com.restfb.types.Photo;
 import com.restfb.types.Post;
 
 public class FB {
@@ -37,6 +37,12 @@ public class FB {
 			+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
 			+ "with_tags, likes.limit(0).summary(true), "
 			+ "comments.limit(0).summary(true)";
+	
+	private static final String PHOTOS_FIELDS_PARAMETER = "album, "
+			+ "backdated_time, backdated_time_granularity, can_tag, created_time, event, from, height, icon, "
+			+ "last_used_time, link, name, name_tags, page_story_id, picture, place, updated_time, width,"
+			+ " likes.limit(0).summary(true), comments.limit(0).summary(true), tags.limit(0).summary(true), "
+			+ "reactions.limit(0).summary(true), sharedposts.limit(0).summary(true)";
 	
 	private AccessToken accessToken;
 	private FacebookClient client;
@@ -88,5 +94,11 @@ public class FB {
 	public Connection<Post> continueFeed(String nextPageUrl) {
 		rateLimiter.acquire();
 		return client.fetchConnectionPage(nextPageUrl, Post.class);
+	}
+	
+	public Connection<Photo> getPhotoFeedStart(String identifier) {
+		rateLimiter.acquire();
+		return client.fetchConnection(identifier + "/photos", Photo.class, Parameter.with("fields", 
+				PHOTOS_FIELDS_PARAMETER));
 	}
 }
