@@ -1,8 +1,14 @@
 package experiment;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.jsoup.nodes.Document;
@@ -75,9 +81,35 @@ public class Experiment {
 	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
-	public static void runExperiment() throws IOException, InterruptedException { 
-		Connection<Photo> photos = FB.getInstance().getPhotoFeedStart("kiewit");
-		System.out.println("photos : " + photos.getData().size());
+	public static void runExperiment() throws IOException, InterruptedException, ParseException { 
+		System.out.println("running experiment");
+		String query = "from FBPost p";
+		int count = 500;
+		int offset = 241000;
+		List<FBPost> fbPosts;
+		DateFormat format = new SimpleDateFormat("EEE MMM FF HH:mm:ss zzz YYYY", Locale.ENGLISH);
+		do{
+			fbPosts = JPA.em().createQuery(query, FBPost.class).setMaxResults(count).setFirstResult(offset).getResultList();
+//			Thu Apr 28 17:00:00 MDT 2016
+			for(FBPost fbPost : fbPosts) {
+				Date createdDate = format.parse(fbPost.getCreatedTime());
+				Date updatedTime = format.parse(fbPost.getUpdatedTime());
+//				System.out.println("date: "  + createdDate);
+//				System.out.println("updatedTime : " + updatedTime);
+				fbPost.setRealCreatedDate(createdDate);
+				fbPost.setRealLastUpdated(updatedTime);
+			}
+			
+			offset += count;
+			System.out.println("processed : " + offset);
+			JPA.em().getTransaction().commit();
+			JPA.em().getTransaction().begin();
+			JPA.em().flush();
+			System.gc();
+		}while(fbPosts.size() > 0);
+			
+		
+		
 	}
 	
 	public static void seleniumExperiment() throws InterruptedException {
