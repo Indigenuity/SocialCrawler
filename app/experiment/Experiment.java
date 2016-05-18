@@ -1,9 +1,18 @@
 package experiment;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.sql.SQLException;
+=======
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+>>>>>>> branch 'master' of https://github.com/Indigenuity/SocialCrawler.git
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.jsoup.nodes.Document;
@@ -46,8 +55,6 @@ import fb.FBComment;
 import fb.FBMaster;
 import fb.FBPage;
 import fb.FBPost;
-import fb.FeedFetch;
-import fb.FeedType;
 import linkedin.LI;
 import linkedin.LIMaster;
 import linkedin.LIPage;
@@ -81,6 +88,7 @@ public class Experiment {
 	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
+<<<<<<< HEAD
 	public static void runExperiment() throws IOException, SQLException {
 		CSV.fbPhotosReport();
 	}
@@ -109,6 +117,36 @@ public class Experiment {
 //		JsonMapper jsonMapper = new DefaultJsonMapper();
 ////		Photo photo = jsonMapper.toJavaObject(first.toString(), Photo.class);
 ////		System.out.println("photo id : " + photo.getId());
+=======
+	public static void runExperiment() throws IOException, InterruptedException, ParseException { 
+		System.out.println("running experiment");
+		String query = "from FBPost p";
+		int count = 500;
+		int offset = 241000;
+		List<FBPost> fbPosts;
+		DateFormat format = new SimpleDateFormat("EEE MMM FF HH:mm:ss zzz YYYY", Locale.ENGLISH);
+		do{
+			fbPosts = JPA.em().createQuery(query, FBPost.class).setMaxResults(count).setFirstResult(offset).getResultList();
+//			Thu Apr 28 17:00:00 MDT 2016
+			for(FBPost fbPost : fbPosts) {
+				Date createdDate = format.parse(fbPost.getCreatedTime());
+				Date updatedTime = format.parse(fbPost.getUpdatedTime());
+//				System.out.println("date: "  + createdDate);
+//				System.out.println("updatedTime : " + updatedTime);
+				fbPost.setRealCreatedDate(createdDate);
+				fbPost.setRealLastUpdated(updatedTime);
+			}
+			
+			offset += count;
+			System.out.println("processed : " + offset);
+			JPA.em().getTransaction().commit();
+			JPA.em().getTransaction().begin();
+			JPA.em().flush();
+			System.gc();
+		}while(fbPosts.size() > 0);
+			
+		
+>>>>>>> branch 'master' of https://github.com/Indigenuity/SocialCrawler.git
 		
 	}
 	
@@ -116,7 +154,7 @@ public class Experiment {
 		System.out.println("content : " + LI.getFullDocument("https://www.linkedin.com/company/kimley-horn-and-associates-inc-?trk=top_nav_home"));
 		Thread.sleep(1000);
 		System.out.println("content : " + LI.getFullDocument("https://www.linkedin.com/company/2928?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A2928%2Cidx%3A2-1-4%2CtarId%3A1445916217440%2Ctas%3ADiscovery%20Communications"));
-	} 
+	}  
 	
 	public static void liExperiment() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");  
