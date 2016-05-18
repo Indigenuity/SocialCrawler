@@ -72,7 +72,9 @@ public class CSV {
 				"group by p.fbpageid, date_format(createdTime, '%Y-%m') " +
 				"order by count(*) desc";
 		
-		createCompanyReportByDate("FBPhotos", query, staticFieldDefinitions, dynamicFieldDefinitions);
+		createCompanyReportByDate("FBPhotos Monthly", query, staticFieldDefinitions, dynamicFieldDefinitions);
+		query = query.replaceAll("%Y-%m", "%Y");
+		createCompanyReportByDate("FBPhotos Yearly", query, staticFieldDefinitions, dynamicFieldDefinitions);
 	}
 	
 public static void fbPostsReport() throws IOException, SQLException {
@@ -140,12 +142,18 @@ public static void fbPostsReport() throws IOException, SQLException {
 					+ "and post.fromId = p.fbid "
 					+ "group by p.fbpageid, date_format(realCreatedDate, '%Y-%m')";
 		
-		createCompanyReportByDate("FBPosts", query, staticFieldDefinitions, dynamicFieldDefinitions);
+		createCompanyReportByDate("FBPosts Self Monthly", query, staticFieldDefinitions, dynamicFieldDefinitions);
+		query = query.replace("post.fromId = p.fbId", "post.fromId != p.fbId");
+		createCompanyReportByDate("FBPosts Others Monthly", query, staticFieldDefinitions, dynamicFieldDefinitions);
+		query = query.replaceAll("%Y-%m", "%Y");
+		createCompanyReportByDate("FBPosts Others Yearly", query, staticFieldDefinitions, dynamicFieldDefinitions);
+		query = query.replace("post.fromId = p.fbId", "post.fromId = p.fbId");
+		createCompanyReportByDate("FBPosts Self Yearly", query, staticFieldDefinitions, dynamicFieldDefinitions);
 	}
 	
 	
 	public static void createCompanyReportByDate(String name, String query, Set<String> staticFieldDefinitions, Set<String> dynamicFieldDefinitions) throws SQLException, IOException{
-		CSVReport report = new CSVReport("FBPhotos");
+		CSVReport report = new CSVReport(name);
 		Map<String, Map<String, String>> companyDynamicFields = new HashMap<String, Map<String, String>>();
 		Map<String, Map<String, String>> companyStaticFields = new HashMap<String, Map<String, String>>();
 		System.out.println("Fetcing Data");
