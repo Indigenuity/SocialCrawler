@@ -1,13 +1,10 @@
 package experiment;
 
 import java.io.IOException;
-<<<<<<< HEAD
 import java.sql.SQLException;
-=======
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
->>>>>>> branch 'master' of https://github.com/Indigenuity/SocialCrawler.git
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,6 +52,7 @@ import fb.FBComment;
 import fb.FBMaster;
 import fb.FBPage;
 import fb.FBPost;
+import fb.FeedType;
 import linkedin.LI;
 import linkedin.LIMaster;
 import linkedin.LIPage;
@@ -88,7 +86,6 @@ public class Experiment {
 	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
-<<<<<<< HEAD
 	public static void runExperiment() throws IOException, SQLException {
 		CSV.fbPhotosReport();
 	}
@@ -117,8 +114,9 @@ public class Experiment {
 //		JsonMapper jsonMapper = new DefaultJsonMapper();
 ////		Photo photo = jsonMapper.toJavaObject(first.toString(), Photo.class);
 ////		System.out.println("photo id : " + photo.getId());
-=======
-	public static void runExperiment() throws IOException, InterruptedException, ParseException { 
+		
+	}
+	public static void dateUpdate() throws IOException, InterruptedException, ParseException { 
 		System.out.println("running experiment");
 		String query = "from FBPost p";
 		int count = 500;
@@ -146,7 +144,6 @@ public class Experiment {
 		}while(fbPosts.size() > 0);
 			
 		
->>>>>>> branch 'master' of https://github.com/Indigenuity/SocialCrawler.git
 		
 	}
 	
