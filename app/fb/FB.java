@@ -1,5 +1,6 @@
 package fb;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -8,15 +9,18 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
+import com.restfb.json.JsonObject;
 
 import utils.ThrottledLimiter;
 
 import com.restfb.FacebookClient.AccessToken;
+import com.restfb.types.Comments;
 import com.restfb.types.Likes;
 import com.restfb.types.NamedFacebookType;
 import com.restfb.types.Page;
 import com.restfb.types.Photo;
 import com.restfb.types.Post;
+import com.restfb.types.Reactions;
 
 public class FB {
 
@@ -38,14 +42,14 @@ public class FB {
 	
 	private static final String FEED_FIELDS_PARAMETER = "application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
 			+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
-			+ "with_tags, likes.limit(0).summary(true), "
+			+ "with_tags, likes.limit(0).summary(true), reactions.limit(0).summary(true)"
 			+ "comments.limit(0).summary(true)";
 	
 	private static final String PHOTOS_FIELDS_PARAMETER = "album, "
 			+ "backdated_time, backdated_time_granularity, can_tag, created_time, event, from, height, icon, "
 			+ "last_used_time, link, name, name_tags, page_story_id, picture, place, updated_time, width,"
-			+ " likes.limit(20).summary(true), comments.limit(20).summary(true), tags.limit(20).summary(true), "
-			+ "reactions.limit(20).summary(true), sharedposts.limit(20).summary(true)";
+			+ " likes.limit(0).summary(true), comments.limit(0).summary(true), tags.limit(0).summary(true), "
+			+ "reactions.limit(0).summary(true), sharedposts.limit(0).summary(true)";
 	
 	private AccessToken accessToken;
 	private FacebookClient client;
@@ -87,11 +91,31 @@ public class FB {
 		
 		return page;
 	}
-
+	
+	public void feedExperiment(){
+		JsonObject photosConnection = client.fetchObject("kiewit/photos", JsonObject.class, Parameter.with("fields", 
+				PHOTOS_FIELDS_PARAMETER));
+		System.out.println("photos Connection : " + photosConnection);
+		
+		
+	}
+	
+	public JsonObject getGenericConnection(String identifier, String after) {
+		rateLimiter.acquire();
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		parameters.add(Parameter.with("type", "uploaded"));
+		parameters.add(Parameter.with("fields", PHOTOS_FIELDS_PARAMETER));
+		if(after != null){
+			parameters.add(Parameter.with("after", after));
+		}
+		return client.fetchObject(identifier + "/photos",JsonObject.class, parameters.toArray(new Parameter[parameters.size()]));
+	}
+	
 	public <T extends NamedFacebookType> Connection<T> getFeedStart(String identifier, Class<T> namedType) {
 		rateLimiter.acquire();
 		if(namedType == Photo.class){
-			return client.fetchConnection(identifier + "/photos", namedType, Parameter.with("include_hidden", true), Parameter.with("fields", 
+			return client.fetchConnection(identifier + "/photos", namedType, 
+					Parameter.with("type", "uploaded"), Parameter.with("include_hidden", true), Parameter.with("fields", 
 					PHOTOS_FIELDS_PARAMETER));
 		}
 		else {
@@ -115,6 +139,32 @@ public class FB {
 			rateLimiter.acquire();
 		}
 		System.out.println("likes : " + count);
+		return count;
+	}
+	
+	public Integer getPhotoComments(String fbId){
+		rateLimiter.acquire();
+		Connection<Comments> items = client.fetchConnection("/" + fbId + "/comments", Comments.class);
+		Integer count = 0;
+		for(List<Comments> itemPage : items){
+			count += itemPage.size();
+			System.out.println("comments count : " + count);
+			rateLimiter.acquire();
+		}
+		System.out.println("comments : " + count);
+		return count;
+	}
+	
+	public Integer getReactions(String fbId){
+		rateLimiter.acquire();
+		Connection<Reactions> items = client.fetchConnection("/" + fbId + "/reactions", Reactions.class);
+		Integer count = 0;
+		for(List<Reactions> itemPage : items){
+			count += itemPage.size();
+			System.out.println("reactions count : " + count);
+			rateLimiter.acquire();
+		}
+		System.out.println("reactions : " + count);
 		return count;
 	}
 	

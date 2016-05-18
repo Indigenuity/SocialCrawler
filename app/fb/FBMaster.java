@@ -12,6 +12,10 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
 import com.restfb.Connection;
+import com.restfb.DefaultJsonMapper;
+import com.restfb.JsonMapper;
+import com.restfb.json.JsonArray;
+import com.restfb.json.JsonObject;
 import com.restfb.types.NamedFacebookType;
 import com.restfb.types.Page;
 import com.restfb.types.Photo;
@@ -20,6 +24,23 @@ import com.restfb.types.Post;
 import play.db.jpa.JPA;
 
 public class FBMaster {
+	
+	public static void getPhotoLikes() {
+		String query = "from FBPhoto p where p.likesCount = 20";
+		List<FBPhoto> fbPhotos = JPA.em().createQuery(query, FBPhoto.class).getResultList();
+		
+		for(FBPhoto fbPhoto : fbPhotos) {
+			int commentsCount = FB.getInstance().getPhotoComments(fbPhoto.getId());
+			int likesCount = FB.getInstance().getPhotoLikes(fbPhoto.getId());
+			int reactionsCount = FB.getInstance().getReactions(fbPhoto.getId()); 
+			System.out.println("likesCount  : " + likesCount);
+			System.out.println("commentsCount : " + commentsCount);
+			System.out.println("reactionsCount : " + reactionsCount);
+			fbPhoto.setLikesCount(likesCount);
+			fbPhoto.setCommentsCount(commentsCount);
+			fbPhoto.setReactionsCount(reactionsCount);
+		}
+	}
 	
 	public static void fetchFeeds(FeedType feedType){
 		
@@ -39,7 +60,7 @@ public class FBMaster {
 				JPA.em().getTransaction().commit();
 				JPA.em().getTransaction().begin();
 			}
-			try {
+			try { 
 				processFeedFetch(feedFetch);
 				feedFetch.setErrorMessage(null);
 			}
@@ -52,7 +73,40 @@ public class FBMaster {
 		}
 	}
 	
+	public static void processPhotoFetch(FeedFetch feedFetch) {
+		FBPage fbPage = feedFetch.getFbPage();
+		System.out.println("processing photo fetch : " + fbPage.getCompanyString());
+		
+		while(!feedFetch.getReachedEnd()){
+			JsonObject rawConnection = FB.getInstance().getGenericConnection(fbPage.getFbId(), feedFetch.getNextPageUrl());
+			JsonArray dataArray = rawConnection.getJsonArray("data");
+			if(dataArray.length() > 0){
+				System.out.println("data array: "  + dataArray.length());
+				List<FBPhoto> fbPhotos = FBParser.parseRawPhotos(dataArray);
+				System.out.println("fbPhotos : " + fbPhotos.size());
+				for(FBPhoto fbPhoto : fbPhotos) {
+					fbPhoto.setFbPage(fbPage);
+					JPA.em().persist(fbPhoto);
+				}
+				
+				JPA.em().getTransaction().commit();
+				JPA.em().getTransaction().begin();
+				
+				
+				feedFetch.setEarliestPost(fbPhotos.get(fbPhotos.size() - 1).getCreatedTime() + "");
+				feedFetch.addNextPageUrl(rawConnection.getJsonObject("paging").getJsonObject("cursors").getString("after"));
+				System.out.println("earliest : "+ feedFetch.getEarliestPost());
+			} else {
+				feedFetch.setReachedEnd(true);
+			}
+		}
+	}
+	
 	public static void processFeedFetch(FeedFetch feedFetch) {
+		if(feedFetch.getFeedType() == FeedType.PHOTOS){
+			processPhotoFetch(feedFetch);
+			return;
+		}
 		FBPage fbPage = feedFetch.getFbPage();
 		Class<? extends NamedFacebookType> feedTypeClass = feedFetch.getFeedType().getFeedClass();
 		Connection<? extends NamedFacebookType> connection = null;

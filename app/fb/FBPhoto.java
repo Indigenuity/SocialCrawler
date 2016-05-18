@@ -19,6 +19,7 @@ public class FBPhoto {
 	
 	private String id;
 	private String albumId;
+	private String albumName;
 	private Date backdatedTime;
 	private String backdatedTimeGranularity;
 	private Date createdTime;
@@ -63,6 +64,14 @@ public class FBPhoto {
 
 	public void setAlbumId(String albumId) {
 		this.albumId = Utils.sanitize(albumId, 255);
+	}
+	
+	public String getAlbumName() {
+		return albumName;
+	}
+
+	public void setAlbumName(String albumName) {
+		this.albumName = Utils.sanitize(albumName, 255);
 	}
 
 	public Date getBackdatedTime() {

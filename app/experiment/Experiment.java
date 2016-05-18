@@ -1,6 +1,7 @@
 package experiment;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +31,8 @@ import com.restfb.Version;
 import com.restfb.batch.BatchRequest;
 import com.restfb.batch.BatchRequest.BatchRequestBuilder;
 import com.restfb.batch.BatchResponse;
+import com.restfb.json.JsonArray;
+import com.restfb.json.JsonObject;
 import com.restfb.types.Category;
 import com.restfb.types.Comment;
 import com.restfb.types.Comments;
@@ -53,6 +56,7 @@ import linkedin.LIUpdate;
 import persistence.Test;
 import persistence.TwitterUser;
 import play.db.jpa.JPA;
+import reporting.CSV;
 import twitter.TweetType;
 import twitter.TwitterInterface;
 import twitter.TwitterMaster;
@@ -77,12 +81,35 @@ public class Experiment {
 	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
+	public static void runExperiment() throws IOException, SQLException {
+		CSV.fbPhotosReport();
+	}
 	
-	
-	public static void runExperiment() throws IOException, InterruptedException, TwitterException { 
-//		FBMaster.fixPageDates();
-//		TwitterMaster.fetchTimelines(TweetType.STATUS);
-		FB.getInstance().getPhotoLikes("993710240696879");
+	public static void jsonExperiment() throws IOException, InterruptedException, TwitterException {
+		FBMaster.fetchFeeds(FeedType.PHOTOS);
+////		FBMaster.getPhotoLikes();
+//		JsonObject rawConnection = FB.getInstance().getGenericConnectionStart("DragonsKeepUtah"); 
+////		System.out.println("raw : " + rawConnection);
+//		JsonArray dataArray = rawConnection.getJsonArray("data");
+//		System.out.println("dataArray.size(): " + dataArray.length());
+////		
+////		JsonObject first = dataArray.getJsonObject(0);
+////		JsonObject comments = first.getJsonObject("comments");
+////		JsonObject summary = comments.getJsonObject("summary");
+////		int commentsCount = summary.getInt("total_count");
+////		System.out.println("totalcount : " + commentsCount);
+//		
+//		JsonObject paging = rawConnection.getJsonObject("paging");
+//		JsonObject cursors = paging.getJsonObject("cursors");
+//		String after = cursors.getString("after");
+//		System.out.println("after : " + after);
+//		
+//		JsonObject nextPage = FB.getInstance().continueGenericConnection("DragonsKeepUtah", after);
+//		System.out.println("nextPage : " + nextPage);
+//		JsonMapper jsonMapper = new DefaultJsonMapper();
+////		Photo photo = jsonMapper.toJavaObject(first.toString(), Photo.class);
+////		System.out.println("photo id : " + photo.getId());
+		
 	}
 	
 	public static void seleniumExperiment() throws InterruptedException {

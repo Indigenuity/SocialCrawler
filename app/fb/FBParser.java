@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.restfb.DefaultJsonMapper;
+import com.restfb.JsonMapper;
+import com.restfb.json.JsonArray;
+import com.restfb.json.JsonObject;
 import com.restfb.types.Category;
 import com.restfb.types.Comment;
 import com.restfb.types.Comments;
@@ -34,45 +38,68 @@ public class FBParser {
 	public static final Pattern SIMPLE_URL = Pattern.compile("(?<=facebook.com/)[^/]+$");
 	
 	public static final String PAGES = "pages/";
+	private static final JsonMapper jsonMapper = new DefaultJsonMapper();
 	
 	public static List<FBPhoto> parsePhotos(List<Photo> photos){
 		System.out.println("photos : " + photos.size());
 		List<FBPhoto> fbPhotos = new ArrayList<FBPhoto>();
 		for(Photo photo : photos) {
-			FBPhoto fbPhoto = new FBPhoto();
-			fbPhoto.setId(photo.getId());
-			if(photo.getAlbum() != null){
-				fbPhoto.setAlbumId(photo.getAlbum().getId());
-			}
-			fbPhoto.setBackdatedTime(photo.getBackdatedTime());
-			fbPhoto.setBackdatedTimeGranularity(photo.getBackdatedTimeGranularity());
-			fbPhoto.setCreatedTime(photo.getCreatedTime());
-			if(photo.getEvent() != null) {
-				fbPhoto.setEventId(photo.getEvent().getId());
-			}
-			fbPhoto.setFromId(photo.getFrom().getId());
-			fbPhoto.setIcon(photo.getIcon());
-			fbPhoto.setLink(photo.getLink());
-			fbPhoto.setName(photo.getName());
-			fbPhoto.setNameTags(photo.getNameTags() + "");
-			fbPhoto.setPageStoryId(photo.getPageStoryId());
-			fbPhoto.setPicture(photo.getPicture());
-			if(photo.getPlace() != null ) {
-				fbPhoto.setPlaceId(photo.getPlace().getId());
-			}
-			fbPhoto.setUpdatedTime(photo.getUpdatedTime());
-			fbPhoto.setWidth(photo.getWidth());
-			fbPhoto.setHeight(photo.getHeight());
-			fbPhoto.setCanTag(photo.getCanTag());
-			fbPhoto.setLikesCount(photo.getLikes().size());
-			fbPhoto.setCommentsCount(photo.getComments().size());
-			fbPhoto.setTagsCount(photo.getTags().size());
-			fbPhoto.setReactionsCount(photo.getReactions().getData().size());
+			FBPhoto fbPhoto = parsePhoto(photo);
 			fbPhotos.add(fbPhoto); 
-			
-			
 		}
 		return fbPhotos;
+	}
+	
+	public static List<FBPhoto> parseRawPhotos(JsonArray dataArray){
+		List<FBPhoto> fbPhotos = new ArrayList<FBPhoto>();
+		for(int i = 0; i < dataArray.length(); i++){
+			fbPhotos.add(parseRawPhoto(dataArray.getJsonObject(i)));
+		}
+		return fbPhotos;
+	}
+	
+	public static FBPhoto parseRawPhoto(JsonObject rawPhoto) {
+		Photo photo = jsonMapper.toJavaObject(rawPhoto.toString(), Photo.class);
+		FBPhoto fbPhoto = parsePhoto(photo);
+		fbPhoto.setLikesCount(rawPhoto.getJsonObject("likes").getJsonObject("summary").getInt("total_count"));
+		fbPhoto.setCommentsCount(rawPhoto.getJsonObject("comments").getJsonObject("summary").getInt("total_count"));
+		fbPhoto.setReactionsCount(rawPhoto.getJsonObject("reactions").getJsonObject("summary").getInt("total_count"));
+		
+		return fbPhoto;
+	}
+	
+	public static FBPhoto parsePhoto(Photo photo){
+		FBPhoto fbPhoto = new FBPhoto();
+		fbPhoto.setId(photo.getId());
+		if(photo.getAlbum() != null){ 
+			fbPhoto.setAlbumId(photo.getAlbum().getId());
+			fbPhoto.setAlbumName(photo.getAlbum().getName());
+		}
+		fbPhoto.setBackdatedTime(photo.getBackdatedTime());
+		fbPhoto.setBackdatedTimeGranularity(photo.getBackdatedTimeGranularity());
+		fbPhoto.setCreatedTime(photo.getCreatedTime());
+		if(photo.getEvent() != null) {
+			fbPhoto.setEventId(photo.getEvent().getId());
+		}
+		fbPhoto.setFromId(photo.getFrom().getId());
+		fbPhoto.setIcon(photo.getIcon());
+		fbPhoto.setLink(photo.getLink());
+		fbPhoto.setName(photo.getName());
+		fbPhoto.setNameTags(photo.getNameTags() + "");
+		fbPhoto.setPageStoryId(photo.getPageStoryId());
+		fbPhoto.setPicture(photo.getPicture());
+		if(photo.getPlace() != null ) {
+			fbPhoto.setPlaceId(photo.getPlace().getId());
+		}
+		fbPhoto.setUpdatedTime(photo.getUpdatedTime());
+		fbPhoto.setWidth(photo.getWidth());
+		fbPhoto.setHeight(photo.getHeight());
+		fbPhoto.setCanTag(photo.getCanTag());
+		fbPhoto.setLikesCount(photo.getLikes().size());
+		fbPhoto.setCommentsCount(photo.getComments().size());
+		fbPhoto.setTagsCount(photo.getTags().size());
+		fbPhoto.setReactionsCount(photo.getReactions().getData().size());
+		return fbPhoto;
 	}
 	
 	public static List<FBPost> parsePosts(List<Post> posts) {

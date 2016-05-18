@@ -1,6 +1,7 @@
 package fb;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -51,6 +52,9 @@ public class FBPost {
 	private Long likesCount;
 	private Long commentsCount;
 	private Long reactionsCount;
+	
+	private Date realCreatedDate;
+	private Date realLastUpdated;
 	
 	@ManyToOne
 	private FBPage fbPage;
@@ -231,6 +235,18 @@ public class FBPost {
 	}
 	public void setFbPage(FBPage fbPage) {
 		this.fbPage = fbPage;
+	}
+	public Date getRealCreatedDate() {
+		return realCreatedDate;
+	}
+	public void setRealCreatedDate(Date realCreatedDate) {
+		this.realCreatedDate = realCreatedDate;
+	}
+	public Date getRealLastUpdated() {
+		return realLastUpdated;
+	}
+	public void setRealLastUpdated(Date realLastUpdated) {
+		this.realLastUpdated = realLastUpdated;
 	}
 	
 	
