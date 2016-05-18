@@ -75,6 +75,75 @@ public class CSV {
 		createCompanyReportByDate("FBPhotos", query, staticFieldDefinitions, dynamicFieldDefinitions);
 	}
 	
+public static void fbPostsReport() throws IOException, SQLException {
+		
+		Set<String> staticFieldDefinitions = new LinkedHashSet<String>();
+		staticFieldDefinitions.add("fbId");
+		staticFieldDefinitions.add("fbPageId");
+		Set<String> dynamicFieldDefinitions = new LinkedHashSet<String>();
+		dynamicFieldDefinitions.add("count(*)");
+		dynamicFieldDefinitions.add("commentsCount");
+		dynamicFieldDefinitions.add("likesCount");
+		dynamicFieldDefinitions.add("reactionsCount");
+		dynamicFieldDefinitions.add("sharesCount");
+		dynamicFieldDefinitions.add("hasCaption");
+		dynamicFieldDefinitions.add("blankMessage");
+		dynamicFieldDefinitions.add("updatedLater");
+		dynamicFieldDefinitions.add("hasParent");
+		dynamicFieldDefinitions.add("hasPlace");
+		dynamicFieldDefinitions.add("hasMessageTags");
+		dynamicFieldDefinitions.add("hasSource");
+		dynamicFieldDefinitions.add("hasTo");
+		dynamicFieldDefinitions.add("postedFromApp");
+		dynamicFieldDefinitions.add("added_photosStory");
+		dynamicFieldDefinitions.add("shared_storyStory");
+		dynamicFieldDefinitions.add("added_videoStory");
+		dynamicFieldDefinitions.add("mobile_status_updateStory");
+		dynamicFieldDefinitions.add("published_storyStory");
+		dynamicFieldDefinitions.add("created_noteStory");
+		dynamicFieldDefinitions.add("wall_postStory");
+		dynamicFieldDefinitions.add("created_eventStory");
+		dynamicFieldDefinitions.add("noTypeStory");
+		
+		String query = "SELECT companyString, "
+					+ "fbId, " 
+					+ "fbPageId, " 
+				    + "date_format(realCreatedDate, '%Y-%m') as 'date', " 
+				    + "count(*), " 
+				    + "sum(shares) as 'sharesCount', " 
+				    + "sum(if(caption is null, 0, 1)) as 'hasCaption', "
+				    + "sum(if(message is null, 1, 0)) as 'blankMessage', "
+					+ "sum(if(realCreatedDate = realLastUpdated, 1, 0)) as 'updatedLater', " 
+				    + "sum(likesCount) as likesCount, " 
+				    + "sum(commentsCount) as commentsCount, "
+				    + "sum(reactionsCount) as reactionsCount, " 
+				    + "sum(if(parentId is null, 0, 1)) as 'hasParent', "
+				    + "sum(if(place = 'null', 0, 1)) as 'hasPlace', " 
+				    + "sum(if(messageTags = '[]', 0, 1)) as 'hasMessageTags', " 
+				    + "sum(if(source is null, 0, 1)) as 'hasSource', "
+				    + "sum(if(toId = '', 0, 1)) as 'hasTo', "
+				    + "sum(if(app = 'null', 0, 1)) as 'postedFromApp', "
+				    + "sum(if(statusType = 'added_photos', 1, 0)) as 'added_photosStory', "
+				    + "sum(if(statusType = 'shared_story', 1, 0)) as 'shared_storyStory', "
+				    + "sum(if(statusType = 'added_video', 1, 0)) as 'added_videoStory', "
+				    + "sum(if(statusType = 'mobile_status_update', 1, 0)) as 'mobile_status_updateStory', "
+				    + "sum(if(statusType = 'published_story', 1, 0)) as 'published_storyStory', "
+				    + "sum(if(statusType = 'created_note', 1, 0)) as 'created_noteStory', "
+				    + "sum(if(statusType = 'wall_post', 1, 0)) as 'wall_postStory', "
+				    + "sum(if(statusType = 'created_event', 1, 0)) as 'created_eventStory', "
+				    + "sum(if(statusType is null, 1, 0)) as 'noTypeStory' "
+					+ "FROM socialcrawler.fbpost post "
+					+ "join fbpage p on p.fbpageid = post.fbpage_fbpageid "
+					+ "where !(hour(realCreatedDate) = 0 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0) "
+					+ "AND !(hour(realCreatedDate) = 1 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0) "
+					+ "AND !(hour(realCreatedDate) = 13 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0) "
+					+ "and post.fromId = p.fbid "
+					+ "group by p.fbpageid, date_format(realCreatedDate, '%Y-%m')";
+		
+		createCompanyReportByDate("FBPosts", query, staticFieldDefinitions, dynamicFieldDefinitions);
+	}
+	
+	
 	public static void createCompanyReportByDate(String name, String query, Set<String> staticFieldDefinitions, Set<String> dynamicFieldDefinitions) throws SQLException, IOException{
 		CSVReport report = new CSVReport("FBPhotos");
 		Map<String, Map<String, String>> companyDynamicFields = new HashMap<String, Map<String, String>>();
