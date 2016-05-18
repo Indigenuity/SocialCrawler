@@ -139,7 +139,7 @@ public static void fbPostsReport() throws IOException, SQLException {
 					+ "where !(hour(realCreatedDate) = 0 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0) "
 					+ "AND !(hour(realCreatedDate) = 1 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0) "
 					+ "AND !(hour(realCreatedDate) = 13 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0) "
-					+ "and post.fromId = p.fbid "
+					+ "and post.fromId = p.fbId "
 					+ "group by p.fbpageid, date_format(realCreatedDate, '%Y-%m')";
 		
 		createCompanyReportByDate("FBPosts Self Monthly", query, staticFieldDefinitions, dynamicFieldDefinitions);
@@ -147,7 +147,7 @@ public static void fbPostsReport() throws IOException, SQLException {
 		createCompanyReportByDate("FBPosts Others Monthly", query, staticFieldDefinitions, dynamicFieldDefinitions);
 		query = query.replaceAll("%Y-%m", "%Y");
 		createCompanyReportByDate("FBPosts Others Yearly", query, staticFieldDefinitions, dynamicFieldDefinitions);
-		query = query.replace("post.fromId = p.fbId", "post.fromId = p.fbId");
+		query = query.replace("post.fromId != p.fbId", "post.fromId = p.fbId");
 		createCompanyReportByDate("FBPosts Self Yearly", query, staticFieldDefinitions, dynamicFieldDefinitions);
 	}
 	
