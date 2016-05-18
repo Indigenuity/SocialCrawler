@@ -1,11 +1,15 @@
 package fb;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import com.restfb.types.NamedFacebookType;
+import com.restfb.types.Post;
 
 import play.db.jpa.JPA;
 import play.db.jpa.JPAApi;
@@ -30,8 +34,10 @@ public class FBdao {
 		}
 	}
 	
-	public static FeedFetch getFeedFetch(FBPage fbPage){
-		List<FeedFetch> results = JPA.em().createQuery("from FeedFetch ff where ff.fbPage = :fbPage", FeedFetch.class).setParameter("fbPage", fbPage).getResultList();
+	public static FeedFetch getFeedFetch(FBPage fbPage, FeedType feedType){
+		String query = "from FeedFetch ff where ff.fbPage = :fbPage and ff.feedType = :feedType";
+		List<FeedFetch> results = JPA.em().createQuery(query, FeedFetch.class).setParameter("fbPage", fbPage)
+				.setParameter("feedType", feedType).getResultList();
 		if(results.size() > 0){
 			return results.get(0);
 		}
@@ -46,4 +52,5 @@ public class FBdao {
 		JPA.em().getTransaction().commit();
 		JPA.em().getTransaction().begin();
 	}
+	
 }

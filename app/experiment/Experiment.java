@@ -116,7 +116,7 @@ public class Experiment {
 		System.out.println("content : " + LI.getFullDocument("https://www.linkedin.com/company/kimley-horn-and-associates-inc-?trk=top_nav_home"));
 		Thread.sleep(1000);
 		System.out.println("content : " + LI.getFullDocument("https://www.linkedin.com/company/2928?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A2928%2Cidx%3A2-1-4%2CtarId%3A1445916217440%2Ctas%3ADiscovery%20Communications"));
-	} 
+	}  
 	
 	public static void liExperiment() throws Exception {
 		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");  

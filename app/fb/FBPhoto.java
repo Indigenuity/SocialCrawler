@@ -2,6 +2,7 @@ package fb;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,11 +10,12 @@ import javax.persistence.ManyToOne;
 
 import utils.Utils;
 
+@Entity
 public class FBPhoto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer fbPhotoId;
+	private long fbPhotoId;
 	
 	private String id;
 	private String albumId;
@@ -34,14 +36,16 @@ public class FBPhoto {
 	private Integer height;
 	private Boolean canTag = false;
 	
+	private Integer likesCount, commentsCount, tagsCount, reactionsCount, sharedCount;
+	
 	@ManyToOne
 	private FBPage fbPage;
 
-	public Integer getFbPhotoId() {
+	public long getFbPhotoId() {
 		return fbPhotoId;
 	}
 
-	public void setFbPhotoId(Integer fbPhotoId) {
+	public void setFbPhotoId(long fbPhotoId) {
 		this.fbPhotoId = fbPhotoId;
 	}
 
@@ -196,6 +200,46 @@ public class FBPhoto {
 
 	public void setUpdatedTime(Date updatedTime) {
 		this.updatedTime = updatedTime;
+	}
+
+	public Integer getLikesCount() {
+		return likesCount;
+	}
+
+	public void setLikesCount(Integer likesCount) {
+		this.likesCount = likesCount;
+	}
+
+	public Integer getCommentsCount() {
+		return commentsCount;
+	}
+
+	public void setCommentsCount(Integer commentsCount) {
+		this.commentsCount = commentsCount;
+	}
+
+	public Integer getTagsCount() {
+		return tagsCount;
+	}
+
+	public void setTagsCount(Integer tagsCount) {
+		this.tagsCount = tagsCount;
+	}
+
+	public Integer getReactionsCount() {
+		return reactionsCount;
+	}
+
+	public void setReactionsCount(Integer reactionsCount) {
+		this.reactionsCount = reactionsCount;
+	}
+
+	public Integer getSharedCount() {
+		return sharedCount;
+	}
+
+	public void setSharedCount(Integer sharedCount) {
+		this.sharedCount = sharedCount;
 	}
 	
 	

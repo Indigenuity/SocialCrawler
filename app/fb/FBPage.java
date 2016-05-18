@@ -111,11 +111,15 @@ public class FBPage {
 	private String errorMessage;
 	
 	
+	private Date realStartDate;
+	
 	
 	
 	@OneToMany(mappedBy="fbPage")
 	private List<FBPost> posts = new ArrayList<FBPost>();
 	
+	@OneToMany(mappedBy="fbPage")
+	private List<FBPhoto> photos = new ArrayList<FBPhoto>();
 	
 	
 //	
@@ -553,6 +557,15 @@ public class FBPage {
 	}
 	public void setJob(Boolean job) {
 		this.job = job;
+	}
+	public List<FBPhoto> getPhotos() {
+		return photos;
+	}
+	public Date getRealStartDate() {
+		return realStartDate;
+	}
+	public void setRealStartDate(Date realStartDate) {
+		this.realStartDate = realStartDate;
 	}
 	
 	

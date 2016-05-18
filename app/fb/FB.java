@@ -1,5 +1,6 @@
 package fb;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.restfb.Connection;
@@ -11,6 +12,8 @@ import com.restfb.Version;
 import utils.ThrottledLimiter;
 
 import com.restfb.FacebookClient.AccessToken;
+import com.restfb.types.Likes;
+import com.restfb.types.NamedFacebookType;
 import com.restfb.types.Page;
 import com.restfb.types.Photo;
 import com.restfb.types.Post;
@@ -41,8 +44,8 @@ public class FB {
 	private static final String PHOTOS_FIELDS_PARAMETER = "album, "
 			+ "backdated_time, backdated_time_granularity, can_tag, created_time, event, from, height, icon, "
 			+ "last_used_time, link, name, name_tags, page_story_id, picture, place, updated_time, width,"
-			+ " likes.limit(0).summary(true), comments.limit(0).summary(true), tags.limit(0).summary(true), "
-			+ "reactions.limit(0).summary(true), sharedposts.limit(0).summary(true)";
+			+ " likes.limit(20).summary(true), comments.limit(20).summary(true), tags.limit(20).summary(true), "
+			+ "reactions.limit(20).summary(true), sharedposts.limit(20).summary(true)";
 	
 	private AccessToken accessToken;
 	private FacebookClient client;
@@ -85,20 +88,34 @@ public class FB {
 		return page;
 	}
 
-	public Connection<Post> getFeedStart(String identifier) {
+	public <T extends NamedFacebookType> Connection<T> getFeedStart(String identifier, Class<T> namedType) {
 		rateLimiter.acquire();
-		return client.fetchConnection(identifier + "/feed", Post.class, Parameter.with("include_hidden", true), Parameter.with("fields", 
-				FEED_FIELDS_PARAMETER));
+		if(namedType == Photo.class){
+			return client.fetchConnection(identifier + "/photos", namedType, Parameter.with("include_hidden", true), Parameter.with("fields", 
+					PHOTOS_FIELDS_PARAMETER));
+		}
+		else {
+			return client.fetchConnection(identifier + "/feed", namedType, Parameter.with("include_hidden", true), Parameter.with("fields", 
+					FEED_FIELDS_PARAMETER));
+		}
 	}
 	
-	public Connection<Post> continueFeed(String nextPageUrl) {
+	public <T extends NamedFacebookType> Connection<T> continueFeed(String nextPageUrl, Class<T> namedType) {
 		rateLimiter.acquire();
-		return client.fetchConnectionPage(nextPageUrl, Post.class);
+		return client.fetchConnectionPage(nextPageUrl, namedType);
 	}
 	
-	public Connection<Photo> getPhotoFeedStart(String identifier) {
+	public Integer getPhotoLikes(String fbId){
 		rateLimiter.acquire();
-		return client.fetchConnection(identifier + "/photos", Photo.class, Parameter.with("fields", 
-				PHOTOS_FIELDS_PARAMETER));
+		Connection<Likes> likes = client.fetchConnection("/" + fbId + "/likes", Likes.class);
+		Integer count = 0;
+		for(List<Likes> likePage : likes){
+			count += likePage.size();
+			System.out.println("likes count : " + count);
+			rateLimiter.acquire();
+		}
+		System.out.println("likes : " + count);
+		return count;
 	}
+	
 }

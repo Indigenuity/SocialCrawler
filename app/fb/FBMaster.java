@@ -12,14 +12,16 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
 import com.restfb.Connection;
+import com.restfb.types.NamedFacebookType;
 import com.restfb.types.Page;
+import com.restfb.types.Photo;
 import com.restfb.types.Post;
 
 import play.db.jpa.JPA;
 
 public class FBMaster {
 	
-	public static void fetchFeeds(){
+	public static void fetchFeeds(FeedType feedType){
 		
 		String query = "from FBPage p";
 		
@@ -27,19 +29,18 @@ public class FBMaster {
 		System.out.println("number of FBPages : " + fbPages.size());
 		for(FBPage fbPage : fbPages){
 			
-			FeedFetch feedFetch = FBdao.getFeedFetch(fbPage);
+			FeedFetch feedFetch = FBdao.getFeedFetch(fbPage, feedType);
 			if(feedFetch == null){
 				System.out.println("was null");
 				feedFetch = new FeedFetch();
 				feedFetch.setFbPage(fbPage);
+				feedFetch.setFeedType(feedType);
 				JPA.em().persist(feedFetch);
 				JPA.em().getTransaction().commit();
 				JPA.em().getTransaction().begin();
 			}
 			try {
 				processFeedFetch(feedFetch);
-				
-				
 				feedFetch.setErrorMessage(null);
 			}
 			catch(Exception e) {
@@ -48,42 +49,58 @@ public class FBMaster {
 				e.printStackTrace();
 			}
 			
-			
 		}
 	}
 	
 	public static void processFeedFetch(FeedFetch feedFetch) {
 		FBPage fbPage = feedFetch.getFbPage();
-		Connection<Post> connection = null;
+		Class<? extends NamedFacebookType> feedTypeClass = feedFetch.getFeedType().getFeedClass();
+		Connection<? extends NamedFacebookType> connection = null;
 		System.out.println("feedFetch null? : " + feedFetch);
 		
-		if(feedFetch.getNextPageUrl() == null && !feedFetch.getReachedEnd()){
-			System.out.println("getting first connection");
-			connection = FB.getInstance().getFeedStart(fbPage.getFbId());
-		}else if(feedFetch.getNextPageUrl() != null && !feedFetch.getReachedEnd()){
-			System.out.println("getting next connection");
-			connection = FB.getInstance().continueFeed(feedFetch.getNextPageUrl());
-			
-		} else if ( feedFetch.getReachedEnd() == true){
+		if ( feedFetch.getReachedEnd() == true){
 			System.out.println("This feed fetch has already reached the end");
 			return;
-		} else {
+		} else if(feedFetch.getNextPageUrl() == null){
+			System.out.println("getting first connection");
+			connection = FB.getInstance().getFeedStart(fbPage.getFbId(), feedTypeClass);
+			
+		}else if(feedFetch.getNextPageUrl() != null){
+			System.out.println("getting next connection");
+			connection = FB.getInstance().continueFeed(feedFetch.getNextPageUrl(), feedTypeClass);
+			
+		} else{
 			System.out.println("here for some reason?");
 			return;
 		}
 		
 		do{
+			if(feedTypeClass == Post.class){
+				List<Post> posts = (List<Post>) connection.getData();
+				List<FBPost> fbPosts = FBParser.parsePosts(posts);
+				if(fbPosts.size() > 0){
+					feedFetch.setEarliestPost(fbPosts.get(fbPosts.size() - 1).getCreatedTime());
+					System.out.println("earliest : " + feedFetch.getEarliestPost());
+				}
+				for(FBPost fbPost : fbPosts) {
+					fbPost.setFbPage(fbPage);
+					JPA.em().persist(fbPost);
+				}
+			} else if(feedTypeClass == Photo.class){
+				List<Photo> photos = (List<Photo>) connection.getData();
+				List<FBPhoto> fbPhotos = FBParser.parsePhotos(photos);
+				if(fbPhotos.size() > 0) {
+					feedFetch.setEarliestPost(fbPhotos.get(fbPhotos.size() - 1).getCreatedTime() + "");
+					System.out.println("earliest : " + feedFetch.getEarliestPost());
+				}
+				for(FBPhoto fbPhoto : fbPhotos) {
+					fbPhoto.setFbPage(fbPage);
+					JPA.em().persist(fbPhoto);
+				}
+			} else {
+				System.out.println("nothing to persist?");
+			}
 			
-			List<Post> posts = connection.getData();
-			List<FBPost> fbPosts = FBParser.parsePosts(posts);
-			if(fbPosts.size() > 0){
-				feedFetch.setEarliestPost(fbPosts.get(fbPosts.size() - 1).getCreatedTime());
-				System.out.println("earliest : " + feedFetch.getEarliestPost());
-			}
-			for(FBPost fbPost : fbPosts) {
-				fbPost.setFbPage(fbPage);
-				JPA.em().persist(fbPost);
-			}
 			
 			String nextPageUrl = connection.getNextPageUrl();
 			if(nextPageUrl == null){
@@ -100,15 +117,25 @@ public class FBMaster {
 			if(nextPageUrl == null || "".equals(nextPageUrl)) {
 				connection = null;
 			} else {
-				connection = FB.getInstance().continueFeed(nextPageUrl);
+				connection = FB.getInstance().continueFeed(nextPageUrl, feedTypeClass);
 			} 
 			
 		}while(connection != null);
-			
-			
-		
-	
 	}
+	
+	public static void fixPageDates() {
+		String query = "from FBPage fb";
+		List<FBPage> fbPages = JPA.em().createQuery(query, FBPage.class).getResultList();
+		for(FBPage fbPage : fbPages){
+			Page page = FB.getInstance().fetchPage(fbPage.getFbId());
+			System.out.println("startdate : " + page.getStartInfo().getDate());
+//			System.out.println("year : " + page.getStartInfo().getDate().getYear());
+//			System.out.println("month : " + page.getStartInfo().getDate().getMonth());
+//			System.out.println("day : " + page.getStartInfo().getDate().getDay());
+			fbPage.setRealStartDate(FBParser.parseStartDate(page.getStartInfo().getDate()));
+		}
+	}
+	
 	
 	public static void processPost(FeedFetch feedFetch, FBPost fbPost){
 		
