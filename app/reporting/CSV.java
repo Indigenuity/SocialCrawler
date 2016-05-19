@@ -43,6 +43,82 @@ public class CSV {
 			"and photo.fromId != p.fbid " +
 			"group by p.fbpageid, date_format(createdTime, '%Y-%m')";
 	
+	public static void allReports() throws IOException, SQLException{
+		liUpdateReport();
+		twitterStatusReport();
+		fbPhotosReport();
+		fbPostsReport();
+	}
+	
+	public static void liUpdateReport() throws IOException, SQLException {
+		
+		Set<String> staticFieldDefinitions = new LinkedHashSet<String>();
+		staticFieldDefinitions.add("liPageId");
+		Set<String> dynamicFieldDefinitions = new LinkedHashSet<String>();
+		dynamicFieldDefinitions.add("count(*)");
+		dynamicFieldDefinitions.add("likesCount");
+		dynamicFieldDefinitions.add("commentsCount");
+		
+		String query = "SELECT companyString, "
+				+ "p.lipageid, "
+				+ "timeAgo as 'date', "
+				+ "count(*), "
+				+ "sum(likesCount) as 'likesCount', "
+				+ "sum(commentsCount) as 'commentsCount' "
+				+ "FROM socialcrawler.liupdate u "
+				+ "join lipage p on u.lipage_lipageid = p.lipageid "
+				+ "group by p.lipageid, timeAgo"; 
+		
+		createCompanyReportByDate("LinkedIn Updates By Time Ago", query, staticFieldDefinitions, dynamicFieldDefinitions);
+	}
+
+	public static void twitterStatusReport() throws IOException, SQLException {
+		
+		Set<String> staticFieldDefinitions = new LinkedHashSet<String>();
+		staticFieldDefinitions.add("twitteruserid");
+		staticFieldDefinitions.add("id");
+		Set<String> dynamicFieldDefinitions = new LinkedHashSet<String>();
+		dynamicFieldDefinitions.add("count(*)");
+		dynamicFieldDefinitions.add("favoriteCount");
+		dynamicFieldDefinitions.add("retweetCount");
+		dynamicFieldDefinitions.add("isReply");
+		dynamicFieldDefinitions.add("isRetweet");
+		dynamicFieldDefinitions.add("isStatusQuote");
+		dynamicFieldDefinitions.add("hasPlace");
+		dynamicFieldDefinitions.add("hasCoords");
+		dynamicFieldDefinitions.add("possiblySensitive");
+		dynamicFieldDefinitions.add("hasExtendedMediaEntities");
+		dynamicFieldDefinitions.add("hasHashtagEntities");
+		dynamicFieldDefinitions.add("hasMediaEntities");
+		dynamicFieldDefinitions.add("hasMentionEntities");
+		dynamicFieldDefinitions.add("hasUrlEntities");
+		
+		String query = "SELECT companyString, "
+				+ "twitteruserid,  "
+				+ "tu.id, "
+				+ "date_format(t.createdAt, '%Y-%m') as 'date', "
+				+ "count(*), "
+				+ "sum(if(extendedMediaEntities = '', 0, 1)) as 'hasExtendedMediaEntities', "
+				+ "sum(favoriteCount) as 'favoriteCount', "
+				+ "sum(if(hashtagEntities = '', 0, 1)) as 'hasHashtagEntities', "
+				+ "sum(if(inReplyToScreenName is null, 0, 1)) as 'isReply', "
+				+ "sum(if(latitude is null, 0, 1)) as 'hasCoords', "
+				+ "sum(if(mediaEntities = '', 0, 1)) as 'hasMediaEntities', "
+				+ "sum(if(mentionEntities = '', 0, 1)) as 'hasMentionEntities', "
+				+ "sum(if(latitude is null, 0, 1)) as 'hasPlace', "
+				+ "sum(if(possiblySensitive = 0, 0, 1)) as 'possiblySensitive', "
+				+ "sum(if(quotedStatusId = -1, 0, 1)) as 'isStatusQuote', "
+				+ "sum(retweetCount) as 'retweetCount', "
+				+ "sum(if(retweetedStatus is null, 0, 1)) as 'isRetweet', "
+				+ "sum(if(urlEntities = '', 0, 1)) as 'hasUrlEntities' "
+				+ "FROM socialcrawler.tweet t "
+				+ "join twitteruser tu on tu.twitteruserid = t.twitteruser_twitteruserid "
+				+ "group by tu.twitteruserid, date_format(t.createdAt, '%Y-%m')"; 
+		
+		createCompanyReportByDate("Twitter Statuses Monthly", query, staticFieldDefinitions, dynamicFieldDefinitions);
+		query = query.replaceAll("%Y-%m", "%Y");
+		createCompanyReportByDate("Twitter Statuses Yearly", query, staticFieldDefinitions, dynamicFieldDefinitions);
+	}
 	
 	public static void fbPhotosReport() throws IOException, SQLException {
 		
@@ -153,19 +229,35 @@ public static void fbPostsReport() throws IOException, SQLException {
 	
 	
 	public static void createCompanyReportByDate(String name, String query, Set<String> staticFieldDefinitions, Set<String> dynamicFieldDefinitions) throws SQLException, IOException{
-		CSVReport report = new CSVReport(name);
+		
 		Map<String, Map<String, String>> companyDynamicFields = new HashMap<String, Map<String, String>>();
 		Map<String, Map<String, String>> companyStaticFields = new HashMap<String, Map<String, String>>();
-		System.out.println("Fetcing Data");
+		System.out.println("Fetching Data");
 		Connection connection = DB.getConnection();
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(query);
 		
+		CSVReport unexplodedReport = new CSVReport(name + " Unexploded");
+		List<String> values = new ArrayList<String>();
+		values.add("companyString");
+		values.add("date");
+		for(String field : staticFieldDefinitions){
+			values.add(field);
+		}
+		for(String field : dynamicFieldDefinitions) {
+			values.add(field);
+		}
+		unexplodedReport.setHeaderValues(values);
+		
+		
 		System.out.println("Exploding data");
 		Set<String> allDates = new TreeSet<String>();
 		while(rs.next()) {
+			values = new ArrayList<String>();
 			String companyString = rs.getString("companyString");
 			String date = rs.getString("date");
+			values.add(companyString);
+			values.add(date);
 			Map<String, String> entries = companyDynamicFields.get(companyString);
 			Map<String, String> staticEntries = companyStaticFields.get(companyString);
 			if(entries == null){
@@ -176,17 +268,24 @@ public static void fbPostsReport() throws IOException, SQLException {
 				staticEntries = new HashMap<String, String>();
 				companyStaticFields.put(companyString, staticEntries);
 			}
-			for(String field : dynamicFieldDefinitions) {
-				entries.put(date + " " + field, rs.getString(field));
-			}
 			for(String field : staticFieldDefinitions) {
 				staticEntries.put(field, rs.getString(field));
+				values.add(rs.getString(field));
+			}
+			for(String field : dynamicFieldDefinitions) {
+				entries.put(date + " " + field, rs.getString(field));
+				values.add(rs.getString(field));
 			}
 			allDates.add(date);
+			unexplodedReport.addRow(values);
 		}
+		System.out.println("creating unexploded report");
+		writeReport(unexplodedReport);
+		
 		
 		System.out.println("Setting up Headers");
-		List<String> values = new ArrayList<String>();
+		CSVReport explodedReport = new CSVReport(name + " Exploded");
+		values = new ArrayList<String>();
 		values.add("Company Name");
 		for(String field : staticFieldDefinitions) {
 			values.add(field);
@@ -196,7 +295,7 @@ public static void fbPostsReport() throws IOException, SQLException {
 				values.add(date + " " + field);
 			}
 		}
-		report.setHeaderValues(values);
+		explodedReport.setHeaderValues(values);
 		
 		//Fill in Rows
 		int count = 0;
@@ -217,11 +316,14 @@ public static void fbPostsReport() throws IOException, SQLException {
 					values.add(value);
 				}
 			}
-			report.addRow(values);
-			System.out.println("Printing row : " + ++count);
+			explodedReport.addRow(values);
+//			System.out.println("Printing row : " + ++count);
 		}
 		
-		writeReport(report);
+		writeReport(explodedReport);
+		rs.close();
+		statement.close();
+		connection.close();
 	}
 	
 	

@@ -30,6 +30,9 @@ public class LIUpdate {
 	@Column(columnDefinition="varchar(4000)")
 	private String shareImageLink;
 	
+	private Integer likesCount;
+	private Integer commentsCount;
+	
 	
 	
 	
@@ -98,6 +101,18 @@ public class LIUpdate {
 	}
 	public void setLiUrl(String liUrl) {
 		this.liUrl = Utils.sanitize(liUrl, 255);
+	}
+	public Integer getLikesCount() {
+		return likesCount;
+	}
+	public void setLikesCount(Integer likesCount) {
+		this.likesCount = likesCount;
+	}
+	public Integer getCommentsCount() {
+		return commentsCount;
+	}
+	public void setCommentsCount(Integer commentsCount) {
+		this.commentsCount = commentsCount;
 	}
 	
 	
