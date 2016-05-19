@@ -30,7 +30,5 @@ join fbpage p on p.fbpageid = post.fbpage_fbpageid
 where !(hour(realCreatedDate) = 0 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0)
 AND !(hour(realCreatedDate) = 1 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0)
 AND !(hour(realCreatedDate) = 13 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0)
-AND !(hour(realCreatedDate) = 12 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0)
-AND !(hour(realCreatedDate) = 14 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0)
-and post.fromId != p.fbid
+and post.fromId = p.fbid
 group by p.fbpageid, date_format(realCreatedDate, '%Y-%m')
