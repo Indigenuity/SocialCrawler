@@ -3,7 +3,8 @@ package fb;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.sql.Date;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,7 @@ import com.restfb.types.Page;
 import com.restfb.types.Photo;
 import com.restfb.types.Post;
 
+import persistence.FBDateMarker;
 import play.db.jpa.JPA;
 
 public class FBMaster {
@@ -244,5 +246,32 @@ public class FBMaster {
 		FBdao.persistPage(fbPage);
 	}
 	
+	public static void readAndFetchDateMarkers() throws IOException, ParseException { 
+		
+		Reader in = new FileReader("./data/in/fbid_accountage.csv");
+		Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(in);
+		
+		EntityManager em = JPA.em();
+		int total = 0;
+		for(CSVRecord record : records) {
+			String fbId = record.get(0);
+			String timestamp = record.get(1);
+			String creationDateString = record.get(2);
+			Date creationDate = FBParser.convertMarkerDate(creationDateString);
+			
+			FBDateMarker marker = new FBDateMarker();
+			marker.setCreationDate(creationDate);
+			marker.setFbId(fbId);
+			String fixedFbId = fbId.replace("x", "0");
+			marker.setFbIdLong(Long.parseLong(fixedFbId));
+			marker.setTimestamp(timestamp);
+			JPA.em().persist(marker);
+			total++;
+			
+			System.out.println("Processed : " + total);
+		}
+		
+		in.close();
+	}
 	
 }

@@ -113,6 +113,11 @@ public class FBPage {
 	
 	private Date realStartDate;
 	
+	private Date firstPost;
+	private Date firstPhoto;
+	
+	private Long fbIdLong;
+	
 	
 	
 	@OneToMany(mappedBy="fbPage")
@@ -566,6 +571,24 @@ public class FBPage {
 	}
 	public void setRealStartDate(Date realStartDate) {
 		this.realStartDate = realStartDate;
+	}
+	public Date getFirstPost() {
+		return firstPost;
+	}
+	public void setFirstPost(Date firstPost) {
+		this.firstPost = firstPost;
+	}
+	public Date getFirstPhoto() {
+		return firstPhoto;
+	}
+	public void setFirstPhoto(Date firstPhoto) {
+		this.firstPhoto = firstPhoto;
+	}
+	public Long getFbIdLong() {
+		return fbIdLong;
+	}
+	public void setFbIdLong(Long fbIdLong) {
+		this.fbIdLong = fbIdLong;
 	}
 	
 	

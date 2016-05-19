@@ -77,137 +77,156 @@ import twitter4j.conf.ConfigurationBuilder;
 import utils.Utils;
 
 public class Experiment {
-	
-	private static final String APP_SECRET = "17b49f9d44934c08902965568727117e"; 
+
+	private static final String APP_SECRET = "17b49f9d44934c08902965568727117e";
 	private static final String APP_ID = "847051758681799";
 	private static final String REDIRECT = "https://www.facebook.com/connect/login_success.html";
 	private static final String TEMP_USER_ACCESS = "AQBhzmEw3hmKQ_ffKvyVxI1GIdTop6-epXaeGIwRQzkR54VTfSJkJ8cNBwWn_jKqAbIi00bSQGyaGoC84dT4Nl2DXM6B04X6Ypt_ifeuenuf0UPVse4lqbFBKD86ZQ6dmvnL_T3Pvf4iTL9OytEJGQklKhR3lkv28EdYpdhJOBHszq4FM8qc28BRrjCUpnO-i3dk6kZyFVt9-k1kHsmxg-g1blfYWOmZShlCKvXYk-bOqbqJiu6D0Q_qroof8_yStP1IWa5HFnIswBKdhC6FmimmvrCGxGNUlv6qRVczTnhIkaUBN5vrh4vCmeUF1Cr2VcY";
-	
+
 	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
-	public static void runExperiment() throws IOException, SQLException {
+	public static void runExperiment() throws IOException, SQLException, InterruptedException, ParseException {
+
+		FBPage fbPage = JPA.em().find(FBPage.class, 95L);
 		
-		
-		FBMaster.fetchFeeds(FeedType.FEED);
+		Connection<Post> connection = FB.getInstance().getFeedStart(fbPage.getFbId(), Post.class);
+		while(connection.getData().size() > 0){
+			for(Post post : connection.getData()){
+				System.out.println("date : " + post.getCreatedTime());
+				System.out.println("message : "+ post.getMessage());
+			}
+			connection = FB.getInstance().continueFeed(connection.getNextPageUrl(), Post.class);
+		}
+//		String query = "from FBPage p";
+//		List<FBPage> fbPages = JPA.em().createQuery(query, FBPage.class).getResultList();
+//		for(FBPage fbPage : fbPages) {
+//			
+//		}
 	}
-	
+
 	public static void jsonExperiment() throws IOException, InterruptedException, TwitterException {
 		FBMaster.fetchFeeds(FeedType.PHOTOS);
-////		FBMaster.getPhotoLikes();
-//		JsonObject rawConnection = FB.getInstance().getGenericConnectionStart("DragonsKeepUtah"); 
-////		System.out.println("raw : " + rawConnection);
-//		JsonArray dataArray = rawConnection.getJsonArray("data");
-//		System.out.println("dataArray.size(): " + dataArray.length());
-////		
-////		JsonObject first = dataArray.getJsonObject(0);
-////		JsonObject comments = first.getJsonObject("comments");
-////		JsonObject summary = comments.getJsonObject("summary");
-////		int commentsCount = summary.getInt("total_count");
-////		System.out.println("totalcount : " + commentsCount);
-//		
-//		JsonObject paging = rawConnection.getJsonObject("paging");
-//		JsonObject cursors = paging.getJsonObject("cursors");
-//		String after = cursors.getString("after");
-//		System.out.println("after : " + after);
-//		
-//		JsonObject nextPage = FB.getInstance().continueGenericConnection("DragonsKeepUtah", after);
-//		System.out.println("nextPage : " + nextPage);
-//		JsonMapper jsonMapper = new DefaultJsonMapper();
-////		Photo photo = jsonMapper.toJavaObject(first.toString(), Photo.class);
-////		System.out.println("photo id : " + photo.getId());
-		
+		//// FBMaster.getPhotoLikes();
+		// JsonObject rawConnection =
+		//// FB.getInstance().getGenericConnectionStart("DragonsKeepUtah");
+		//// System.out.println("raw : " + rawConnection);
+		// JsonArray dataArray = rawConnection.getJsonArray("data");
+		// System.out.println("dataArray.size(): " + dataArray.length());
+		////
+		//// JsonObject first = dataArray.getJsonObject(0);
+		//// JsonObject comments = first.getJsonObject("comments");
+		//// JsonObject summary = comments.getJsonObject("summary");
+		//// int commentsCount = summary.getInt("total_count");
+		//// System.out.println("totalcount : " + commentsCount);
+		//
+		// JsonObject paging = rawConnection.getJsonObject("paging");
+		// JsonObject cursors = paging.getJsonObject("cursors");
+		// String after = cursors.getString("after");
+		// System.out.println("after : " + after);
+		//
+		// JsonObject nextPage =
+		//// FB.getInstance().continueGenericConnection("DragonsKeepUtah",
+		//// after);
+		// System.out.println("nextPage : " + nextPage);
+		// JsonMapper jsonMapper = new DefaultJsonMapper();
+		//// Photo photo = jsonMapper.toJavaObject(first.toString(),
+		//// Photo.class);
+		//// System.out.println("photo id : " + photo.getId());
+
 	}
-	public static void dateUpdate() throws IOException, InterruptedException, ParseException { 
+
+	public static void dateUpdate() throws IOException, InterruptedException, ParseException {
 		System.out.println("running experiment");
 		String query = "from FBPost p";
 		int count = 500;
-		int offset = 241000;
+		int offset = 0;
 		List<FBPost> fbPosts;
 		DateFormat format = new SimpleDateFormat("EEE MMM FF HH:mm:ss zzz YYYY", Locale.ENGLISH);
-		do{
-			fbPosts = JPA.em().createQuery(query, FBPost.class).setMaxResults(count).setFirstResult(offset).getResultList();
-//			Thu Apr 28 17:00:00 MDT 2016
-			for(FBPost fbPost : fbPosts) {
+		do {
+			fbPosts = JPA.em().createQuery(query, FBPost.class).setMaxResults(count).setFirstResult(offset)
+					.getResultList();
+			// Thu Apr 28 17:00:00 MDT 2016
+			for (FBPost fbPost : fbPosts) {
 				Date createdDate = format.parse(fbPost.getCreatedTime());
 				Date updatedTime = format.parse(fbPost.getUpdatedTime());
-//				System.out.println("date: "  + createdDate);
-//				System.out.println("updatedTime : " + updatedTime);
+				// System.out.println("date: " + createdDate);
+				// System.out.println("updatedTime : " + updatedTime);
 				fbPost.setRealCreatedDate(createdDate);
 				fbPost.setRealLastUpdated(updatedTime);
 			}
-			
+
 			offset += count;
 			System.out.println("processed : " + offset);
 			JPA.em().getTransaction().commit();
 			JPA.em().getTransaction().begin();
 			JPA.em().flush();
 			System.gc();
-		}while(fbPosts.size() > 0);
-			
-		
-		
+		} while (fbPosts.size() > 0);
+
 	}
-	
+
 	public static void seleniumExperiment() throws InterruptedException {
-		System.out.println("content : " + LI.getFullDocument("https://www.linkedin.com/company/kimley-horn-and-associates-inc-?trk=top_nav_home"));
+		System.out.println("content : " + LI
+				.getFullDocument("https://www.linkedin.com/company/kimley-horn-and-associates-inc-?trk=top_nav_home"));
 		Thread.sleep(1000);
-		System.out.println("content : " + LI.getFullDocument("https://www.linkedin.com/company/2928?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A2928%2Cidx%3A2-1-4%2CtarId%3A1445916217440%2Ctas%3ADiscovery%20Communications"));
-	}  
-	
+		System.out.println("content : " + LI.getFullDocument(
+				"https://www.linkedin.com/company/2928?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A2928%2Cidx%3A2-1-4%2CtarId%3A1445916217440%2Ctas%3ADiscovery%20Communications"));
+	}
+
 	public static void liExperiment() throws Exception {
-		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");  
+		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-		
-//		Proxy proxy = new Proxy();
-//		String proxyString = Global.getProxyUrl() + ":" + Global.getProxyPort(); 
-//		proxy.setFtpProxy(proxyString);
-//		proxy.setHttpProxy(proxyString);
-//		proxy.setSslProxy(proxyString);
-//		capabilities.setCapability(CapabilityType.PROXY, proxy);
-//		capabilities.setCapability("chrome.switches",  Arrays.asList("--disable-javascript"));
-//		WebDriver driver = new ChromeDriver(capabilities);
+
+		// Proxy proxy = new Proxy();
+		// String proxyString = Global.getProxyUrl() + ":" +
+		// Global.getProxyPort();
+		// proxy.setFtpProxy(proxyString);
+		// proxy.setHttpProxy(proxyString);
+		// proxy.setSslProxy(proxyString);
+		// capabilities.setCapability(CapabilityType.PROXY, proxy);
+		// capabilities.setCapability("chrome.switches",
+		// Arrays.asList("--disable-javascript"));
+		// WebDriver driver = new ChromeDriver(capabilities);
 		ChromeOptions opt = new ChromeOptions();
 		opt.setBinary(CHROME_EXE);
 		opt.addArguments(COOKIES);
 		WebDriver driver = new ChromeDriver(opt);
-		
+
 		String seed = "https://www.linkedin.com/";
 		System.out.println("Performing faux  crawl : " + seed);
-		
-		/*********************** Perform crawl with small windowed normal browser ************************************/
+
+		/***********************
+		 * Perform crawl with small windowed normal browser
+		 ************************************/
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.get(seed);
-		try{
+		try {
 			WebElement bodyElement = driver.findElement(By.cssSelector("body"));
 			Thread.sleep(10);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			System.out.println("caught an exception ");
 			throw e;
 		}
 	}
-	
-	public static void fetchTwitter() throws Exception{
-		
-//		TwitterUser twitterUser = JPA.em().find(TwitterUser.class, 28L);
-//		System.out.println("tweets : " + twitterUser.getTweets().size());
-		
+
+	public static void fetchTwitter() throws Exception {
+
+		// TwitterUser twitterUser = JPA.em().find(TwitterUser.class, 28L);
+		// System.out.println("tweets : " + twitterUser.getTweets().size());
+
 		TwitterMaster.readAndFetchPages();
 		TwitterMaster.fetchTimelines(TweetType.STATUS);
-		TwitterMaster.fetchTimelines(TweetType.MENTION); 
-		
+		TwitterMaster.fetchTimelines(TweetType.MENTION);
+
 	}
-	
-	
-	
+
 	public static void twitterExperiments() throws TwitterException {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true)
-		  .setOAuthConsumerKey("4PZxEOm6whMFjBc7Bi9XDA")
-		  .setOAuthConsumerSecret("TJntYfhSNjDAN997BWtVYbw74AXwIxc6x9EYD7VcMok")
-		  .setOAuthAccessToken("381118490-zArlTcjR1JHlgrhOMUH6RowcaUXwOKF6cuAVGyA3")
-		  .setOAuthAccessTokenSecret("lgzUKc6IDtt6afR1dmDzlm7l1Rpp1RUf2froBfrzw");
+		cb.setDebugEnabled(true).setOAuthConsumerKey("4PZxEOm6whMFjBc7Bi9XDA")
+				.setOAuthConsumerSecret("TJntYfhSNjDAN997BWtVYbw74AXwIxc6x9EYD7VcMok")
+				.setOAuthAccessToken("381118490-zArlTcjR1JHlgrhOMUH6RowcaUXwOKF6cuAVGyA3")
+				.setOAuthAccessTokenSecret("lgzUKc6IDtt6afR1dmDzlm7l1Rpp1RUf2froBfrzw");
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		Twitter twitter = tf.getInstance();
 		Query query = new Query("@Google").count(100);
@@ -215,70 +234,75 @@ public class Experiment {
 		List<Status> tweets = result.getTweets();
 		System.out.println("tweets : " + tweets.size());
 		System.out.println("next query : " + result.nextQuery());
-		
-		
-		
-//		List<Status> statuses = twitter.getUserTimeline("TlkngMchns");
-		
-//		System.out.println("statuses : " + statuses.size());
-//		
-//		for(Status status : statuses) {
-//			System.out.println("status : " + status.getId() + " " + status.getCreatedAt());
-//		}
-//		
-//		Paging paging = new Paging(1,400).maxId(647712548406591488L);
-//		
-//		statuses = twitter.getUserTimeline("TlkngMchns", paging);
-//		System.out.println("second page statuses : " + statuses.size());
-//		for(Status status : statuses) {
-//			System.out.println("status : " + status.getId() + " " + status.getCreatedAt());
-//		}
+
+		// List<Status> statuses = twitter.getUserTimeline("TlkngMchns");
+
+		// System.out.println("statuses : " + statuses.size());
+		//
+		// for(Status status : statuses) {
+		// System.out.println("status : " + status.getId() + " " +
+		// status.getCreatedAt());
+		// }
+		//
+		// Paging paging = new Paging(1,400).maxId(647712548406591488L);
+		//
+		// statuses = twitter.getUserTimeline("TlkngMchns", paging);
+		// System.out.println("second page statuses : " + statuses.size());
+		// for(Status status : statuses) {
+		// System.out.println("status : " + status.getId() + " " +
+		// status.getCreatedAt());
+		// }
 	}
-	
+
 	public static void batchRequests() {
 		System.out.println("getting access token");
 		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(APP_ID, APP_SECRET);
 		System.out.println("creating client");
 		FacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
-		
-		BatchRequest pageRequest = new BatchRequestBuilder("kengarffauto").parameters(Parameter.with("summary",true), 
-				Parameter.with("fields", "about,affiliation,app_id,attire,best_page,built,can_checkin,category,category_list,"
-						+ "checkins,company_overview,contact_address,culinary_team,current_location,description,display_subtext,"
-						+ "emails,fan_count,features,food_styles,founded,general_info,general_manager,global_brand_root_id,"
-						+ "hours,impressum, is_always_open,is_community_page,is_permanently_closed,is_unclaimed,is_verified,link,"
-						+ "location,members,mission,mpg,name, parent_page,parking,payment_options, personal_info, personal_interests,"
-						+ "pharma_safety_info,phone,place_type,price_range, products,public_transit,restaurant_services,"
-						+ "restaurant_specialties,single_line_address,start_info,store_location_descriptor,store_number,"
-						+ "talking_about_count,username,verification_status,voip_info,website,were_here_count")).build();
-		
-		BatchRequest feedRequest = new BatchRequestBuilder("kengarffauto/feed").parameters(Parameter.with("include_hidden", false), Parameter.with("fields", 
-				"application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
-				+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
-				+ "with_tags, likes.limit(0).summary(true), "
-				+ "comments.limit(0).summary(true)")).build();
-		
+
+		BatchRequest pageRequest = new BatchRequestBuilder("kengarffauto")
+				.parameters(Parameter.with("summary", true),
+						Parameter.with("fields",
+								"about,affiliation,app_id,attire,best_page,built,can_checkin,category,category_list,"
+										+ "checkins,company_overview,contact_address,culinary_team,current_location,description,display_subtext,"
+										+ "emails,fan_count,features,food_styles,founded,general_info,general_manager,global_brand_root_id,"
+										+ "hours,impressum, is_always_open,is_community_page,is_permanently_closed,is_unclaimed,is_verified,link,"
+										+ "location,members,mission,mpg,name, parent_page,parking,payment_options, personal_info, personal_interests,"
+										+ "pharma_safety_info,phone,place_type,price_range, products,public_transit,restaurant_services,"
+										+ "restaurant_specialties,single_line_address,start_info,store_location_descriptor,store_number,"
+										+ "talking_about_count,username,verification_status,voip_info,website,were_here_count"))
+				.build();
+
+		BatchRequest feedRequest = new BatchRequestBuilder("kengarffauto/feed").parameters(
+				Parameter.with("include_hidden", false),
+				Parameter.with("fields",
+						"application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
+								+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
+								+ "with_tags, likes.limit(0).summary(true), " + "comments.limit(0).summary(true)"))
+				.build();
+
 		List<BatchResponse> batchResponses = facebookClient.executeBatch(pageRequest, feedRequest);
 
 		// Responses are ordered to match up with their corresponding requests.
 
 		BatchResponse pageResponse = batchResponses.get(0);
 		BatchResponse feedResponse = batchResponses.get(1);
-		
-		if(pageResponse.getCode() != 200)
-			  System.out.println("Batch request failed: " + pageResponse);
+
+		if (pageResponse.getCode() != 200)
+			System.out.println("Batch request failed: " + pageResponse);
 		else {
 			JsonMapper jsonMapper = new DefaultJsonMapper();
 			Page page = jsonMapper.toJavaObject(pageResponse.getBody(), Page.class);
 			System.out.println("page : " + page);
-	
+
 			Connection<Post> feed = new Connection<Post>(facebookClient, feedResponse.getBody(), Post.class);
 			System.out.println("feed : " + feed.getData().size());
 		}
 	}
-	
-	public static void fetchPosts(){
+
+	public static void fetchPosts() {
 		FBPage fbPage = fetchPage();
-		
+
 		System.out.println("getting access token");
 		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(APP_ID, APP_SECRET);
 		System.out.println("creating client");
@@ -286,27 +310,26 @@ public class Experiment {
 		System.out.println("creating connection");
 		String url = fbPage.getFbId() + "/feed";
 		System.out.println("url : " + url);
-		Connection<Post> feed = facebookClient.fetchConnection(url, Post.class, Parameter.with("include_hidden", false), Parameter.with("fields", 
-				"application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
-				+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
-				+ "with_tags, likes.limit(0).summary(true), "
-				+ "comments.limit(0).summary(true)"));
-		
+		Connection<Post> feed = facebookClient.fetchConnection(url, Post.class, Parameter.with("include_hidden", false),
+				Parameter.with("fields",
+						"application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
+								+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
+								+ "with_tags, likes.limit(0).summary(true), " + "comments.limit(0).summary(true)"));
+
 		int index = 0;
 		System.out.println("getting data");
 		List<Post> posts = feed.getData();
 		System.out.println("Got data");
 		System.out.println("posts : " + posts.size());
-		for(Post post : posts) {
+		for (Post post : posts) {
 			Comments commentsObject;
-			if((commentsObject = post.getComments()) == null){
+			if ((commentsObject = post.getComments()) == null) {
 				System.out.println("no comments");
-			}
-			else {
+			} else {
 				System.out.println("num comments : " + post.getCommentsCount());
 				List<Comment> comments = commentsObject.getData();
 				int commentIndex = 0;
-				for(Comment comment : comments) {
+				for (Comment comment : comments) {
 					FBComment fbComment = new FBComment();
 					fbComment.setId(comment.getId());
 					fbComment.setCommentCount(comment.getCommentCount());
@@ -314,7 +337,7 @@ public class Experiment {
 					fbComment.setFromId(comment.getFrom().getId());
 					fbComment.setLikeCount(comment.getLikeCount());
 					fbComment.setMessage(comment.getMessage());
-					
+
 					JPA.em().persist(fbComment);
 					System.out.println("comment : " + ++commentIndex + comment.getMessage());
 				}
@@ -324,7 +347,7 @@ public class Experiment {
 			fbPost.setApp(post.getApplication() + "");
 			fbPost.setCreatedTime(post.getCreatedTime() + "");
 			fbPost.setCaption(post.getCaption());
-			fbPost.setFeedTargeting(post.getFeedTargeting()+"");
+			fbPost.setFeedTargeting(post.getFeedTargeting() + "");
 			fbPost.setFromId(post.getFrom().getId());
 			fbPost.setIsHidden(post.getIsHidden());
 			fbPost.setLink(post.getLink());
@@ -346,17 +369,17 @@ public class Experiment {
 			fbPost.setLikesCount(post.getLikesCount());
 			fbPost.setCommentsCount(post.getCommentsCount());
 			fbPost.setReactionsCount(post.getReactionsCount());
-			
+
 			JPA.em().persist(fbPost);
-			
+
 		}
 	}
-	
+
 	public static FBPage fetchPage() {
 		AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(APP_ID, APP_SECRET);
 		FacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
-		Page page = facebookClient.fetchObject("kengarffauto",  Page.class, Parameter.with("summary",true), 
-				Parameter.with("fields", "about,affiliation,app_id,attire,best_page,built,can_checkin,category,category_list,"
+		Page page = facebookClient.fetchObject("kengarffauto", Page.class, Parameter.with("summary", true), Parameter
+				.with("fields", "about,affiliation,app_id,attire,best_page,built,can_checkin,category,category_list,"
 						+ "checkins,company_overview,contact_address,culinary_team,current_location,description,display_subtext,"
 						+ "emails,fan_count,features,food_styles,founded,general_info,general_manager,global_brand_root_id,"
 						+ "hours,impressum, is_always_open,is_community_page,is_permanently_closed,is_unclaimed,is_verified,link,"
@@ -371,15 +394,15 @@ public class Experiment {
 		fbPage.setAffiliation(page.getAffiliation());
 		fbPage.setAppId(page.getAppId());
 		fbPage.setAttire(page.getAttire());
-		if(page.getBestPage() != null) {
+		if (page.getBestPage() != null) {
 			fbPage.setBestPage(page.getBestPage().getId());
 		}
-		fbPage.setBuilt(page.getBuilt()); 
+		fbPage.setBuilt(page.getBuilt());
 		fbPage.setCanCheckin(page.getCanCheckin());
 		fbPage.setCategory(page.getCategory());
-		if(page.getCategoryList() != null){
+		if (page.getCategoryList() != null) {
 			List<String> categories = new ArrayList<String>();
-			for(Category category : page.getCategoryList()){
+			for (Category category : page.getCategoryList()) {
 				categories.add(category.getName());
 			}
 			fbPage.setSubCategories(categories);
@@ -391,12 +414,12 @@ public class Experiment {
 		fbPage.setCurrentLocation(page.getCurrentLocation());
 		fbPage.setDescription(page.getDescription());
 		fbPage.setDisplaySubtext(page.getDisplaySubtext());
-		if(page.getEmails() != null){
+		if (page.getEmails() != null) {
 			fbPage.setEmails(page.getEmails());
 		}
 		fbPage.setLikes(page.getFanCount());
 		fbPage.setFeatures(page.getFeatures());
-		if(page.getFoodStyles() != null){
+		if (page.getFoodStyles() != null) {
 			fbPage.setFoodStyles(page.getFoodStyles());
 		}
 		fbPage.setFounded(page.getFounded());
@@ -428,9 +451,9 @@ public class Experiment {
 		fbPage.setRestaurantServices(page.getRestaurantServices() + "");
 		fbPage.setRestaurantSpecialties(page.getRestaurantSpecialties() + "");
 		fbPage.setSingleLineAddress(page.getSingleLineAddress());
-		if(page.getStartInfo() != null){
+		if (page.getStartInfo() != null) {
 			fbPage.setStartDate(page.getStartInfo().getDate() + "");
-			fbPage.setStartType(page.getStartInfo().getType()); 
+			fbPage.setStartType(page.getStartInfo().getType());
 		}
 		fbPage.setStoreLocationDescriptor(page.getNameWithLocationDescriptor());
 		fbPage.setStoreNumber(page.getStoreNumber());
@@ -441,55 +464,55 @@ public class Experiment {
 		fbPage.setWebsite(page.getWebsite());
 		fbPage.setWereHere(page.getWereHereCount());
 		page.getArtistsWeLike();
-		
+
 		JPA.em().persist(fbPage);
 		System.out.println("page : " + page.getHours());
-		System.out.println("page likes : "  + page.getDisplaySubtext());
+		System.out.println("page likes : " + page.getDisplaySubtext());
 		return fbPage;
 	}
-	
-	
+
 	public static void fbClientTesting() throws Exception {
-		try{
+		try {
 			System.out.println("Running experiment");
 			ScopeBuilder scopeBuilder = new ScopeBuilder();
 			scopeBuilder.addPermission(UserDataPermissions.USER_POSTS);
-			
-			
+
 			AccessToken accessToken = new DefaultFacebookClient().obtainAppAccessToken(APP_ID, APP_SECRET);
 			FacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
-			//Page page = facebookClient.fetchObject("kengarffauto",  Page.class, Parameter.with("summary",true), Parameter.with("fields", "phone,fan_count"));
-//			System.out.println("page : " + page.getPhone());
-//			System.out.println("page likes : "  + page.getFanCount());
-			
-			
-			Connection<Post> feed = facebookClient.fetchConnection("kengarffauto/feed", Post.class, Parameter.with("include_hidden", false), Parameter.with("fields",  "created_time,from, to, likes.limit(0).summary(true), comments"));
+			// Page page = facebookClient.fetchObject("kengarffauto",
+			// Page.class, Parameter.with("summary",true),
+			// Parameter.with("fields", "phone,fan_count"));
+			// System.out.println("page : " + page.getPhone());
+			// System.out.println("page likes : " + page.getFanCount());
+
+			Connection<Post> feed = facebookClient.fetchConnection("kengarffauto/feed", Post.class,
+					Parameter.with("include_hidden", false),
+					Parameter.with("fields", "created_time,from, to, likes.limit(0).summary(true), comments"));
 			int index = 0;
 			List<Post> posts = feed.getData();
-			for(Post post : posts) {
-				System.out.println("post : "  + ++index + post.getMessage());
+			for (Post post : posts) {
+				System.out.println("post : " + ++index + post.getMessage());
 				System.out.println("likes : " + post.getLikesCount());
-				System.out.println("date : " + post.getCreatedTime()); 
+				System.out.println("date : " + post.getCreatedTime());
 				System.out.println("from : " + post.getFrom());
-//				Comments commentsObject;
-//				if((commentsObject = post.getComments()) == null){
-//					System.out.println("no comments");
-//				}
-//				else {
-//					List<Comment> comments = commentsObject.getData();
-//					int commentIndex = 0;
-//					for(Comment comment : comments) {
-//						System.out.println("comment : " + ++commentIndex + comment.getMessage());
-//					}
-//				}
+				// Comments commentsObject;
+				// if((commentsObject = post.getComments()) == null){
+				// System.out.println("no comments");
+				// }
+				// else {
+				// List<Comment> comments = commentsObject.getData();
+				// int commentIndex = 0;
+				// for(Comment comment : comments) {
+				// System.out.println("comment : " + ++commentIndex +
+				// comment.getMessage());
+				// }
+				// }
 			}
-			
-			
-		}
-		catch(Exception e){
+
+		} catch (Exception e) {
 			System.out.println("type : " + e.getClass().getSimpleName());
 			System.out.println("message : " + e.getMessage());
-			
+
 		}
 	}
-} 
+}

@@ -32,4 +32,3 @@ AND !(hour(realCreatedDate) = 1 and minute(realCreatedDate) = 0 and second(realC
 AND !(hour(realCreatedDate) = 13 and minute(realCreatedDate) = 0 and second(realCreatedDate) = 0)
 and post.fromId = p.fbid
 group by p.fbpageid, date_format(realCreatedDate, '%Y-%m')
-order by hasTargeting desc

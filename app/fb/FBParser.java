@@ -1,9 +1,13 @@
 package fb;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,8 +41,16 @@ public class FBParser {
 	
 	public static final Pattern SIMPLE_URL = Pattern.compile("(?<=facebook.com/)[^/]+$");
 	
+	public static final DateFormat format = new SimpleDateFormat("EEE MMM FF HH:mm:ss zzz YYYY", Locale.ENGLISH);
+	public static final DateFormat markerFormat = new SimpleDateFormat("YYYY-MM-FF", Locale.ENGLISH);
+	
+	
 	public static final String PAGES = "pages/";
 	private static final JsonMapper jsonMapper = new DefaultJsonMapper();
+	
+	public static Date convertMarkerDate(String dateString) throws ParseException{
+		return markerFormat.parse(dateString);
+	}
 	
 	public static List<FBPhoto> parsePhotos(List<Photo> photos){
 		System.out.println("photos : " + photos.size());
@@ -132,6 +144,17 @@ public class FBParser {
 			fbPost.setLikesCount(post.getLikesCount());
 			fbPost.setCommentsCount(post.getCommentsCount());
 			fbPost.setReactionsCount(post.getReactionsCount());
+			
+			try {
+				Date createdDate = format.parse(fbPost.getCreatedTime());
+				Date updatedTime = format.parse(fbPost.getUpdatedTime());
+				
+				fbPost.setRealCreatedDate(createdDate);
+				fbPost.setRealLastUpdated(updatedTime);
+			} catch (ParseException e) {
+				System.out.println("error while parsing date ");
+			}
+			
 			fbPosts.add(fbPost);
 		}
 		return fbPosts;
