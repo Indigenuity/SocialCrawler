@@ -42,7 +42,7 @@ public class FB {
 	
 	private static final String FEED_FIELDS_PARAMETER = "application, created_time, caption, feed_targeting,from{id}, is_hidden, link, message, message_tags, object_id, parent_id,"
 			+ "place, privacy, shares, source, status_type, story, targeting,to{id},type, updated_time,"
-			+ "with_tags, likes.limit(0).summary(true), reactions.limit(0).summary(true)"
+			+ "with_tags, likes.limit(0).summary(true), reactions.limit(0).summary(true), "
 			+ "comments.limit(0).summary(true)";
 	
 	private static final String PHOTOS_FIELDS_PARAMETER = "album, "
@@ -66,7 +66,7 @@ public class FB {
 		accessToken = new DefaultFacebookClient(Version.LATEST).obtainAppAccessToken(APP_ID, APP_SECRET);
 		System.out.println("creating client");
 		client = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
-		rateLimiter = new ThrottledLimiter(2, 30, TimeUnit.SECONDS);
+		rateLimiter = new ThrottledLimiter(.5, 30, TimeUnit.SECONDS);
 		initialized = true;
 	}
 	

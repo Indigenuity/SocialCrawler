@@ -87,7 +87,9 @@ public class Experiment {
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
 
 	public static void runExperiment() throws IOException, SQLException {
-		CSV.fbPostsReport();
+		
+		
+		FBMaster.fetchFeeds(FeedType.FEED);
 	}
 	
 	public static void jsonExperiment() throws IOException, InterruptedException, TwitterException {
