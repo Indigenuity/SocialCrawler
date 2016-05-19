@@ -89,7 +89,7 @@ public class Experiment {
 	public static void runExperiment() throws IOException, SQLException {
 		
 		
-		CSV.allReports();
+		FBMaster.fetchFeeds(FeedType.FEED);
 	}
 	
 	public static void jsonExperiment() throws IOException, InterruptedException, TwitterException {
