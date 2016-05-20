@@ -11,6 +11,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import com.restfb.DefaultJsonMapper;
 import com.restfb.JsonMapper;
 import com.restfb.json.JsonArray;
@@ -155,6 +158,96 @@ public class FBParser {
 				System.out.println("error while parsing date ");
 			}
 			
+			fbPosts.add(fbPost);
+		}
+		return fbPosts;
+	}
+	
+	public static List<FBPost> parseDomPosts(List<WebElement> elements) {
+		List<FBPost> fbPosts = new ArrayList<FBPost>();
+		for(WebElement element : elements) {
+			FBPost fbPost = new FBPost();
+			
+			fbPost.setCreatedTime(element.findElement(By.cssSelector(".timestampContent")).getText());
+			fbPost.setFromText(element.findElement(By.cssSelector("h5")).getText());
+			fbPost.setId(element.findElement(By.name("ft_ent_identifier")).getAttribute("value"));
+			try{
+				fbPost.setLikesText(element.findElement(By.cssSelector("._4arz")).getText());
+			}catch(Exception e){
+				System.out.println("Exception while getting likes");
+			}
+			
+			try{
+				fbPost.setCommentsText(element.findElement(By.cssSelector(".UFIPagerRow")).getText()); 
+			}catch(Exception e){
+				System.out.println("Exception while getting comments");
+			}
+			
+			try{
+				fbPost.setSharesText(element.findElement(By.cssSelector(".UFIShareRow")).getText());
+			}catch(Exception e){
+				System.out.println("Exception while getting shares");
+			}
+			
+			try{
+				fbPost.setMessage(element.findElement(By.cssSelector(".userContent")).getText());
+			}catch(Exception e){
+				System.out.println("Exception while getting message");
+			}
+			
+			try{
+				WebElement worldIcon = element.findElement(By.cssSelector("._5qla"));
+				System.out.println("found world icon");
+				WebElement hoverTextElement = worldIcon.findElement(By.xpath(".."));
+				System.out.println("got parent");
+				fbPost.setAddedText(hoverTextElement.getAttribute("data-tooltip-content"));
+			} catch(Exception e) {
+				System.out.println("Exception while getting added hover");
+			}
+			
+			System.out.println("createdTime : " + fbPost.getCreatedTime());
+			System.out.println("id : " + fbPost.getId());
+			System.out.println("fromText : " + fbPost.getFromText());
+			System.out.println("likesText : " + fbPost.getLikesText());
+			System.out.println("commentsText : " + fbPost.getCommentsText());
+			System.out.println("sharesText : " + fbPost.getSharesText());
+			System.out.println("messageText : " + fbPost.getMessage());
+			System.out.println("hoverText : " + fbPost.getAddedText());
+			
+//			fbPost.setCaption(post.getCaption());
+//			fbPost.setFeedTargeting(post.getFeedTargeting()+"");
+//			fbPost.setFromId(post.getFrom().getId());
+//			fbPost.setIsHidden(post.getIsHidden());
+//			fbPost.setLink(post.getLink());
+//			fbPost.setMessage(post.getMessage());
+//			fbPost.setMessageTags(post.getMessageTags() + "");
+//			fbPost.setObjectId(post.getObjectId());
+//			fbPost.setParentId(post.getParentId());
+//			fbPost.setPlace(post.getPlace() + "");
+//			fbPost.setPrivacy(post.getPrivacy() + "");
+//			fbPost.setShares(post.getSharesCount());
+//			fbPost.setSource(post.getSource());
+//			fbPost.setStatusType(post.getStatusType());
+//			fbPost.setStory(post.getStory());
+//			fbPost.setTargeting(post.getTargeting() + "");
+//			fbPost.setToId(Utils.listToIdCSV(post.getTo()));
+//			fbPost.setType(post.getType());
+//			fbPost.setUpdatedTime(post.getUpdatedTime() + "");
+//			fbPost.setWithTags(post.getWithTags() + "");
+//			fbPost.setLikesCount(post.getLikesCount());
+//			fbPost.setCommentsCount(post.getCommentsCount());
+//			fbPost.setReactionsCount(post.getReactionsCount());
+			
+//			try {
+//				Date createdDate = format.parse(fbPost.getCreatedTime());
+//				Date updatedTime = format.parse(fbPost.getUpdatedTime());
+//				
+//				fbPost.setRealCreatedDate(createdDate);
+//				fbPost.setRealLastUpdated(updatedTime);
+//			} catch (ParseException e) {
+//				System.out.println("error while parsing date ");
+//			}
+//			
 			fbPosts.add(fbPost);
 		}
 		return fbPosts;

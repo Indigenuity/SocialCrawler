@@ -104,6 +104,15 @@ public class FBMaster {
 		}
 	}
 	
+	public static void processManualFetch(FeedFetch feedFetch) {
+		FBPage fbPage = feedFetch.getFbPage();
+		System.out.println("processing photo fetch : " + fbPage.getCompanyString());
+		
+		while(!feedFetch.getReachedEnd()){
+			
+		}
+	}
+	
 	public static void processFeedFetch(FeedFetch feedFetch) {
 		if(feedFetch.getFeedType() == FeedType.PHOTOS){
 			processPhotoFetch(feedFetch);

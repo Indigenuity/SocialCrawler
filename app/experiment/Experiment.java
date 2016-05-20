@@ -12,10 +12,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -51,6 +53,7 @@ import fb.FB;
 import fb.FBComment;
 import fb.FBMaster;
 import fb.FBPage;
+import fb.FBParser;
 import fb.FBPost;
 import fb.FeedType;
 import linkedin.LI;
@@ -74,6 +77,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.api.SearchResource;
 import twitter4j.conf.ConfigurationBuilder;
+import utils.ThrottledLimiter;
 import utils.Utils;
 
 public class Experiment {
@@ -85,19 +89,142 @@ public class Experiment {
 
 	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
 	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
+	
+	private static final ThrottledLimiter rateLimiter;
+	private static final ThrottledLimiter shortLimiter;
+	private static final WebDriver driver;
+	
+	static {
+		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");  
+		ChromeOptions opt = new ChromeOptions();
+		opt.setBinary(CHROME_EXE);
+		opt.addArguments(COOKIES);
+		driver = new ChromeDriver(opt);
+		
+		rateLimiter = new ThrottledLimiter(.2, 60, TimeUnit.SECONDS); 
+		shortLimiter = new ThrottledLimiter(2, 60, TimeUnit.SECONDS);
+	}
+	public static void runExperiment() throws InterruptedException {
+		scrapePage();
+	}
+	
+	private static void scrapePage() throws InterruptedException{
+		rateLimiter.acquire();
+		driver.get("https://www.facebook.com/stjude/");
+		List<WebElement> years = driver.findElements(By.cssSelector("ul[aria-label='Timeline'] li")); 
+//		Elements elements = doc.select("ul[aria-label='Timeline'] li");
+		System.out.println("elements size : " + years.size());
+		Thread.sleep(1000);
+		List<WebElement> posts = driver.findElements(By.cssSelector("div.userContentWrapper:not([crawled])"));
+		List<FBPost> fbPosts = FBParser.parseDomPosts(posts);
+//		System.out.println("posts : " + posts.size());
+		for(WebElement yearNav : years){
+//			scrapeYear(yearNav);
+		}
+	}
+	
+	private static void scrapeYear(WebElement yearNav){
+		boolean shouldCrawl = false;
+		Integer yearInt = null;
+		try{
+			 yearInt = Integer.parseInt(yearNav.getText());
+			if(yearInt < 2012 && yearInt > 2005){
+				shouldCrawl = true;
+			}
+		} catch(Exception e){
+			System.out.println("year text not parsable to int : " + yearNav.getText());
+		}
+		
+		if(shouldCrawl) {
+			rateLimiter.acquire();
+			System.out.println("clicking yearNav : " + yearInt);
+			yearNav.click();
+			List<WebElement> yearPostSections = driver.findElements(By.cssSelector("div[id^=PagePostsSectionPagelet"));
+			System.out.println("yearPostSections : " + yearPostSections.size());
+			for(WebElement postSection : yearPostSections) {
+				WebElement yearLabel = postSection.findElement(By.cssSelector(".lfloat"));
+				
+				String yearLabelText = yearLabel.getText();
+				if(yearNav.getText().equals(yearLabelText)){
+					System.out.println("found appropriate section");
+					scrapePostSection(postSection);
+				}
+			}
+		}
+	}
+	
+	private static void scrapePostSection(WebElement postSection) {
+		WebElement popoverButton = postSection.findElement(By.cssSelector(".clearfix div.uiPopover.rfloat"));
+		shortLimiter.acquire();
+		popoverButton.click();
+		WebElement allStoriesButton = driver.findElement(By.cssSelector("div.uiLayer:not(.hidden_elem) span span span")); 
+		shortLimiter.acquire();
+		allStoriesButton.click();
+		List<FBPost> fbPosts;
+		rateLimiter.acquire();
+		do{
+			
+			scrollDown();
+			rateLimiter.acquire();
+			fbPosts = extractNewPosts(postSection);
+		}while(fbPosts != null && fbPosts.size() > 0);
+	}
+	
+	private static List<FBPost> extractNewPosts(WebElement postSection){
+		List<WebElement> posts = postSection.findElements(By.cssSelector("div._5pat:not([crawled])"));
+		System.out.println("posts : " + posts.size());
+		for(WebElement post : posts){
+			setAttr(post, "crawled", "true");
+		}
+		return FBParser.parseDomPosts(posts);
+	}
+	
+	private static void setAttr(WebElement element, String attr, String value){
+		String id = element.getAttribute("id");
+		System.out.println("setting attribute of id : " + id);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("document.getElementById('" + id + "').setAttribute('" + attr + "', '" + value + "');");
+	}
+	
+	private static void scrollDown() {
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("scrollBy(0, 100000)");
+	}
+	
+	public static void fbFeedExperiment() throws IOException, SQLException, InterruptedException, ParseException {
 
-	public static void runExperiment() throws IOException, SQLException, InterruptedException, ParseException {
-
-		FBPage fbPage = JPA.em().find(FBPage.class, 95L);
+		FBPage fbPage = JPA.em().find(FBPage.class, 34L);
 		
 		Connection<Post> connection = FB.getInstance().getFeedStart(fbPage.getFbId(), Post.class);
+		String nextPageUrl = null;
+		String previousPageUrl = null;
 		while(connection.getData().size() > 0){
 			for(Post post : connection.getData()){
 				System.out.println("date : " + post.getCreatedTime());
 				System.out.println("message : "+ post.getMessage());
 			}
+			System.out.println("nextPageUrl : " + connection.getNextPageUrl());
+			if(connection.getPreviousPageUrl() != null){
+				previousPageUrl = connection.getPreviousPageUrl();	
+				System.out.println("previousPageUrl : " + previousPageUrl);
+			}
+			connection = FB.getInstance().continueFeed(connection.getNextPageUrl(), Post.class);
+			
+		}
+		System.out.println("starting reverse traversal");
+		connection = FB.getInstance().continueFeed(previousPageUrl, Post.class);
+		while(connection.getData().size() > 0){
+			for(Post post : connection.getData()){
+				System.out.println("date : " + post.getCreatedTime());
+				System.out.println("message : "+ post.getMessage());
+			}
+			previousPageUrl = connection.getPreviousPageUrl();
+			System.out.println("previousPageUrl : " + previousPageUrl);
+			System.out.println("nextPageUrl : " + connection.getNextPageUrl());
 			connection = FB.getInstance().continueFeed(connection.getNextPageUrl(), Post.class);
 		}
+			
+		
 //		String query = "from FBPage p";
 //		List<FBPage> fbPages = JPA.em().createQuery(query, FBPage.class).getResultList();
 //		for(FBPage fbPage : fbPages) {

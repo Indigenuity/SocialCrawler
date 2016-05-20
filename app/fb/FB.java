@@ -28,8 +28,11 @@ public class FB {
 
 	private static final String APP_SECRET = "17b49f9d44934c08902965568727117e";
 	private static final String APP_ID = "847051758681799";
+	private static final String USER_ACCESS_TOKEN = "EAAMCY5suvscBAMR2m6PTVpAtw1uQVxxZCuFiOjfQmmrGoMwSfUfACmbO8I7iUhnpP57ZAup5GSacwGEh4WAu2ZBJ0H07hHZCipxiANguYrRnZBafm5ucepTKsd8aDHpp6XB0QiLMc0ZClkYNfNay2tX3MOyyWWhN9i2H3Ot2xVDQZDZD";
 	private static final String REDIRECT = "https://www.facebook.com/connect/login_success.html";
 	private static final String TEMP_USER_ACCESS = "AQBhzmEw3hmKQ_ffKvyVxI1GIdTop6-epXaeGIwRQzkR54VTfSJkJ8cNBwWn_jKqAbIi00bSQGyaGoC84dT4Nl2DXM6B04X6Ypt_ifeuenuf0UPVse4lqbFBKD86ZQ6dmvnL_T3Pvf4iTL9OytEJGQklKhR3lkv28EdYpdhJOBHszq4FM8qc28BRrjCUpnO-i3dk6kZyFVt9-k1kHsmxg-g1blfYWOmZShlCKvXYk-bOqbqJiu6D0Q_qroof8_yStP1IWa5HFnIswBKdhC6FmimmvrCGxGNUlv6qRVczTnhIkaUBN5vrh4vCmeUF1Cr2VcY";
+	
+	private static final int POST_LIMIT = 100;
 
 	private static final String PAGE_FIELDS_PARAMETER = "about,affiliation,app_id,attire,best_page,built,can_checkin,category,category_list,"
 			+ "checkins,company_overview,contact_address,culinary_team,current_location,description,display_subtext,"
@@ -63,9 +66,9 @@ public class FB {
 	
 	private void init(){
 		System.out.println("getting access token");
-		accessToken = new DefaultFacebookClient(Version.LATEST).obtainAppAccessToken(APP_ID, APP_SECRET);
+//		accessToken = new DefaultFacebookClient(Version.LATEST).obtainAppAccessToken(APP_ID, APP_SECRET);
 		System.out.println("creating client");
-		client = new DefaultFacebookClient(accessToken.getAccessToken(), Version.LATEST);
+		client = new DefaultFacebookClient(USER_ACCESS_TOKEN, Version.VERSION_2_6);
 		rateLimiter = new ThrottledLimiter(.5, 30, TimeUnit.SECONDS);
 		initialized = true;
 	}
@@ -119,8 +122,8 @@ public class FB {
 					PHOTOS_FIELDS_PARAMETER));
 		}
 		else {
-			return client.fetchConnection(identifier + "/feed", namedType, Parameter.with("include_hidden", true), Parameter.with("fields", 
-					FEED_FIELDS_PARAMETER));
+			return client.fetchConnection(identifier + "/feed", namedType, 
+					Parameter.with("limit",  POST_LIMIT));
 		}
 	}
 	

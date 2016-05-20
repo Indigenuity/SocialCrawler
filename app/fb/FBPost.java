@@ -56,6 +56,15 @@ public class FBPost {
 	private Date realCreatedDate;
 	private Date realLastUpdated;
 	
+	private String likesText;
+	private String sharesText;
+	private String fromText;
+	private String commentsText;
+	private String addedText;
+	
+	private String rawHtml;
+	
+	
 	@ManyToOne
 	private FBPage fbPage;
 	
@@ -247,6 +256,36 @@ public class FBPost {
 	}
 	public void setRealLastUpdated(Date realLastUpdated) {
 		this.realLastUpdated = realLastUpdated;
+	}
+	public String getLikesText() {
+		return likesText;
+	}
+	public void setLikesText(String likesText) {
+		this.likesText = likesText;
+	}
+	public String getSharesText() {
+		return sharesText;
+	}
+	public void setSharesText(String sharesText) {
+		this.sharesText = sharesText;
+	}
+	public String getFromText() {
+		return fromText;
+	}
+	public void setFromText(String fromText) {
+		this.fromText = fromText;
+	}
+	public String getCommentsText() {
+		return commentsText;
+	}
+	public void setCommentsText(String commentsText) {
+		this.commentsText = commentsText;
+	}
+	public String getAddedText() {
+		return addedText;
+	}
+	public void setAddedText(String addedText) {
+		this.addedText = addedText;
 	}
 	
 	
