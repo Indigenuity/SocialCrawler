@@ -134,8 +134,8 @@ public class Experiment {
 	public static void runExperiment() throws InterruptedException, IOException, SQLException{
 		
 //		parseRawPosts();
-//		CSV.allReports();
-		doBasicCrawls();
+		CSV.allReports();
+//		doBasicCrawls();
 //		if(!started){
 //			driver.get("http://facebook.com/Nordstrom");
 //			started = true;
