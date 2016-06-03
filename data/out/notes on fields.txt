@@ -1,0 +1,24 @@
+Facebook Page Fields
+
+	alwaysOpen, and other fields --useful only for local businesses, like a number of other fields
+	appId --would contain the id of an app used to create the apge
+	communityPage --“Community Pages are a new type of Facebook Page dedicated to a topic or experience that is owned collectively by the community connected to it."
+	globalBrandRootId --the FB id for a page representing the parent brand
+	
+Facebook Post Aggregate Fields
+	count(*) --The total number of posts
+	blankMessage --The post has no text
+	updatedLater --Not a lot of meaning here, safe to ignore
+	hasParent --This is a re-post or some other sharing of pre-existing facebook content
+	hasPlace --the post has a place associated with it
+	hasMessageTags --People or pages or other things are tagged 
+	hasSource --The post links to some external source
+	hasTo --The post is addressed to someone
+	postedFromApp --The company used some app to publish the post
+	Different story types are just different kinds of posts. Life Event stories are ignored in this report, since they are not contemporary engagement.
+	
+Tweet Aggregate Fields
+	isStatusQuote --The tweet quotes another tweet
+	hasCoords --there are geocoordinates associated with the place in the tweet
+	possiblySensitive --marks adult content, etc.
+	has Entities --These describe the different content in the tweet, like hashtags, links, mentions, or media.

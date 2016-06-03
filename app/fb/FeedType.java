@@ -7,6 +7,7 @@ import com.restfb.types.Post;
 public enum FeedType {
 
 	FEED(Post.class), 
+	MANUAL(Post.class),
 	PHOTOS(Photo.class);
 	
 	private Class<? extends NamedFacebookType> feedClass;

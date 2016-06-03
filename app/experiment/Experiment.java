@@ -17,7 +17,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -55,6 +57,8 @@ import fb.FBMaster;
 import fb.FBPage;
 import fb.FBParser;
 import fb.FBPost;
+import fb.FBdao;
+import fb.FeedFetch;
 import fb.FeedType;
 import linkedin.LI;
 import linkedin.LIMaster;
@@ -88,14 +92,14 @@ public class Experiment {
 	private static final String TEMP_USER_ACCESS = "AQBhzmEw3hmKQ_ffKvyVxI1GIdTop6-epXaeGIwRQzkR54VTfSJkJ8cNBwWn_jKqAbIi00bSQGyaGoC84dT4Nl2DXM6B04X6Ypt_ifeuenuf0UPVse4lqbFBKD86ZQ6dmvnL_T3Pvf4iTL9OytEJGQklKhR3lkv28EdYpdhJOBHszq4FM8qc28BRrjCUpnO-i3dk6kZyFVt9-k1kHsmxg-g1blfYWOmZShlCKvXYk-bOqbqJiu6D0Q_qroof8_yStP1IWa5HFnIswBKdhC6FmimmvrCGxGNUlv6qRVczTnhIkaUBN5vrh4vCmeUF1Cr2VcY";
 
 	private static final String CHROME_EXE = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
-	private static final String COOKIES = "--user-data-dir=C:\\Users\\jdclark\\AppData\\Local\\Google\\Chrome\\User Data";
+	private static final String COOKIES = "--user-data-dir=C:\\Users\\JD\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1";
 	
 	private static final ThrottledLimiter rateLimiter;
 	private static final ThrottledLimiter shortLimiter;
-	private static final WebDriver driver;
-	
+	private static WebDriver driver;
+	 
 	static {
-		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");  
+		System.setProperty("webdriver.chrome.driver", "./chromedriver.exe");   
 		ChromeOptions opt = new ChromeOptions();
 		opt.setBinary(CHROME_EXE);
 		opt.addArguments(COOKIES);
@@ -104,41 +108,138 @@ public class Experiment {
 		rateLimiter = new ThrottledLimiter(.2, 60, TimeUnit.SECONDS); 
 		shortLimiter = new ThrottledLimiter(2, 60, TimeUnit.SECONDS);
 	}
-	public static void runExperiment() throws InterruptedException {
-		scrapePage();
+	private static boolean started = false;
+	
+	public static void parseRawPosts(){
+		String query = "from FBPost p where p.fromText is not null";
+		int count = 0;
+		int offset = 0;
+		List<FBPost> fbPosts;  
+		
+			fbPosts = JPA.em().createQuery(query, FBPost.class).getResultList();
+			System.out.println("fbPosts size : " + fbPosts.size());
+			for(FBPost fbPost : fbPosts) {
+				FBParser.parseTextPost(fbPost);
+				count++;
+				if(count % 500 == 0) {
+					JPA.em().getTransaction().commit();
+					JPA.em().getTransaction().begin(); 
+					System.out.println("Processed : " + count);
+				}
+			}
+			
 	}
 	
-	private static void scrapePage() throws InterruptedException{
-		rateLimiter.acquire();
-		driver.get("https://www.facebook.com/stjude/");
-		List<WebElement> years = driver.findElements(By.cssSelector("ul[aria-label='Timeline'] li")); 
-//		Elements elements = doc.select("ul[aria-label='Timeline'] li");
-		System.out.println("elements size : " + years.size());
-		Thread.sleep(1000);
-		List<WebElement> posts = driver.findElements(By.cssSelector("div.userContentWrapper:not([crawled])"));
-		List<FBPost> fbPosts = FBParser.parseDomPosts(posts);
-//		System.out.println("posts : " + posts.size());
-		for(WebElement yearNav : years){
-//			scrapeYear(yearNav);
+	
+	public static void runExperiment() throws InterruptedException, IOException, SQLException{
+		
+//		parseRawPosts();
+//		CSV.allReports();
+		doBasicCrawls();
+//		if(!started){
+//			driver.get("http://facebook.com/Nordstrom");
+//			started = true;
+//		}
+//		else {
+//			WebElement postSection = driver.findElement(By.cssSelector("#PagePostsSectionPagelet-12854644836-3"));
+//			System.out.println("postSection : " + postSection);
+//			WebElement morePostsButton = postSection.findElement(By.cssSelector(".uiMorePager"));
+//			WebElement morePostsPrimaryButton = postSection.findElement(By.cssSelector(".uiMorePagerPrimary"));
+//			morePostsButton.click();
+////			morePostsPrimaryButton.click();
+//		}
+	}
+	
+	public static void doBasicCrawls() throws InterruptedException {
+		String query = "select p from FBPage p join p.posts pp group by p.fbPageId order by count(pp)";
+		
+		
+		List<FBPage> fbPages = JPA.em().createQuery(query, FBPage.class).getResultList();
+		System.out.println("fbPages : " + fbPages.size());
+		for(FBPage fbPage : fbPages) {
+			FeedFetch feedFetch = FBdao.getFeedFetch(fbPage, FeedType.MANUAL);
+			scrapePage(feedFetch);
 		}
+		
+//		FBPage fbPage = JPA.em().find(FBPage.class, 86L);
+//		
+//		FeedFetch feedFetch = FBdao.getFeedFetch(fbPage, FeedType.MANUAL);
+//		scrapePage(feedFetch);
 	}
 	
-	private static void scrapeYear(WebElement yearNav){
+	private static void scrapePage(FeedFetch feedFetch) throws InterruptedException{
+		
+		try{
+			FBPage fbPage = feedFetch.getFbPage();
+			if(feedFetch.getReachedEnd()){
+				return;
+			}
+			rateLimiter.acquire();
+			driver.get("http://facebook.com/" + fbPage.getFbId());
+			
+			List<WebElement> yearNavs = driver.findElements(By.cssSelector("ul[aria-label='Timeline'] li"));
+			System.out.println("found yearNavs of size : " + yearNavs.size());
+			int numPosts = 0;
+			for(WebElement yearNav : yearNavs){
+				numPosts = scrapeYear(feedFetch, yearNav);
+				System.out.println("number of posts for the year : " + numPosts);
+				if(numPosts > 200){
+					JPA.em().getTransaction().commit();
+					JPA.em().getTransaction().begin();
+					throw new IllegalStateException("Too Many Damn Posts");
+				}
+			}
+			
+			feedFetch.setReachedEnd(true);
+			JPA.em().getTransaction().commit();
+			JPA.em().getTransaction().begin();
+			
+		}catch(Exception e){
+			feedFetch.setErrorMessage(e.getClass().getSimpleName()+ " Exception : " + e.getMessage());
+			System.out.println(feedFetch.getErrorMessage());
+		}
+		
+//		Elements elements = doc.select("ul[aria-label='Timeline'] li");
+//		System.out.println("elements size : " + years.size());
+//		Thread.sleep(1000);
+//		List<WebElement> posts = driver.findElements(By.cssSelector("div.userContentWrapper:not([crawled])"));
+//		List<FBPost> fbPosts = FBParser.parseDomPosts(posts);
+//		System.out.println("posts : " + posts.size());
+//		for(WebElement yearNav : years){
+//			scrapeYear(yearNav);
+//		}
+	}
+	
+	private static void scrapeYear(FeedFetch feedFetch, int year) {
+		
+	}
+	
+	private static int scrapeYear(FeedFetch feedFetch, WebElement yearNav){
 		boolean shouldCrawl = false;
+		int numPosts = 0;
 		Integer yearInt = null;
+		FBPage fbPage = feedFetch.getFbPage();
+		Date earliestPost = fbPage.getFirstPost();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(earliestPost);
+		
 		try{
 			 yearInt = Integer.parseInt(yearNav.getText());
-			if(yearInt < 2012 && yearInt > 2005){
+			 
+			if(yearInt <= calendar.get(Calendar.YEAR) && yearInt < feedFetch.getEarliestBasicYear() && yearInt > 2005){
 				shouldCrawl = true;
 			}
 		} catch(Exception e){
+			
 			System.out.println("year text not parsable to int : " + yearNav.getText());
 		}
-		
+		System.out.println("yearInt : " + yearInt);
+		System.out.println("schouldCrawl : " + shouldCrawl);
 		if(shouldCrawl) {
-			rateLimiter.acquire();
 			System.out.println("clicking yearNav : " + yearInt);
+			shortLimiter.acquire();
 			yearNav.click();
+			shortLimiter.acquire();
 			List<WebElement> yearPostSections = driver.findElements(By.cssSelector("div[id^=PagePostsSectionPagelet"));
 			System.out.println("yearPostSections : " + yearPostSections.size());
 			for(WebElement postSection : yearPostSections) {
@@ -147,41 +248,81 @@ public class Experiment {
 				String yearLabelText = yearLabel.getText();
 				if(yearNav.getText().equals(yearLabelText)){
 					System.out.println("found appropriate section");
-					scrapePostSection(postSection);
+					numPosts += scrapePostSection(feedFetch, postSection); 
 				}
 			}
+			feedFetch.setEarliestBasicYear(yearInt);
 		}
+		return numPosts;
 	}
 	
-	private static void scrapePostSection(WebElement postSection) {
+	private static int scrapePostSection(FeedFetch feedFetch, WebElement postSection) {
+		int numPosts = 0;
+		shortLimiter.acquire();
 		WebElement popoverButton = postSection.findElement(By.cssSelector(".clearfix div.uiPopover.rfloat"));
-		shortLimiter.acquire();
+		System.out.println("clicking highlights popdown");
+		
 		popoverButton.click();
-		WebElement allStoriesButton = driver.findElement(By.cssSelector("div.uiLayer:not(.hidden_elem) span span span")); 
 		shortLimiter.acquire();
+		WebElement allStoriesButton = driver.findElement(By.cssSelector("div.uiLayer:not(.hidden_elem) span span span")); 
+		System.out.println("clicking all stories button");
 		allStoriesButton.click();
 		List<FBPost> fbPosts;
-		rateLimiter.acquire();
+		boolean keepGoing = true;
 		do{
-			
+			System.out.println("scrolling down");
+			rateLimiter.acquire();
 			scrollDown();
 			rateLimiter.acquire();
+			System.out.println("extracting posts");
 			fbPosts = extractNewPosts(postSection);
+			if(fbPosts.size() < 1){
+				try{
+					System.out.println("looking for more posts button");
+					rateLimiter.acquire();
+					WebElement morePostsButton = postSection.findElement(By.cssSelector(".uiMorePager"));
+					System.out.println("clicking more posts button");
+					morePostsButton.click();
+					rateLimiter.acquire();
+					scrollDown();
+					rateLimiter.acquire();
+					fbPosts = extractNewPosts(postSection);
+				}catch(Exception e){
+					System.out.println("Error following more posts button:  " + e.getMessage());
+				}
+			}
+			for(FBPost fbPost : fbPosts) {
+				fbPost.setFbPage(feedFetch.getFbPage());
+				JPA.em().persist(fbPost);
+				feedFetch.setEarliestPost(fbPost.getCreatedTime());
+				System.out.println("Earliest : "+ feedFetch.getEarliestPost());
+			}
+			numPosts += fbPosts.size();
+			JPA.em().getTransaction().commit();
+			JPA.em().getTransaction().begin();
 		}while(fbPosts != null && fbPosts.size() > 0);
+		return numPosts;
 	}
 	
 	private static List<FBPost> extractNewPosts(WebElement postSection){
-		List<WebElement> posts = postSection.findElements(By.cssSelector("div._5pat:not([crawled])"));
-		System.out.println("posts : " + posts.size());
-		for(WebElement post : posts){
-			setAttr(post, "crawled", "true");
+		try{
+			List<WebElement> posts = postSection.findElements(By.cssSelector("div._5pat:not([crawled])"));
+			System.out.println("posts : " + posts.size());
+			for(WebElement post : posts){
+				setAttr(post, "crawled", "true");
+			}
+			return FBParser.parseDomPosts(posts);
+		} catch(NoSuchElementException e){
+			return new ArrayList<FBPost>();
+		} catch(ElementNotVisibleException e){
+			return new ArrayList<FBPost>();
 		}
-		return FBParser.parseDomPosts(posts);
+		
 	}
 	
 	private static void setAttr(WebElement element, String attr, String value){
 		String id = element.getAttribute("id");
-		System.out.println("setting attribute of id : " + id);
+//		System.out.println("setting attribute of id : " + id);
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		js.executeScript("document.getElementById('" + id + "').setAttribute('" + attr + "', '" + value + "');");
 	}

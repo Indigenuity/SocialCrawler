@@ -34,6 +34,9 @@ public class FeedFetch {
 	
 	private String earliestPost;
 	
+	private Date earliestItem;
+	private Integer earliestBasicYear=2017;
+	
 	private Boolean reachedEnd = false;
 	
 	@Enumerated(EnumType.STRING)
@@ -100,6 +103,22 @@ public class FeedFetch {
 
 	public void setFeedType(FeedType feedType) {
 		this.feedType = feedType;
+	}
+
+	public Date getEarliestItem() {
+		return earliestItem;
+	}
+
+	public void setEarliestItem(Date earliestItem) {
+		this.earliestItem = earliestItem;
+	}
+
+	public Integer getEarliestBasicYear() {
+		return earliestBasicYear;
+	}
+
+	public void setEarliestBasicYear(Integer earliestBasicYear) {
+		this.earliestBasicYear = earliestBasicYear;
 	}
 	
 	

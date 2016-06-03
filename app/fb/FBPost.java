@@ -62,6 +62,7 @@ public class FBPost {
 	private String commentsText;
 	private String addedText;
 	
+	private Integer numShowingComments;
 	private String rawHtml;
 	
 	
@@ -286,6 +287,12 @@ public class FBPost {
 	}
 	public void setAddedText(String addedText) {
 		this.addedText = addedText;
+	}
+	public Integer getNumShowingComments() {
+		return numShowingComments;
+	}
+	public void setNumShowingComments(Integer numShowingComments) {
+		this.numShowingComments = numShowingComments;
 	}
 	
 	

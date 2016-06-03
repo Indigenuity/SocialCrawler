@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -46,13 +47,100 @@ public class FBParser {
 	
 	public static final DateFormat format = new SimpleDateFormat("EEE MMM FF HH:mm:ss zzz YYYY", Locale.ENGLISH);
 	public static final DateFormat markerFormat = new SimpleDateFormat("YYYY-MM-FF", Locale.ENGLISH);
+	public static final DateFormat rawFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
 	
 	
 	public static final String PAGES = "pages/";
 	private static final JsonMapper jsonMapper = new DefaultJsonMapper();
 	
+	private static final String ofComment = "[0-9]+ of ([0-9]+)";
+	private static final Pattern ofCommentPattern = Pattern.compile(ofComment);
+	
+	private static final String moreComment = "View ([0-9]+) more comments";
+	private static final Pattern moreCommentPattern = Pattern.compile(moreComment);
+	
+	
+	private static final String othersLikes = "[^0-9]+ and ([0-9\\.]+) others";
+	private static final Pattern othersLikesPattern = Pattern.compile(othersLikes);
+	
 	public static Date convertMarkerDate(String dateString) throws ParseException{
 		return markerFormat.parse(dateString);
+	}
+	
+	public static void parseTextPost(FBPost fbPost) {
+//		Matcher matcher = othersLikesPattern.matcher("Angelina Castellano-O'Leary and 40 others");
+//		System.out.println("mmatcher: " + matcher.find());
+//		System.out.println("parsing fbPost : " + fbPost);
+		parseCommentText(fbPost);
+		parseLikeText(fbPost);
+		parseSharesText(fbPost);
+		parseDateText(fbPost);
+	}
+	
+	public static void parseCommentText(FBPost fbPost) {
+		Integer numComments = fbPost.getNumShowingComments();
+		if(numComments == null) {
+			numComments = 0;
+		}
+		String commentText = fbPost.getCommentsText();
+		
+		if(!StringUtils.isEmpty(commentText)){
+			Matcher matcher = ofCommentPattern.matcher(commentText);
+			if(matcher.find()){
+				numComments += Integer.parseInt(matcher.group(1));
+			} else {
+				matcher = moreCommentPattern.matcher(commentText);
+				if(matcher.find()){
+					numComments += Integer.parseInt(matcher.group(1));
+				}
+			}
+		}
+		fbPost.setCommentsCount(numComments + 0L);
+		
+	}
+	
+	public static void parseLikeText(FBPost fbPost) {
+		double numLikes = 1;
+		String likesText = fbPost.getLikesText();
+		if(!StringUtils.isEmpty(likesText)){
+			if(likesText.contains("K")){
+				numLikes = 1000;
+				likesText = likesText.replace("K", "");
+			}
+			
+			Matcher matcher = othersLikesPattern.matcher(likesText);
+//			System.out.println("likesText : " + likesText);
+			if(matcher.find()){
+//				System.out.println("found it");
+				numLikes *= Double.parseDouble(matcher.group(1));
+			} else {
+				numLikes *= Double.parseDouble(likesText);
+			}
+//			System.out.println("numLikes : " + numLikes);
+		}
+		fbPost.setLikesCount((long)numLikes);
+	}
+	
+	public static void parseSharesText(FBPost fbPost) {
+		long numShares = 0;
+		if(!StringUtils.isEmpty(fbPost.getSharesText())){
+			numShares= Long.parseLong(fbPost.getSharesText().replace(" shares", "").replace(" share", "").replace(",", ""));
+		}
+		fbPost.setShares(numShares);
+	}
+	
+	public static void parseDateText(FBPost fbPost) {
+		try{
+			Date rawDate = rawFormat.parse(fbPost.getCreatedTime());
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(rawDate);
+			calendar.set(Calendar.MINUTE, 1);
+			fbPost.setRealCreatedDate(calendar.getTime());
+			
+		}catch( Exception e){
+			System.out.println("bad date");
+//			JPA.em().remove(fbPost);
+		}
 	}
 	
 	public static List<FBPhoto> parsePhotos(List<Photo> photos){
@@ -174,45 +262,57 @@ public class FBParser {
 			try{
 				fbPost.setLikesText(element.findElement(By.cssSelector("._4arz")).getText());
 			}catch(Exception e){
-				System.out.println("Exception while getting likes");
+//				System.out.println("Exception while getting likes");
 			}
 			
 			try{
-				fbPost.setCommentsText(element.findElement(By.cssSelector(".UFIPagerRow")).getText()); 
+				List<WebElement> pagerRows = element.findElements(By.cssSelector(".UFIPagerRow"));
+				String commentsText = "";
+				for(WebElement pagerRow : pagerRows){
+					commentsText += pagerRow.getText() + " ";
+				}
+				fbPost.setCommentsText(commentsText); 
 			}catch(Exception e){
-				System.out.println("Exception while getting comments");
+//				System.out.println("Exception while getting comments text");
+			}
+			
+			try{
+				List<WebElement> visibleComments = element.findElements(By.cssSelector(".UFIComment"));
+				fbPost.setNumShowingComments(visibleComments.size());
+			}catch(Exception e){
+//				System.out.println("Exception while getting comments count");
 			}
 			
 			try{
 				fbPost.setSharesText(element.findElement(By.cssSelector(".UFIShareRow")).getText());
 			}catch(Exception e){
-				System.out.println("Exception while getting shares");
+//				System.out.println("Exception while getting shares");
 			}
 			
 			try{
 				fbPost.setMessage(element.findElement(By.cssSelector(".userContent")).getText());
 			}catch(Exception e){
-				System.out.println("Exception while getting message");
+//				System.out.println("Exception while getting message");
 			}
 			
 			try{
 				WebElement worldIcon = element.findElement(By.cssSelector("._5qla"));
-				System.out.println("found world icon");
+//				System.out.println("found world icon");
 				WebElement hoverTextElement = worldIcon.findElement(By.xpath(".."));
-				System.out.println("got parent");
+//				System.out.println("got parent");
 				fbPost.setAddedText(hoverTextElement.getAttribute("data-tooltip-content"));
 			} catch(Exception e) {
-				System.out.println("Exception while getting added hover");
+//				System.out.println("Exception while getting added hover");
 			}
 			
 			System.out.println("createdTime : " + fbPost.getCreatedTime());
-			System.out.println("id : " + fbPost.getId());
-			System.out.println("fromText : " + fbPost.getFromText());
-			System.out.println("likesText : " + fbPost.getLikesText());
-			System.out.println("commentsText : " + fbPost.getCommentsText());
-			System.out.println("sharesText : " + fbPost.getSharesText());
+//			System.out.println("id : " + fbPost.getId());
+//			System.out.println("fromText : " + fbPost.getFromText());
+//			System.out.println("likesText : " + fbPost.getLikesText());
+//			System.out.println("commentsText : " + fbPost.getCommentsText());
+//			System.out.println("sharesText : " + fbPost.getSharesText());
 			System.out.println("messageText : " + fbPost.getMessage());
-			System.out.println("hoverText : " + fbPost.getAddedText());
+//			System.out.println("hoverText : " + fbPost.getAddedText());
 			
 //			fbPost.setCaption(post.getCaption());
 //			fbPost.setFeedTargeting(post.getFeedTargeting()+"");
