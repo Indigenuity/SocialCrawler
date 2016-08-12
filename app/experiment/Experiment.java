@@ -51,6 +51,7 @@ import com.restfb.types.Photo;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 
+import fb.DatedFeedFetch;
 import fb.FB;
 import fb.FBComment;
 import fb.FBMaster;
@@ -60,6 +61,7 @@ import fb.FBPost;
 import fb.FBdao;
 import fb.FeedFetch;
 import fb.FeedType;
+import fb.DatedFeedFetch.DateGranularity;
 import linkedin.LI;
 import linkedin.LIMaster;
 import linkedin.LIPage;
@@ -103,7 +105,8 @@ public class Experiment {
 		ChromeOptions opt = new ChromeOptions();
 		opt.setBinary(CHROME_EXE);
 		opt.addArguments(COOKIES);
-		driver = new ChromeDriver(opt);
+//		driver = new ChromeDriver(opt);
+		driver = null;
 		
 		rateLimiter = new ThrottledLimiter(.2, 60, TimeUnit.SECONDS); 
 		shortLimiter = new ThrottledLimiter(2, 60, TimeUnit.SECONDS);
@@ -130,8 +133,32 @@ public class Experiment {
 			
 	}
 	
+	public static void runExperiment() throws IOException {
+		
+		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
+		
+		for(FBPage fbPage : fbPages){
+			DatedFeedFetch feedFetch = new DatedFeedFetch();
+			feedFetch.setDateGranularity(DateGranularity.MONTH);
+			JPA.em().persist(feedFetch);
+			fbPage.setFetchByMonth(feedFetch);
+			FBMaster.runDatedFeedFetch(fbPage.getFetchByMonth(), fbPage);
+		}
+//		System.out.println("running experiment");
+//		
+//		FBPage fbPage = JPA.em().find(FBPage.class, 17L);
+//		
+//		System.out.println("fbPage : " + fbPage.getName());
+//		System.out.println("numposts : " + fbPage.getPosts().size());
+		
+		
+		
+		
+		
+		
+	}
 	
-	public static void runExperiment() throws InterruptedException, IOException, SQLException{
+	public static void runReports() throws InterruptedException, IOException, SQLException{
 		
 //		parseRawPosts();
 		CSV.allReports();

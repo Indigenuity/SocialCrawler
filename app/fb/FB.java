@@ -1,6 +1,7 @@
 package fb;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +33,7 @@ public class FB {
 	private static final String REDIRECT = "https://www.facebook.com/connect/login_success.html";
 	private static final String TEMP_USER_ACCESS = "AQBhzmEw3hmKQ_ffKvyVxI1GIdTop6-epXaeGIwRQzkR54VTfSJkJ8cNBwWn_jKqAbIi00bSQGyaGoC84dT4Nl2DXM6B04X6Ypt_ifeuenuf0UPVse4lqbFBKD86ZQ6dmvnL_T3Pvf4iTL9OytEJGQklKhR3lkv28EdYpdhJOBHszq4FM8qc28BRrjCUpnO-i3dk6kZyFVt9-k1kHsmxg-g1blfYWOmZShlCKvXYk-bOqbqJiu6D0Q_qroof8_yStP1IWa5HFnIswBKdhC6FmimmvrCGxGNUlv6qRVczTnhIkaUBN5vrh4vCmeUF1Cr2VcY";
 	
-	private static final int POST_LIMIT = 100;
+	public static final int POST_LIMIT = 100;
 
 	private static final String PAGE_FIELDS_PARAMETER = "about,affiliation,app_id,attire,best_page,built,can_checkin,category,category_list,"
 			+ "checkins,company_overview,contact_address,culinary_team,current_location,description,display_subtext,"
@@ -66,10 +67,10 @@ public class FB {
 	
 	private void init(){
 		System.out.println("getting access token");
-//		accessToken = new DefaultFacebookClient(Version.LATEST).obtainAppAccessToken(APP_ID, APP_SECRET);
+		accessToken = new DefaultFacebookClient(Version.LATEST).obtainAppAccessToken(APP_ID, APP_SECRET);
 		System.out.println("creating client");
-		client = new DefaultFacebookClient(USER_ACCESS_TOKEN, Version.VERSION_2_6);
-		rateLimiter = new ThrottledLimiter(.5, 30, TimeUnit.SECONDS);
+		client = new DefaultFacebookClient(accessToken.getAccessToken(), Version.VERSION_2_6);
+		rateLimiter = new ThrottledLimiter(.9, 30, TimeUnit.SECONDS);
 		initialized = true;
 	}
 	
@@ -132,6 +133,15 @@ public class FB {
 		return client.fetchConnectionPage(nextPageUrl, namedType);
 	}
 	
+	public Connection<Post> getTimedConnection(String identifier, Date since, Date until) {
+		rateLimiter.acquire();
+		return client.fetchConnection(identifier + "/feed", Post.class, 
+				Parameter.with("until", until), Parameter.with("since", since),
+				Parameter.with("fields", FEED_FIELDS_PARAMETER),
+				Parameter.with("limit",  POST_LIMIT));
+		
+	}
+	
 	public Integer getPhotoLikes(String fbId){
 		rateLimiter.acquire();
 		Connection<Likes> likes = client.fetchConnection("/" + fbId + "/likes", Likes.class);
@@ -170,5 +180,6 @@ public class FB {
 		System.out.println("reactions : " + count);
 		return count;
 	}
+	
 	
 }

@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Index;
 
@@ -30,8 +31,10 @@ public class FBPage {
 	
 	private String givenUrl;
 	private String companyString;
+	private String companyId;
 	private Boolean job;
 	private Boolean liTab;
+	private Boolean fbTab;
 	private String geoSpecial;
 	
 	private String fbId;
@@ -125,6 +128,12 @@ public class FBPage {
 	
 	@OneToMany(mappedBy="fbPage")
 	private List<FBPhoto> photos = new ArrayList<FBPhoto>();
+	
+	@OneToOne
+	private DatedFeedFetch fetchByDay;
+	
+	@OneToOne
+	private DatedFeedFetch fetchByMonth;
 	
 	
 //	
@@ -589,6 +598,30 @@ public class FBPage {
 	}
 	public void setFbIdLong(Long fbIdLong) {
 		this.fbIdLong = fbIdLong;
+	}
+	public DatedFeedFetch getFetchByDay() {
+		return fetchByDay;
+	}
+	public void setFetchByDay(DatedFeedFetch fetchByDay) {
+		this.fetchByDay = fetchByDay;
+	}
+	public DatedFeedFetch getFetchByMonth() {
+		return fetchByMonth;
+	}
+	public void setFetchByMonth(DatedFeedFetch fetchByMonth) {
+		this.fetchByMonth = fetchByMonth;
+	}
+	public Boolean getFbTab() {
+		return fbTab;
+	}
+	public void setFbTab(Boolean fbTab) {
+		this.fbTab = fbTab;
+	}
+	public String getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -209,7 +210,7 @@ public class FBMaster {
 	
 	public static void readAndFetchPages() throws IOException { 
 		
-		Reader in = new FileReader("./data/in/companies.csv");
+		Reader in = new FileReader("./data/in/companies2.csv");
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
 		
 		EntityManager em = JPA.em();
@@ -232,15 +233,17 @@ public class FBMaster {
 	public static void importFBPage(CSVRecord record){
 		String givenUrl = record.get("URL");
 		String companyString = record.get("Company");
+		String companyId = record.get("Co ID");
 		Boolean job = Boolean.parseBoolean(record.get("Job/Career (Yes/No)"));
-		Boolean liTab = Boolean.parseBoolean(record.get("LI Tab?"));
-		String geoSpecial = record.get("Geography specific");
+//		Boolean liTab = Boolean.parseBoolean(record.get("LI Tab?"));
+		Boolean fbTab = Boolean.parseBoolean(record.get("FB Tab"));
+//		String geoSpecial = record.get("Geography specific");
 		
 		if(FBdao.alreadyPresent(givenUrl)){
 			return;
 		}
 		
-		String identifier = FBParser.getIdentifier(givenUrl);
+		String identifier = FBParser.getIdentifier(givenUrl); 
 		System.out.println("identifier : " + identifier);
 		System.out.println("givenUrl : "  + givenUrl);
 		Page page = FB.getInstance().fetchPage(identifier);
@@ -248,9 +251,11 @@ public class FBMaster {
 		System.out.println("after parse : " + fbPage.getFbPageId());
 		fbPage.setGivenUrl(givenUrl);
 		fbPage.setCompanyString(companyString);
+		fbPage.setCompanyId(companyId);
 		fbPage.setJob(job);
-		fbPage.setLiTab(liTab);
-		fbPage.setGeoSpecial(geoSpecial);
+//		fbPage.setLiTab(liTab);
+//		fbPage.setGeoSpecial(geoSpecial);
+		fbPage.setFbTab(fbTab);
 		
 		FBdao.persistPage(fbPage);
 	}
@@ -281,6 +286,55 @@ public class FBMaster {
 		}
 		
 		in.close();
+	}
+	
+	public static void runDatedFeedFetch(DatedFeedFetch feedFetch, FBPage fbPage) {
+		System.out.println("running dated feed fetch");
+		
+		try{
+			Date currentDate = feedFetch.getCurrentDate();
+			int numDays = feedFetch.getDateGranularity().getNumDays();
+			Date targetDate = addDays(currentDate, numDays);
+			while(targetDate.compareTo(feedFetch.getLastDate()) < 0){
+				System.out.println("fetching until : " + targetDate);
+				Connection<Post> feed = FB.getInstance().getTimedConnection(fbPage.getFbId(), currentDate, targetDate);
+				List<Post> posts = feed.getData();
+				System.out.println("found posts : " + posts.size());
+				List<FBPost> fbPosts = FBParser.parsePosts(posts);
+				for(FBPost fbPost : fbPosts) {
+					fbPost.setFbPage(fbPage);
+					JPA.em().persist(fbPost);
+				}
+				
+				FeedPage feedPage = new FeedPage();
+				feedPage.setFirstDate(currentDate);
+				feedPage.setLastDate(targetDate);
+				feedPage.setPreviousPageUrl(feed.getPreviousPageUrl());
+				feedPage.setNextPageUrl(feed.getNextPageUrl());
+				feedPage.setNumPosts(posts.size());
+				feedPage.setMaxPosts(FB.POST_LIMIT);
+				JPA.em().persist(feedPage);
+				feedFetch.getFeedPages().add(feedPage);
+				
+				feedFetch.setCurrentDate(targetDate);
+				
+				
+				currentDate = targetDate;
+				targetDate = addDays(targetDate, numDays);
+				
+				JPA.em().getTransaction().commit();
+				JPA.em().getTransaction().begin();
+			}
+		} catch(Exception e){
+			feedFetch.setErrorMessage(e.getClass().getSimpleName() + " exception : " + e.getMessage());
+		}
+	}
+	
+	public static Date addDays(Date currentDate, int numDays){
+		Calendar c = Calendar.getInstance();
+		c.setTime(currentDate);
+		c.add(Calendar.DATE, numDays);
+		return c.getTime();
 	}
 	
 }

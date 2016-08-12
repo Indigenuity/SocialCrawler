@@ -460,6 +460,7 @@ public class FBParser {
 	}
 	
 	public static String getIdentifier(String url) {
+		System.out.println("getting identifier for : " + url);
 		String identifier = NOT_A_PAGE;
 //		url = url.toLowerCase();
 		if(url.contains(SHARER) || url.contains(FACEBOOK_LEGAL) || url.contains(FACEBOOK_PRINCIPLES) ||
@@ -471,7 +472,9 @@ public class FBParser {
 		
 		
 		int lastIndex = url.lastIndexOf("/");
-		if(lastIndex >= url.length()){
+		System.out.println("last index of / : " + lastIndex);
+		System.out.println("length : " + url.length());
+		if(lastIndex >= url.length() - 1){
 			url = url.substring(0,lastIndex);
 			System.out.println("replaced : " + url);
 		}

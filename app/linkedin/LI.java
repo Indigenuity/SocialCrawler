@@ -26,7 +26,8 @@ public class LI {
 		ChromeOptions opt = new ChromeOptions();
 		opt.setBinary(CHROME_EXE);
 		opt.addArguments(COOKIES);
-		driver = new ChromeDriver(opt);
+//		driver = new ChromeDriver(opt);
+		driver = null;
 		
 		rateLimiter = new ThrottledLimiter(.2, 60, TimeUnit.SECONDS); 
 	}
