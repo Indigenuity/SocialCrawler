@@ -210,10 +210,11 @@ public class FBParser {
 		List<FBPost> fbPosts = new ArrayList<FBPost>();
 		for(Post post : posts) {
 			FBPost fbPost = new FBPost();
+			fbPost.setId(post.getId());
 			fbPost.setApp(post.getApplication() + "");
 			fbPost.setCreatedTime(post.getCreatedTime() + "");
 			fbPost.setCaption(post.getCaption());
-			fbPost.setFeedTargeting(post.getFeedTargeting()+"");
+			fbPost.setFeedTargeting(post.getFeedTargeting()+""); 
 			fbPost.setFromId(post.getFrom().getId());
 			fbPost.setIsHidden(post.getIsHidden());
 			fbPost.setLink(post.getLink());

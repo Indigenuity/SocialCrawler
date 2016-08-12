@@ -133,29 +133,63 @@ public class Experiment {
 			
 	}
 	
-	public static void runExperiment() throws IOException {
+	public static void runExperiment() throws IOException { 
+//		FBMaster.readAndFetchPages();
+//		JPA.em().getTransaction().commit();
+//		JPA.em().getTransaction().begin(); 
+//		createMonthFetches();
+		fillMonthFetches();
+		JPA.em().getTransaction().commit();
+		JPA.em().getTransaction().begin(); 
+		JPA.em().clear();
+		createDayFetches();
+		JPA.em().getTransaction().commit();
+		JPA.em().getTransaction().begin(); 
+		JPA.em().clear();
+		fillDayFetches();
+	}
+	
+	public static void createDayFetches() {
+		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
+		
+		for(FBPage fbPage : fbPages){
+			FBMaster.createFetchesByDay(fbPage);
+		}
+	}
+	
+	public static void fillDayFetches() {
+		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
+		
+		for(FBPage fbPage : fbPages){
+			
+			for(DatedFeedFetch feedFetch : fbPage.getFetchesByDay()){
+				System.out.println("running day fetch : " + feedFetch.getDatedFeedFetchId());
+				FBMaster.runDatedFeedFetch(feedFetch, fbPage);
+			}
+		}
+	}
+	
+	public static void fillMonthFetches() throws IOException {
 		
 		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
 		
 		for(FBPage fbPage : fbPages){
+			System.out.println("running month fetch for page : " + fbPage.getName());
+			FBMaster.runDatedFeedFetch(fbPage.getFetchByMonth(), fbPage);
+		}
+	}
+	
+	public static void createMonthFetches() throws IOException {
+		
+		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
+		
+		for(FBPage fbPage : fbPages){
+			System.out.println("creating month fetch for page : " + fbPage.getName());
 			DatedFeedFetch feedFetch = new DatedFeedFetch();
 			feedFetch.setDateGranularity(DateGranularity.MONTH);
 			JPA.em().persist(feedFetch);
 			fbPage.setFetchByMonth(feedFetch);
-			FBMaster.runDatedFeedFetch(fbPage.getFetchByMonth(), fbPage);
 		}
-//		System.out.println("running experiment");
-//		
-//		FBPage fbPage = JPA.em().find(FBPage.class, 17L);
-//		
-//		System.out.println("fbPage : " + fbPage.getName());
-//		System.out.println("numposts : " + fbPage.getPosts().size());
-		
-		
-		
-		
-		
-		
 	}
 	
 	public static void runReports() throws InterruptedException, IOException, SQLException{

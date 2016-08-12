@@ -129,8 +129,8 @@ public class FBPage {
 	@OneToMany(mappedBy="fbPage")
 	private List<FBPhoto> photos = new ArrayList<FBPhoto>();
 	
-	@OneToOne
-	private DatedFeedFetch fetchByDay;
+	@OneToMany
+	private List<DatedFeedFetch> fetchesByDay;
 	
 	@OneToOne
 	private DatedFeedFetch fetchByMonth;
@@ -599,12 +599,6 @@ public class FBPage {
 	public void setFbIdLong(Long fbIdLong) {
 		this.fbIdLong = fbIdLong;
 	}
-	public DatedFeedFetch getFetchByDay() {
-		return fetchByDay;
-	}
-	public void setFetchByDay(DatedFeedFetch fetchByDay) {
-		this.fetchByDay = fetchByDay;
-	}
 	public DatedFeedFetch getFetchByMonth() {
 		return fetchByMonth;
 	}
@@ -622,6 +616,12 @@ public class FBPage {
 	}
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
+	}
+	public List<DatedFeedFetch> getFetchesByDay() {
+		return fetchesByDay;
+	}
+	public void setFetchesByDay(List<DatedFeedFetch> fetchesByDay) {
+		this.fetchesByDay = fetchesByDay;
 	}
 	
 	

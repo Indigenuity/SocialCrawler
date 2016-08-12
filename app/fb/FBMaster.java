@@ -23,6 +23,7 @@ import com.restfb.types.Page;
 import com.restfb.types.Photo;
 import com.restfb.types.Post;
 
+import fb.DatedFeedFetch.DateGranularity;
 import persistence.FBDateMarker;
 import play.db.jpa.JPA;
 
@@ -288,14 +289,41 @@ public class FBMaster {
 		in.close();
 	}
 	
+	public static void createFetchesByDay(FBPage fbPage) {
+		fbPage.getFetchesByDay().clear();
+		DatedFeedFetch feedFetch = fbPage.getFetchByMonth();
+		int numDays = feedFetch.getDateGranularity().getNumDays();
+		
+		Date lastDate  = feedFetch.getLastDate();
+		int count = 0;
+		for(FeedPage feedPage : feedFetch.getFeedPages()){
+			System.out.println("processing feedPage : " + count);
+			count++;
+			if(!feedPage.getZoomed() && feedPage.getNumPosts() >= feedPage.getMaxPosts()){
+				Date firstDate = feedPage.getFirstDate();
+				System.out.println("found one at maximum");
+				for(int i = 0; i <= numDays; i++){
+					DatedFeedFetch byDay = new DatedFeedFetch();
+					byDay.setDateGranularity(DateGranularity.DAY);
+					byDay.setFirstDate(addDays(firstDate, i));
+					byDay.setLastDate(addDays(firstDate, i + 1));
+					JPA.em().persist(byDay);
+					fbPage.getFetchesByDay().add(byDay);
+				}
+				feedPage.setZoomed(true);
+			}
+		}
+	}
+	
 	public static void runDatedFeedFetch(DatedFeedFetch feedFetch, FBPage fbPage) {
 		System.out.println("running dated feed fetch");
 		
 		try{
 			Date currentDate = feedFetch.getCurrentDate();
+			System.out.println("currentDate : " + currentDate);
 			int numDays = feedFetch.getDateGranularity().getNumDays();
 			Date targetDate = addDays(currentDate, numDays);
-			while(targetDate.compareTo(feedFetch.getLastDate()) < 0){
+			while(currentDate.compareTo(feedFetch.getLastDate()) <= 0){
 				System.out.println("fetching until : " + targetDate);
 				Connection<Post> feed = FB.getInstance().getTimedConnection(fbPage.getFbId(), currentDate, targetDate);
 				List<Post> posts = feed.getData();
@@ -316,10 +344,10 @@ public class FBMaster {
 				JPA.em().persist(feedPage);
 				feedFetch.getFeedPages().add(feedPage);
 				
-				feedFetch.setCurrentDate(targetDate);
 				
 				
 				currentDate = targetDate;
+				feedFetch.setCurrentDate(currentDate);
 				targetDate = addDays(targetDate, numDays);
 				
 				JPA.em().getTransaction().commit();

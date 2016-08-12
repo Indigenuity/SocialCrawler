@@ -82,6 +82,7 @@ public class DatedFeedFetch {
 
 	public void setFirstDate(Date firstDate) {
 		this.firstDate = firstDate;
+		this.currentDate = this.firstDate;
 	}
 
 

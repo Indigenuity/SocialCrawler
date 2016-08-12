@@ -20,6 +20,8 @@ public class FeedPage {
 	private int numPosts;
 	private int maxPosts;
 	
+	private Boolean zoomed = false;
+	
 	@Column(nullable = true, columnDefinition="varchar(4000)")
 	private String nextPageUrl;
 	@Column(nullable = true, columnDefinition="varchar(4000)")
@@ -67,6 +69,12 @@ public class FeedPage {
 	}
 	public void setMaxPosts(int maxPosts) {
 		this.maxPosts = maxPosts;
+	}
+	public Boolean getZoomed() {
+		return zoomed;
+	}
+	public void setZoomed(Boolean zoomed) {
+		this.zoomed = zoomed;
 	}
 	
 	
