@@ -290,7 +290,7 @@ public class FBMaster {
 	}
 	
 	public static void createFetchesByDay(FBPage fbPage) {
-		fbPage.getFetchesByDay().clear();
+		fbPage.getFetchesByDay().clear(); 
 		DatedFeedFetch feedFetch = fbPage.getFetchByMonth();
 		int numDays = feedFetch.getDateGranularity().getNumDays();
 		

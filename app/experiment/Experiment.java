@@ -138,10 +138,10 @@ public class Experiment {
 //		JPA.em().getTransaction().commit();
 //		JPA.em().getTransaction().begin(); 
 //		createMonthFetches();
-		fillMonthFetches();
-		JPA.em().getTransaction().commit();
-		JPA.em().getTransaction().begin(); 
-		JPA.em().clear();
+//		fillMonthFetches();
+//		JPA.em().getTransaction().commit();
+//		JPA.em().getTransaction().begin(); 
+//		JPA.em().clear();
 		createDayFetches();
 		JPA.em().getTransaction().commit();
 		JPA.em().getTransaction().begin(); 
@@ -159,9 +159,9 @@ public class Experiment {
 	
 	public static void fillDayFetches() {
 		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
-		
+		System.out.println("filling day fetches for pages : " + fbPages.size());
 		for(FBPage fbPage : fbPages){
-			
+			System.out.println("page has feedfetches : " + fbPage.getFetchesByDay().size());
 			for(DatedFeedFetch feedFetch : fbPage.getFetchesByDay()){
 				System.out.println("running day fetch : " + feedFetch.getDatedFeedFetchId());
 				FBMaster.runDatedFeedFetch(feedFetch, fbPage);
