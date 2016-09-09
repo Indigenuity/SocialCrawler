@@ -315,6 +315,7 @@ public class FBMaster {
 		}
 	}
 	
+	
 	public static void runDatedFeedFetch(DatedFeedFetch feedFetch, FBPage fbPage) {
 		System.out.println("running dated feed fetch");
 		
@@ -353,7 +354,16 @@ public class FBMaster {
 				JPA.em().getTransaction().commit();
 				JPA.em().getTransaction().begin();
 			}
+			feedFetch.setCompleted(true);
 		} catch(Exception e){
+			System.out.println(e.getClass().getSimpleName() + " exception : " + e.getMessage());
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
 			feedFetch.setErrorMessage(e.getClass().getSimpleName() + " exception : " + e.getMessage());
 		}
 	}

@@ -60,6 +60,7 @@ import fb.FBParser;
 import fb.FBPost;
 import fb.FBdao;
 import fb.FeedFetch;
+import fb.FeedPage;
 import fb.FeedType;
 import fb.DatedFeedFetch.DateGranularity;
 import linkedin.LI;
@@ -133,7 +134,32 @@ public class Experiment {
 			
 	}
 	
-	public static void runExperiment() throws IOException { 
+	public static void runExperiment() throws IOException, SQLException, ParseException, InterruptedException {
+
+//		dateUpdate();
+//		CSV.fbPostsReport();
+//		newCreateDayFetches();
+		newFillDayFetches();
+		
+//		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
+//		System.out.println("filling day fetches for pages : " + fbPages.size());
+//		
+//		for(FBPage fbPage : fbPages) {
+//			DatedFeedFetch monthFetch = fbPage.getFetchByMonth();
+//			monthFetch.setFbPage(fbPage);
+//			for(FeedPage monthFeedPage : monthFetch.getFeedPages()){
+//				System.out.println("setting feedPage");
+//				monthFeedPage.setFeedFetch(monthFetch);
+//				for(DatedFeedFetch dayFetch : monthFeedPage.getSubFetches()){
+//					dayFetch.setFbPage(fbPage);
+//					System.out.println("set fbPage : " + fbPage);
+//				}
+//			}
+//		}
+		
+	}
+	
+	public static void runFbFetches() throws IOException { 
 //		FBMaster.readAndFetchPages();
 //		JPA.em().getTransaction().commit();
 //		JPA.em().getTransaction().begin(); 
@@ -169,6 +195,74 @@ public class Experiment {
 		}
 	}
 	
+	public static void newCreateDayFetches() {
+		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
+		System.out.println("filling day fetches for pages : " + fbPages.size());
+		for(FBPage fbPage : fbPages){
+			
+			DatedFeedFetch feedFetch = fbPage.getFetchByMonth();
+			int numDays = feedFetch.getDateGranularity().getNumDays();
+			
+			for(FeedPage feedPage : fbPage.getFetchByMonth().getFeedPages()){
+				Date firstDate = feedPage.getFirstDate();
+				if(!feedPage.getZoomed() && feedPage.getNumPosts() >= feedPage.getMaxPosts()){
+					for(int i = 0; i <= numDays; i++){
+						DatedFeedFetch dayFetch = new DatedFeedFetch();
+						dayFetch.setDateGranularity(DateGranularity.DAY);
+						dayFetch.setFirstDate(FBMaster.addDays(firstDate, i));
+						dayFetch.setLastDate(FBMaster.addDays(firstDate, i + 1));
+						JPA.em().persist(dayFetch);
+						feedPage.getSubFetches().add(dayFetch);
+					}
+					feedPage.setZoomed(true);
+				}
+			}
+			System.out.println("page has monthFetch : " + fbPage.getFetchByMonth());
+		}
+	}
+	
+	public static void newFillDayFetches() {
+		String queryString = "select sf from FeedPage fp join fp.subFetches sf where sf.completed = false";
+//		String queryString = "select dff from DatedFeedFetch dff join dff.feedPages fp where fp.subFetches is not empty";
+		int count = 500;
+		int offset = 0;
+		List<DatedFeedFetch> dayFetches;
+//		List<FeedPage> feedPages = JPA.em().createQuery(queryString, FeedPage.class).getResultList();
+//		System.out.println("feedPages : " + feedPages.size());
+//		
+//		for(FeedPage feedPage : feedPages){
+//			for(DatedFeedFetch dayFetch : feedPage.getSubFetches()) {
+//				System.out.println("dayFetch : " + dayFetch);
+//				System.out.println("feedFetch : " + feedPage.getFeedFetch());
+//				dayFetch.setFbPage(feedPage.getFeedFetch().getFbPage());
+//			}
+//		}
+		do{
+			dayFetches = JPA.em().createQuery(queryString, DatedFeedFetch.class).setMaxResults(count).setFirstResult(offset)
+					.getResultList();
+			System.out.println("dayFetches size : " + dayFetches.size());
+			for (DatedFeedFetch dayFetch : dayFetches) {
+//				System.out.println("fbPage : " + dayFetch.getFbPage());
+				
+				FBMaster.runDatedFeedFetch(dayFetch, dayFetch.getFbPage());
+//				Date createdDate = format.parse(fbPost.getCreatedTime());
+//				Date updatedTime = format.parse(fbPost.getUpdatedTime());
+//				// System.out.println("date: " + createdDate);
+//				// System.out.println("updatedTime : " + updatedTime);
+//				fbPost.setRealCreatedDate(createdDate);
+//				fbPost.setRealLastUpdated(updatedTime);
+			}
+
+			offset += count;
+			System.out.println("processed : " + offset);
+			JPA.em().getTransaction().commit();
+			JPA.em().getTransaction().begin();
+			JPA.em().clear();
+			System.gc();
+			
+		} while(dayFetches.size() > 0);
+	}
+	
 	public static void fillMonthFetches() throws IOException {
 		
 		List<FBPage> fbPages = JPA.em().createQuery("from FBPage fb", FBPage.class).getResultList();
@@ -195,7 +289,8 @@ public class Experiment {
 	public static void runReports() throws InterruptedException, IOException, SQLException{
 		
 //		parseRawPosts();
-		CSV.allReports();
+//		CSV.allReports();
+		
 //		doBasicCrawls();
 //		if(!started){
 //			driver.get("http://facebook.com/Nordstrom");
@@ -468,10 +563,10 @@ public class Experiment {
 	public static void dateUpdate() throws IOException, InterruptedException, ParseException {
 		System.out.println("running experiment");
 		String query = "from FBPost p";
-		int count = 500;
+		int count = 5000;
 		int offset = 0;
 		List<FBPost> fbPosts;
-		DateFormat format = new SimpleDateFormat("EEE MMM FF HH:mm:ss zzz YYYY", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
 		do {
 			fbPosts = JPA.em().createQuery(query, FBPost.class).setMaxResults(count).setFirstResult(offset)
 					.getResultList();
@@ -489,7 +584,7 @@ public class Experiment {
 			System.out.println("processed : " + offset);
 			JPA.em().getTransaction().commit();
 			JPA.em().getTransaction().begin();
-			JPA.em().flush();
+			JPA.em().clear();
 			System.gc();
 		} while (fbPosts.size() > 0);
 

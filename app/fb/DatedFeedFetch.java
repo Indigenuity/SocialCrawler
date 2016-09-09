@@ -19,8 +19,8 @@ public class DatedFeedFetch {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long datedFeedFetchId;
 	
-//	@ManyToOne
-//	private FBPage fbPage;
+	@ManyToOne
+	private FBPage fbPage;
 	
 	private DateGranularity dateGranularity;
 	
@@ -32,6 +32,8 @@ public class DatedFeedFetch {
 	
 	@Column(nullable = true, columnDefinition="varchar(4000)")
 	private String errorMessage;
+	
+	private Boolean completed = false;
 	
 	@OneToMany
 	private List<FeedPage> feedPages = new ArrayList<FeedPage>();
@@ -137,6 +139,30 @@ public class DatedFeedFetch {
 	public void setPastToPresent(Boolean pastToPresent) {
 		this.pastToPresent = pastToPresent;
 	}
+
+	
+	public Boolean getCompleted() {
+		return completed;
+	}
+
+
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
+	}
+
+
+
+
+	public FBPage getFbPage() {
+		return fbPage;
+	}
+
+
+	public void setFbPage(FBPage fbPage) {
+		this.fbPage = fbPage;
+	}
+
+
 
 
 	public enum DateGranularity {

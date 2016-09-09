@@ -1,18 +1,26 @@
 package fb;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class FeedPage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long feedPageId;
+	
+	@ManyToOne
+	private DatedFeedFetch feedFetch;
 	
 	private Date firstDate;
 	private Date lastDate;
@@ -26,6 +34,9 @@ public class FeedPage {
 	private String nextPageUrl;
 	@Column(nullable = true, columnDefinition="varchar(4000)")
 	private String previousPageUrl;
+	
+	@OneToMany
+	private List<DatedFeedFetch> subFetches = new ArrayList<DatedFeedFetch>();
 	
 	
 	public long getFeedPageId() {
@@ -75,6 +86,18 @@ public class FeedPage {
 	}
 	public void setZoomed(Boolean zoomed) {
 		this.zoomed = zoomed;
+	}
+	public List<DatedFeedFetch> getSubFetches() {
+		return subFetches;
+	}
+	public void setSubFetches(List<DatedFeedFetch> subFetches) {
+		this.subFetches = subFetches;
+	}
+	public DatedFeedFetch getFeedFetch() {
+		return feedFetch;
+	}
+	public void setFeedFetch(DatedFeedFetch feedFetch) {
+		this.feedFetch = feedFetch;
 	}
 	
 	

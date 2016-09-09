@@ -45,8 +45,8 @@ public class FBParser {
 	
 	public static final Pattern SIMPLE_URL = Pattern.compile("(?<=facebook.com/)[^/]+$");
 	
-	public static final DateFormat format = new SimpleDateFormat("EEE MMM FF HH:mm:ss zzz YYYY", Locale.ENGLISH);
-	public static final DateFormat markerFormat = new SimpleDateFormat("YYYY-MM-FF", Locale.ENGLISH);
+	public static final DateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+	public static final DateFormat markerFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 	public static final DateFormat rawFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
 	
 	
