@@ -70,7 +70,7 @@ public class FB {
 		accessToken = new DefaultFacebookClient(Version.LATEST).obtainAppAccessToken(APP_ID, APP_SECRET);
 		System.out.println("creating client");
 		client = new DefaultFacebookClient(accessToken.getAccessToken(), Version.VERSION_2_6);
-		rateLimiter = new ThrottledLimiter(.9, 30, TimeUnit.SECONDS);
+		rateLimiter = new ThrottledLimiter(2, 30, TimeUnit.SECONDS);
 		initialized = true;
 	}
 	

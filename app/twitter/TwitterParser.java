@@ -17,6 +17,7 @@ public class TwitterParser {
 	private static final Pattern IDENTIFIER_REGEX = Pattern.compile("https://twitter\\.com/([^/]+)");
 	
 	public static String getIdentifier(String givenUrl){
+		givenUrl = givenUrl.replace("?lang=en", "");
 		Matcher matcher = IDENTIFIER_REGEX.matcher(givenUrl);
 		if(matcher.find()){
 			return matcher.group(1);

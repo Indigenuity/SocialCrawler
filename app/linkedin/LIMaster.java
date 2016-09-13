@@ -67,8 +67,8 @@ public class LIMaster {
 	}
 	
 	public static void readAndFetchPages() throws IOException, InterruptedException { 
-		
-		Reader in = new FileReader("./data/in/companies.csv");
+		System.out.println("Reading and Fetching LI pages");
+		Reader in = new FileReader("./data/in/companies2.csv");
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
 		
 		EntityManager em = JPA.em();
@@ -92,8 +92,8 @@ public class LIMaster {
 		String givenUrl = record.get("URL");
 		String companyString = record.get("Company");
 		Boolean job = Boolean.parseBoolean(record.get("Job/Career (Yes/No)"));
-		Boolean liTab = Boolean.parseBoolean(record.get("LI Tab?"));
-		String geoSpecial = record.get("Geography specific");
+//		Boolean liTab = Boolean.parseBoolean(record.get("LI Tab?"));
+//		String geoSpecial = record.get("Geography specific");
 		
 		if(LIdao.alreadyPresent(givenUrl)){
 			return;
@@ -103,8 +103,8 @@ public class LIMaster {
 		liPage.setGivenUrl(givenUrl);
 		liPage.setCompanyString(companyString);
 		liPage.setJob(job);
-		liPage.setLiTab(liTab);
-		liPage.setGeoSpecial(geoSpecial);
+//		liPage.setLiTab(liTab);
+//		liPage.setGeoSpecial(geoSpecial);
 		liPage.setTrimmedUrl(trimmedUrl);
 		liPage.setGroup(LIParser.isGroupUrl(givenUrl));
 		

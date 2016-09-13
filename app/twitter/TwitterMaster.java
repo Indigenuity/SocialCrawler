@@ -31,7 +31,7 @@ public class TwitterMaster {
 
 	public static void readAndFetchPages() throws IOException, TwitterException { 
 		
-		Reader in = new FileReader("./data/in/companies.csv");
+		Reader in = new FileReader("./data/in/companies2.csv");
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
 		
 		EntityManager em = JPA.em();
@@ -126,8 +126,8 @@ public class TwitterMaster {
 		String givenUrl = record.get("URL");
 		String companyString = record.get("Company");
 		Boolean job = Boolean.parseBoolean(record.get("Job/Career (Yes/No)"));
-		Boolean liTab = Boolean.parseBoolean(record.get("LI Tab?"));
-		String geoSpecial = record.get("Geography specific");
+//		Boolean liTab = Boolean.parseBoolean(record.get("LI Tab?"));
+//		String geoSpecial = record.get("Geography specific");
 		
 		if(TwitterDao.alreadyPresent(givenUrl)){
 			return;
@@ -143,8 +143,8 @@ public class TwitterMaster {
 		twitterUser.setGivenUrl(givenUrl);
 		twitterUser.setCompanyString(companyString);
 		twitterUser.setJob(job);
-		twitterUser.setLiTab(liTab);
-		twitterUser.setGeoSpecial(geoSpecial);
+//		twitterUser.setLiTab(liTab);
+//		twitterUser.setGeoSpecial(geoSpecial);
 		JPA.em().persist(twitterUser);
 		JPA.em().getTransaction().commit();
 		JPA.em().getTransaction().begin();

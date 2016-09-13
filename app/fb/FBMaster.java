@@ -324,7 +324,7 @@ public class FBMaster {
 			System.out.println("currentDate : " + currentDate);
 			int numDays = feedFetch.getDateGranularity().getNumDays();
 			Date targetDate = addDays(currentDate, numDays);
-			while(currentDate.compareTo(feedFetch.getLastDate()) <= 0){
+			while(currentDate.compareTo(feedFetch.getLastDate()) < 0){
 				System.out.println("fetching until : " + targetDate);
 				Connection<Post> feed = FB.getInstance().getTimedConnection(fbPage.getFbId(), currentDate, targetDate);
 				List<Post> posts = feed.getData();

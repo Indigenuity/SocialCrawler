@@ -2,6 +2,8 @@ package linkedin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,6 +13,9 @@ import utils.DSFormatter;
 
 public class LIParser {
 
+	public static final String COMPANY_ID_REGEX = "companyId\":([0-9]+),";
+	public static final Pattern companyIdPattern = Pattern.compile(COMPANY_ID_REGEX);
+	
 	public static String trimUrl(String givenUrl){
 		return DSFormatter.removeQueryString(givenUrl);
 	}
@@ -39,6 +44,12 @@ public class LIParser {
 		String affiliatedCompaniesLinks = getMultipleLinks(".affiliated-company-name a", doc);
 		String associatedGroupsNames = getMultiple(".associated-groups h4", doc);
 		String associatedGroupsLinks = getMultipleLinks(".associated-groups h4 a", doc);
+		
+		String liCompanyId = null;
+		Matcher matcher = companyIdPattern.matcher(doc.outerHtml());
+		if(matcher.find()){
+			System.out.println("matcher : " + matcher.group(1));
+		}
 		
 		liPage.setDescription(description);
 		liPage.setSpecialties(specialties);

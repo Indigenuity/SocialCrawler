@@ -134,7 +134,22 @@ public class Experiment {
 			
 	}
 	
-	public static void runExperiment() throws IOException, SQLException, ParseException, InterruptedException {
+	
+	public static void runExperiment() throws Exception {
+		System.out.println("running experiment");
+		doLinkedIn();
+	}
+	
+	public static void doLinkedIn() throws IOException, InterruptedException{
+		System.out.println("doing linked in");
+//		LIMaster.readAndFetchPages();
+		LIPage liPage = JPA.em().find(LIPage.class, 1L);
+		System.out.println("found liPage : "+ liPage);
+		Document doc = LI.getMainDocument(liPage.getTrimmedUrl());
+//		LIParser.parseDocument(liPage, doc);
+	}
+	
+	public static void runfbExperiment() throws IOException, SQLException, ParseException, InterruptedException {
 
 //		dateUpdate();
 //		CSV.fbPostsReport();
@@ -641,7 +656,7 @@ public class Experiment {
 
 		TwitterMaster.readAndFetchPages();
 		TwitterMaster.fetchTimelines(TweetType.STATUS);
-		TwitterMaster.fetchTimelines(TweetType.MENTION);
+//		TwitterMaster.fetchTimelines(TweetType.MENTION);
 
 	}
 
